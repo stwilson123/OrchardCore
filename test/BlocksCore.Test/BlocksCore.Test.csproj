@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
+        <PackageReference Include="Moq" Version="4.10.1" />
+        <PackageReference Include="xunit" Version="2.3.1" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\BlocksCore\BlocksCore.Application.Core\BlocksCore.Application.Core.csproj" />
+      <ProjectReference Include="..\..\BlocksCore\BlocksCore.Localization.Abstractions\BlocksCore.Localization.Abstractions.csproj" />
+      <ProjectReference Include="..\..\BlocksCore\BlocksCore.Localization.Core\BlocksCore.Localization.Core.csproj" />
+      <ProjectReference Include="..\..\BlocksCore\BlocksCore.Web.Abstractions\BlocksCore.Web.Abstractions.csproj" />
+      <ProjectReference Include="..\..\BlocksCore\BlocksCore.WebAPI\BlocksCore.WebAPI.csproj" />
+      <ProjectReference Include="..\..\Core\BlocksCore.Abstractions\BlocksCore.Abstractions.csproj" />
+      <ProjectReference Include="..\..\ModuleLoaderCore\BlocksCore.Loader\BlocksCore.Loader.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Application" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.AspNetCore.Mvc.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
+        <HintPath>..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.mvc.core\2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.Core.dll</HintPath>
+      </Reference>
+      <Reference Include="Microsoft.AspNetCore.Mvc.ViewFeatures, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
+        <HintPath>..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.mvc.viewfeatures\2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.ViewFeatures.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+    <Import Project="..\..\BlocksCore\BlocksCore.Appliction.Face\BlocksCore.Application.Face.targets" />
+</Project>

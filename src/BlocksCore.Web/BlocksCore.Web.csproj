@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OrchardCore\BlocksCore.Application.Mvc.Targets\BlocksCore.Application.Mvc.Targets.csproj" />
+    <ProjectReference Include="..\OrchardCore\BlocksCore.Logging.Log4net\BlocksCore.Logging.Log4net.csproj" />
+  </ItemGroup>
+
+
+</Project>
