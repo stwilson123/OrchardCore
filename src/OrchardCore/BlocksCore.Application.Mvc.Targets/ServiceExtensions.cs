@@ -22,7 +22,8 @@ namespace Microsoft.Extensions.DependencyInjection
             var builder = services.AddOrchardCore()
 
                 // .AddCommands()
-                .AddMvc();
+                .AddMvc()
+                .AddWebAPI();
                 //.AddSetupFeatures("OrchardCore.Setup")
 
                 //.AddDataAccess()

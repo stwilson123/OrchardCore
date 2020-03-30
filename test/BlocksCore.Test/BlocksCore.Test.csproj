@@ -1,10 +1,18 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
 
         <IsPackable>false</IsPackable>
     </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="Navigation\Model\WebNavigation.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="Navigation\Model\WebNavigation.json" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
@@ -15,13 +23,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\BlocksCore\BlocksCore.Application.Core\BlocksCore.Application.Core.csproj" />
-      <ProjectReference Include="..\..\BlocksCore\BlocksCore.Localization.Abstractions\BlocksCore.Localization.Abstractions.csproj" />
-      <ProjectReference Include="..\..\BlocksCore\BlocksCore.Localization.Core\BlocksCore.Localization.Core.csproj" />
-      <ProjectReference Include="..\..\BlocksCore\BlocksCore.Web.Abstractions\BlocksCore.Web.Abstractions.csproj" />
-      <ProjectReference Include="..\..\BlocksCore\BlocksCore.WebAPI\BlocksCore.WebAPI.csproj" />
-      <ProjectReference Include="..\..\Core\BlocksCore.Abstractions\BlocksCore.Abstractions.csproj" />
-      <ProjectReference Include="..\..\ModuleLoaderCore\BlocksCore.Loader\BlocksCore.Loader.csproj" />
+      <ProjectReference Include="..\..\src\OrchardCore\BlocksCore.Abstractions\BlocksCore.Abstractions.csproj" />
+      <ProjectReference Include="..\..\src\OrchardCore\BlocksCore.Application.Core\BlocksCore.Application.Core.csproj" />
+      <ProjectReference Include="..\..\src\OrchardCore\BlocksCore.Navigation.Abstractions\BlocksCore.Navigation.Abstractions.csproj" />
+      <ProjectReference Include="..\..\src\OrchardCore\BlocksCore.Navigation.Core\BlocksCore.Navigation.Core.csproj" />
+      <ProjectReference Include="..\..\src\OrchardCore\BlocksCore.Web.Abstractions\BlocksCore.Web.Abstractions.csproj" />
+      <ProjectReference Include="..\..\src\OrchardCore\BlocksCore.WebAPI\BlocksCore.WebAPI.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -36,5 +43,5 @@
         <HintPath>..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.mvc.viewfeatures\2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.ViewFeatures.dll</HintPath>
       </Reference>
     </ItemGroup>
-    <Import Project="..\..\BlocksCore\BlocksCore.Appliction.Face\BlocksCore.Application.Face.targets" />
+    <!--<Import Project="..\..\BlocksCore\BlocksCore.Appliction.Face\BlocksCore.Application.Face.targets" />-->
 </Project>

@@ -7,7 +7,7 @@ namespace BlocksCore.Abstractions.extensions
 {
     public static class FileInfoExtensions
     {
-        public static Task<string> ReadToString(this IFileInfo fileInfo)
+        public static async Task<string> ReadToString(this IFileInfo fileInfo)
         {
 
             if (fileInfo?.Exists ?? false)
@@ -16,11 +16,12 @@ namespace BlocksCore.Abstractions.extensions
                 {
                     using (var sr = new StreamReader(reader))
                     {
-                        return sr.ReadToEndAsync()
+                       
+                        return await sr.ReadToEndAsync();
                     }
                 }
             }
-            return Task.FromResult<string>(null);
+            return (string)null;
         }
     }
 }

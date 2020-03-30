@@ -6,4 +6,7 @@
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BlocksCore.SyntacticAbstractions\BlocksCore.SyntacticAbstractions.csproj" />
+  </ItemGroup>
 </Project>

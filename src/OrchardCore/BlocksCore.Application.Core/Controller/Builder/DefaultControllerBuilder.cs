@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using BlocksCore.Abstractions.Exception;
 using BlocksCore.Application.Abstratctions.Attributes;
 using BlocksCore.Application.Abstratctions.Controller;
 using BlocksCore.Application.Abstratctions.Controller.Attributes;
@@ -8,7 +9,6 @@ using BlocksCore.Application.Abstratctions.Controller.Builder;
 using BlocksCore.Application.Abstratctions.Controller.Helper;
 using BlocksCore.Application.Abstratctions.Filters;
 using BlocksCore.Application.Abstratctions.Manager;
-using BlocksCore.Exception;
 using BlocksCore.SyntacticAbstractions.Reflection.Extensions;
 using BlocksCore.SyntacticAbstractions.Types;
 
@@ -56,8 +56,8 @@ namespace BlocksCore.Application.Core.Controller.Builder
             ServiceInterfaceType = typeof (T);
 
             _actionBuilders = new Dictionary<string, TControllerActionBuilder>();
-            var methodInfos = DynamicApiControllerActionHelper.GetMethodsOfType(typeof(T))
-                .Where(methodInfo => methodInfo.GetSingleAttributeOrNull<BlocksActionNameAttribute>() != null);
+            var methodInfos = DynamicApiControllerActionHelper.GetMethodsOfType(typeof(T));
+               // .Where(methodInfo => methodInfo.GetSingleAttributeOrNull<BlocksActionNameAttribute>() != null);
             foreach (var methodInfo in methodInfos)
             {
                 var actionBuilder = (TControllerActionBuilder)typeof(TControllerActionBuilder).New(this, methodInfo);
@@ -67,9 +67,9 @@ namespace BlocksCore.Application.Core.Controller.Builder
                     actionBuilder.DontCreateAction();
                 }
                 var actionNameAttr = methodInfo.GetSingleAttributeOrNull<BlocksActionNameAttribute>();
- 
+                var actionName = actionNameAttr?.ActionName ?? methodInfo.Name;
 
-                _actionBuilders[actionNameAttr.ActionName] =
+                _actionBuilders[actionName] =
                     actionBuilder;
             }
         }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using BlocksCore.Abstractions;
 
 namespace BlocksCore.Navigation.Abstractions
 {
@@ -9,6 +10,6 @@ namespace BlocksCore.Navigation.Abstractions
     {
         Task Initialize();
 
-        IEnumerable<NavigationConfig> NavigationConfigs { get; }
+        IDictionary<Platform, NavigationConfig> NavigationConfigs { get; }
     }
 }

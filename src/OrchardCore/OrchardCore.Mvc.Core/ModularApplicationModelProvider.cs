@@ -52,7 +52,7 @@ namespace OrchardCore.Mvc
                     if (blueprint.Extension.Id == _hostingEnvironment.ApplicationName &&
                         _shellSettings.State != TenantState.Running)
                     {
-                        // Don't serve any action of the application'module which is enabled during a setup.
+                        // Don't serve any action of the application'module which is enabled during a setup.IApplicationFeatureProvider
                         foreach (var action in controller.Actions)
                         {
                             action.Selectors.Clear();
@@ -63,7 +63,7 @@ namespace OrchardCore.Mvc
                     else
                     {
                         // Add an "area" route value equal to the module id.
-                        controller.RouteValues.Add("area", blueprint.Extension.Id);
+                        //controller.RouteValues.Add("area", blueprint.Extension.Id);
                     }
                 }
             }

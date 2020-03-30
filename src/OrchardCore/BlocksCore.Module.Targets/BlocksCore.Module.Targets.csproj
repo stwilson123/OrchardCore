@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\OrchardCore.Module.Targets\Package.Build.props" Link="Package.Build.props">
+      <PackagePath>build\$(TargetFramework)\$(AssemblyName).props</PackagePath>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+      <Pack>true</Pack>
+    </None>
+  </ItemGroup>
+
+</Project>

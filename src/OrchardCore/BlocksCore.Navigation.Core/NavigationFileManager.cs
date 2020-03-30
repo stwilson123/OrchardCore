@@ -12,48 +12,57 @@ using Newtonsoft.Json;
 using OrchardCore.Environment.Extensions;
 using OrchardCore.Environment.Shell;
 using OrchardCore.Modules.FileProviders;
+using BlocksCore.SyntacticAbstractions.Types.Collections;
 
 namespace BlocksCore.Navigation.Core
 {
     public class NavigationFileManager : INavigationFileManager
     {
-        public NavigationFileManager(IEnumerable<INavigationFileProvider> navigationFileProviders, IHostEnvironment hostingEnvironment, IExtensionManager extensionManager, ITypeFeatureProvider typeFeatureProvider )
+        public NavigationFileManager(IEnumerable<INavigationFileProvider> navigationFileProviders, IHostEnvironment hostingEnvironment, ITypeFeatureProvider typeFeatureProvider)
         {
             this._navigationFileProviders = navigationFileProviders;
-            this._extensionManager = extensionManager;
             this._typeFeatureProvider = typeFeatureProvider;
-       
+
             _fileProvider = hostingEnvironment.ContentRootFileProvider;
         }
         private readonly IEnumerable<INavigationFileProvider> _navigationFileProviders;
-        private readonly IExtensionManager _extensionManager;
         private readonly ITypeFeatureProvider _typeFeatureProvider;
         private IFileProvider _fileProvider;
 
-        public IEnumerable<NavigationConfig> NavigationConfigs => throw new NotImplementedException();
+        public IDictionary<Platform, NavigationConfig> NavigationConfigs => _navigationConfigs;
 
-        private IList<NavigationConfig> _navigationConfigs = new List<NavigationConfig>();
+        private IDictionary<Platform, NavigationConfig> _navigationConfigs = new Dictionary<Platform, NavigationConfig>();
 
-        public async Task  Initialize()
+        public async Task Initialize()
         {
-
+            if (_navigationConfigs.Any())
+                return;
             foreach (var navigationFileProvider in _navigationFileProviders.Where(p => p.filePaths != null && p.filePaths.Any()))
             {
                 var feature = _typeFeatureProvider.GetFeatureForDependency(navigationFileProvider.GetType());
-                foreach (var navigationFilePath in navigationFileProvider.filePaths)
+                foreach (var navigationFile in navigationFileProvider.filePaths)
                 {
-                   var fileProvider =  _fileProvider.GetFileInfo(PathExtensions.Combine(feature.Extension.SubPath, "Navigation", navigationFilePath.Value));
+                    var fileProvider = _fileProvider.GetFileInfo(PathExtensions.Combine(feature.Extension.SubPath, "Navigation", navigationFile.Value));
                     if (!fileProvider.Exists)
                         continue;
-                   var JsonString =  await fileProvider.ReadToString();
 
-                   var navgationConfig = JsonConvert.DeserializeObject<NavigationConfig>(JsonString);
-                    _navigationConfigs.Add(navgationConfig);
+                    var JsonString = await fileProvider.ReadToString();
+
+                    var navgationConfig = JsonConvert.DeserializeObject<NavigationConfig>(JsonString);
+
+                    if (navgationConfig != null && !navgationConfig.Items.IsNullOrEmpty())
+                    {
+                        foreach (var navItem in navgationConfig.Items)
+                        {
+                            navItem.AreaName = string.IsNullOrEmpty(navItem.AreaName) ? feature.Name : navItem.AreaName;
+                        }
+                    }
+                    _navigationConfigs.Add(navigationFile.Key, navgationConfig);
                 }
-                  
+
             }
-             
-             
+
+
 
 
 

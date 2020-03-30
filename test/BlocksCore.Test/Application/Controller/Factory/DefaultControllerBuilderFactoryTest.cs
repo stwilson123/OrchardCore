@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using BlocksCore.Application.Abstratctions;
@@ -75,7 +75,10 @@ namespace BlocksCore.Test.Application.Controller.Factory
             Assert.Null(controllerActionIgnore.Value);
 
             var controllerActionNoActionName = testController.Actions.FirstOrDefault(t => t.Key == "TestNoActionName");
-            Assert.Null(controllerActionNoActionName.Value);
+            Assert.NotNull(controllerActionNoActionName.Value);
+            Assert.Equal("TestNoActionName", controllerActionNoActionName.Value.ActionName);
+
+            
         }
 
         [Fact]

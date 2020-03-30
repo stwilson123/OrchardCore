@@ -384,11 +384,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlocksCore.Modules", "Block
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.Navigation", "src\OrchardCore.Modules\BlocksCore.Navigation\BlocksCore.Navigation.csproj", "{537181A1-1835-4460-A1D5-0F0F267E40AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlocksCore.Navigation.Abstractions", "src\OrchardCore\BlocksCore.Navigation.Abstractions\BlocksCore.Navigation.Abstractions.csproj", "{9F229409-2FBA-401A-B886-670F14B17B09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.Navigation.Abstractions", "src\OrchardCore\BlocksCore.Navigation.Abstractions\BlocksCore.Navigation.Abstractions.csproj", "{9F229409-2FBA-401A-B886-670F14B17B09}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.Abstractions", "src\OrchardCore\BlocksCore.Abstractions\BlocksCore.Abstractions.csproj", "{AFC262D6-D6E7-401F-892E-C9E39D01BE22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlocksCore.Navigation.Core", "src\OrchardCore\BlocksCore.Navigation.Core\BlocksCore.Navigation.Core.csproj", "{350E2494-84AB-4191-9658-E5AA4EADF07D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.Navigation.Core", "src\OrchardCore\BlocksCore.Navigation.Core\BlocksCore.Navigation.Core.csproj", "{350E2494-84AB-4191-9658-E5AA4EADF07D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.WebAPI", "src\OrchardCore\BlocksCore.WebAPI\BlocksCore.WebAPI.csproj", "{D53C47AE-B86F-4C00-958C-F8FFF0ABF7BD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.Web.Abstractions", "src\OrchardCore\BlocksCore.Web.Abstractions\BlocksCore.Web.Abstractions.csproj", "{D6940DF1-8DEB-4F94-AF57-E338C928BCEC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blocks.UserModule", "src\OrchardCore.Modules\Blocks.UserModule\Blocks.UserModule.csproj", "{735E967B-EDD2-45D9-AC97-AB547EA1A7E2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.Module.Targets", "src\OrchardCore\BlocksCore.Module.Targets\BlocksCore.Module.Targets.csproj", "{BA88A44E-49D8-4177-8D30-074E523D8E1E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.Diagnostics", "src\OrchardCore.Modules\BlocksCore.Diagnostics\BlocksCore.Diagnostics.csproj", "{254F3A13-7E79-422D-95CA-D5D77C2FBC7B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlocksCore.Test.Modules", "BlocksCore.Test.Modules", "{6647F56C-2B03-48F1-98F5-C3596582E08F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1044,6 +1056,26 @@ Global
 		{350E2494-84AB-4191-9658-E5AA4EADF07D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{350E2494-84AB-4191-9658-E5AA4EADF07D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{350E2494-84AB-4191-9658-E5AA4EADF07D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D53C47AE-B86F-4C00-958C-F8FFF0ABF7BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D53C47AE-B86F-4C00-958C-F8FFF0ABF7BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D53C47AE-B86F-4C00-958C-F8FFF0ABF7BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D53C47AE-B86F-4C00-958C-F8FFF0ABF7BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6940DF1-8DEB-4F94-AF57-E338C928BCEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6940DF1-8DEB-4F94-AF57-E338C928BCEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6940DF1-8DEB-4F94-AF57-E338C928BCEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6940DF1-8DEB-4F94-AF57-E338C928BCEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{735E967B-EDD2-45D9-AC97-AB547EA1A7E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{735E967B-EDD2-45D9-AC97-AB547EA1A7E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{735E967B-EDD2-45D9-AC97-AB547EA1A7E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{735E967B-EDD2-45D9-AC97-AB547EA1A7E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA88A44E-49D8-4177-8D30-074E523D8E1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA88A44E-49D8-4177-8D30-074E523D8E1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA88A44E-49D8-4177-8D30-074E523D8E1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA88A44E-49D8-4177-8D30-074E523D8E1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{254F3A13-7E79-422D-95CA-D5D77C2FBC7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{254F3A13-7E79-422D-95CA-D5D77C2FBC7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{254F3A13-7E79-422D-95CA-D5D77C2FBC7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{254F3A13-7E79-422D-95CA-D5D77C2FBC7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1228,6 +1260,12 @@ Global
 		{9F229409-2FBA-401A-B886-670F14B17B09} = {D0194169-34DC-4762-ADB8-F8A4E189C920}
 		{AFC262D6-D6E7-401F-892E-C9E39D01BE22} = {D0194169-34DC-4762-ADB8-F8A4E189C920}
 		{350E2494-84AB-4191-9658-E5AA4EADF07D} = {D0194169-34DC-4762-ADB8-F8A4E189C920}
+		{D53C47AE-B86F-4C00-958C-F8FFF0ABF7BD} = {D0194169-34DC-4762-ADB8-F8A4E189C920}
+		{D6940DF1-8DEB-4F94-AF57-E338C928BCEC} = {D0194169-34DC-4762-ADB8-F8A4E189C920}
+		{735E967B-EDD2-45D9-AC97-AB547EA1A7E2} = {D92E7E13-E6D5-4723-AB93-D93C9A4F7416}
+		{BA88A44E-49D8-4177-8D30-074E523D8E1E} = {3398AB60-2DB7-464C-B211-C4120BE75582}
+		{254F3A13-7E79-422D-95CA-D5D77C2FBC7B} = {D92E7E13-E6D5-4723-AB93-D93C9A4F7416}
+		{6647F56C-2B03-48F1-98F5-C3596582E08F} = {B8D16C60-99B4-43D5-A3AD-4CD89AF39B25}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {46A1D25A-78D1-4476-9CBF-25B75E296341}

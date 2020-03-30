@@ -36,7 +36,6 @@ namespace BlocksCore.Web
                 app.UseDeveloperExceptionPage();
             }
 
-
             app.UseStaticFiles();
 
             app.UseBlocksCore();

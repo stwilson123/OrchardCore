@@ -1,13 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\OrchardCore.Modules\Blocks.UserModule\Blocks.UserModule.csproj" />
+    <ProjectReference Include="..\OrchardCore.Modules\BlocksCore.Diagnostics\BlocksCore.Diagnostics.csproj" />
     <ProjectReference Include="..\OrchardCore\BlocksCore.Application.Mvc.Targets\BlocksCore.Application.Mvc.Targets.csproj" />
     <ProjectReference Include="..\OrchardCore\BlocksCore.Logging.Log4net\BlocksCore.Logging.Log4net.csproj" />
   </ItemGroup>
+  <!-- Necessary as we reference the Project and not the Package -->
+  <Import Project="..\OrchardCore\OrchardCore.Application.Targets\OrchardCore.Application.Targets.targets" />
 
+  <Import Project="..\OrchardCore.Build\OrchardCore.Commons.targets" />
 
 </Project>

@@ -13,33 +13,39 @@ namespace BlocksCore.Navigation.Core
     public class AutoRegisterNavigationProvider : INavigationProvider
     {
         private readonly INavigationFileManager _navigationFileManager;
-        public IStringLocalizer T { get; set; }
+        private readonly IStringLocalizer T;
 
-        public AutoRegisterNavigationProvider(INavigationFileManager navigationFileManager, IStringLocalizer<AutoRegisterNavigationProvider> localizer)
+        public AutoRegisterNavigationProvider(INavigationFileManager navigationFileManager, IStringLocalizer<AutoRegisterNavigationProvider> stringLocalizer)
         {
             this._navigationFileManager = navigationFileManager;
-            this.T = localizer;
+            this.T = stringLocalizer;
         }
-        public Task BuildNavigationAsync(string name, NavigationBuilder builder)
+        public async Task BuildNavigationAsync(string name, NavigationBuilder builder)
         {
 
-            foreach (var navigationConfig in _navigationFileManager.NavigationConfigs)
+            await this._navigationFileManager.Initialize();
+            foreach (var navigationConfig in _navigationFileManager.NavigationConfigs.Where(n => n.Key.ToString() == name && n.Value != null))
             {
-                foreach (var item in navigationConfig.Items)
+                builder.Add(T[name], installed =>
                 {
-                    builder.Add(T["Configuration"], "5", installed =>
+                    foreach (var item in navigationConfig.Value.Items)
                     {
-                        var menuItem =
-                        installed.Action(item.Action, item.ControllerName, item.AreaName)
-                                 .LocalNav();
-                        foreach (var permission in item.Permission)
+
+                        installed.Add(T[item.Name], itemBuilder =>
                         {
-                            menuItem = menuItem.Permission(new Permission(permission));
-                        }
-                    });
-                }
+                            var menuItem = itemBuilder.Action(item.Action, item.ControllerName, item.AreaName)
+                                 .LocalNav();
+                            foreach (var permission in item.Permission)
+                            {
+                                menuItem = menuItem.Permission(new Permission(permission));
+                            }
+                        });
+
+
+                    }
+                });
             }
-            return Task.CompletedTask;
+            //return Task.CompletedTask;
         }
     }
 }

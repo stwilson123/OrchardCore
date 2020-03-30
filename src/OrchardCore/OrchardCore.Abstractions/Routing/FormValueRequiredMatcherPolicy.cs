@@ -23,7 +23,7 @@ namespace OrchardCore.Routing
 
                 if (action != null)
                 {
-                    for (var n = 0; n < action.EndpointMetadata.Count; n++)
+                    for (var n = 0; n < action.EndpointMetadata?.Count; n++)
                     {
                         if (action.EndpointMetadata[n] is FormValueRequiredAttribute)
                         {

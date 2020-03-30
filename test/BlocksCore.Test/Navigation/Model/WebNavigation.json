@@ -1,0 +1,22 @@
+{
+  "Items": [
+    {
+      "Name": "FactoryWeb",
+      "DisplayName": "Factory_management",
+      "ControllerName": "Factory",
+      "Action": "Index",
+      "Permission": [
+        "Index"
+      ]
+    },
+    {
+      "Name": "WorkcenterWeb",
+      "DisplayName": "Workcenter_management",
+      "ControllerName": "Workcenter",
+      "Action": "Index",
+      "Permission": [
+        "Index"
+      ]
+    }
+  ]
+}
