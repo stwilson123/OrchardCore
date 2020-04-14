@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BlocksCore.Application.Abstratctions.Filters;
 
 namespace BlocksCore.Application.Abstratctions.Controller
@@ -13,12 +13,15 @@ namespace BlocksCore.Application.Abstratctions.Controller
         /// <summary>
         /// Service interface type.
         /// </summary>
-        Type ServiceInterfaceType { get;   }
+        Type ServiceType { get;   }
 
         /// <summary>
         /// Api Controller type.
         /// </summary>
         Type ApiControllerType { get;   }
+
+
+        Type ServiceInterfaceType { get; }
 
         /// <summary>
         /// Interceptor type.

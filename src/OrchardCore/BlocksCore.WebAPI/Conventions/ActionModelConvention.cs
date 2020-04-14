@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using BlocksCore.WebAPI.Controllers;
 using BlocksCore.WebAPI.Controllers.Manager;
@@ -19,24 +20,30 @@ namespace BlocksCore.WebAPI
         {
             var controllerInfo = _mvcControllerManager.GetAll()
 
-                .FirstOrDefault(c => c.ServiceInterfaceType == action.Controller.ControllerType);
+                .FirstOrDefault(c => c.ServiceType == action.Controller.ControllerType);
             if (controllerInfo == null )
                 return;
 
             if (controllerInfo.Actions.TryGetValue(action.ActionName, out MvcControllerActionInfo actionInfo))
             {
-                var controllerAttrs = actionInfo.Method.GetCustomAttributes(false);
+                var actionAttrs = actionInfo.Method.GetCustomAttributes(false);
+                var addAttrs = new List<object>();
+                
+                //if (!action.Attributes.OfType<IActionHttpMethodProvider>().Any(c => c.HttpMethods.Any()))
+                //{
+                //    //default post attribute
+                //    addAttrs.Add(new HttpPostAttribute());
+                //}
+                addAttrs.AddRange(actionAttrs);
 
-                if (!controllerAttrs.OfType<IActionHttpMethodProvider>().Any(c => c.HttpMethods.Any()))
-                {
-                    //default post attribute
-                    controllerAttrs = new[] {new HttpPostAttribute()};
-                }
+                addAttrs.AddRange(action.Attributes.Where(actionAttr =>  typeof(IActionHttpMethodProvider).IsAssignableFrom(actionAttr.GetType())));
 
-                if (controllerAttrs.Any())
+                if (addAttrs.Any())
                 {
                     action.Selectors.Clear();
-                    ConventionHelper.AddRange(action.Selectors, ConventionHelper.CreateSelectors(controllerAttrs));
+                    ConventionHelper.AddRange(action.Selectors, ConventionHelper.CreateSelectors(addAttrs));
+                    // action.Selectors.Clear();
+                    //ConventionHelper.AddRange(action.Selectors, ConventionHelper.CreateSelectors(controllerAttrs));
                 }
             }
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using BlocksCore.Abstractions.Exception;
+using BlocksCore.Application.Abstratctions;
 using BlocksCore.Application.Abstratctions.Attributes;
 using BlocksCore.Application.Abstratctions.Controller;
 using BlocksCore.Application.Abstratctions.Controller.Attributes;
@@ -14,14 +15,17 @@ using BlocksCore.SyntacticAbstractions.Types;
 
 namespace BlocksCore.Application.Core.Controller.Builder
 {
-    public class DefaultControllerBuilder<T,TControllerActionBuilder> : IDefaultControllerBuilder<T> where TControllerActionBuilder :DefaultControllerActionBuilder<T>  
+    public class DefaultControllerBuilder<T, TControllerActionBuilder> : IDefaultControllerBuilder<T> where TControllerActionBuilder : DefaultControllerActionBuilder<T>
     {
         protected Dictionary<string, TControllerActionBuilder> _actionBuilders;
 
         public string ServicePrefix { get; }
 
         public string ServiceName { get; }
+        public Type ServiceType { get; set; }
+
         public Type ServiceInterfaceType { get; set; }
+
         public bool? IsApiExplorerEnabled { get; set; }
 
         public IFilter[] Filters { set; get; }
@@ -53,11 +57,12 @@ namespace BlocksCore.Application.Core.Controller.Builder
             _defaultControllerManager = defaultControllerManager;
             ServicePrefix = servicePrefix;
             ServiceName = serviceName;
-            ServiceInterfaceType = typeof (T);
-
+            ServiceType = typeof(T);
+            ServiceInterfaceType = ServiceType != null && !ServiceType.IsInterface ? ServiceType.GetInterfaces().Where(i => typeof(IAppService).IsAssignableFrom(i)).FirstOrDefault() :
+                ServiceType;
             _actionBuilders = new Dictionary<string, TControllerActionBuilder>();
-            var methodInfos = DynamicApiControllerActionHelper.GetMethodsOfType(typeof(T));
-               // .Where(methodInfo => methodInfo.GetSingleAttributeOrNull<BlocksActionNameAttribute>() != null);
+            var methodInfos = DynamicApiControllerActionHelper.GetMethodsOfType(ServiceInterfaceType);
+            // .Where(methodInfo => methodInfo.GetSingleAttributeOrNull<BlocksActionNameAttribute>() != null);
             foreach (var methodInfo in methodInfos)
             {
                 var actionBuilder = (TControllerActionBuilder)typeof(TControllerActionBuilder).New(this, methodInfo);
@@ -68,22 +73,22 @@ namespace BlocksCore.Application.Core.Controller.Builder
                 }
                 var actionNameAttr = methodInfo.GetSingleAttributeOrNull<BlocksActionNameAttribute>();
                 var actionName = actionNameAttr?.ActionName ?? methodInfo.Name;
-
-                _actionBuilders[actionName] =
-                    actionBuilder;
+                _actionBuilders.TryAdd(actionName, actionBuilder);
+                //_actionBuilders[actionName] =
+                //    actionBuilder;
             }
         }
-        
-        
-        
+
+
+
         public IDefaultControllerBuilder<T> WithApiExplorer(bool isEnabled)
         {
             IsApiExplorerEnabled = isEnabled;
             return this;
         }
-      
-        
-     
+
+
+
         public IDefaultControllerActionBuilder<T> GetMethod(string methodName)
         {
             if (!_actionBuilders.ContainsKey(methodName))
@@ -107,13 +112,14 @@ namespace BlocksCore.Application.Core.Controller.Builder
             var controllerInfo = new DefaultControllerInfo<DefaultControllerActionInfo>(
                 ServicePrefix,
                 ServiceName,
+                ServiceType,
                 ServiceInterfaceType,
                 ApiControllerType,
                 null, //TODO
                 Filters,
                 IsApiExplorerEnabled
             );
-            
+
             foreach (var actionBuilder in _actionBuilders.Values)
             {
                 if (actionBuilder.DontCreate)

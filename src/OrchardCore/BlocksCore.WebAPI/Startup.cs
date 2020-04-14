@@ -43,9 +43,10 @@ namespace BlocksCore.WebAPI.Providers
         public override void ConfigureServices(IServiceCollection services)
         {
             MvcControllerManager defaultMvcControllerManager = new MvcControllerManager();
+            services.AddSingleton(defaultMvcControllerManager);
             var builder = services.AddMvc(options =>
             {
-                options.Conventions.Add(new ControllerModelConvention(defaultMvcControllerManager));
+                //options.Conventions.Add(new ControllerModelConvention(defaultMvcControllerManager));
                 options.Conventions.Add(new ActionModelConvention(defaultMvcControllerManager));
 
                 options.Filters.Add(new HttpResponseExceptionFilter());

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -37,7 +37,8 @@ namespace BlocksCore.Application.Abstratctions.Controller.Helper
 
         private static void FillMethodsRecursively(Type type, BindingFlags flags, List<MethodInfo> members)
         {
-            members.AddRange(type.GetMethods(flags));
+            // Filter methods where name is doubled,because Api Manager can't controller double name actions. 
+            members.AddRange(type.GetMethods(flags).Where(m => !members.Any( memberItem => memberItem.Name == m.Name)));
 
             foreach (var interfaceType in type.GetInterfaces())
             {

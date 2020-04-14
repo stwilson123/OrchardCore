@@ -28,9 +28,10 @@ namespace BlocksCore.WebAPI.Providers
         {
             foreach (var controllerInfo in _mvcControllerManager.GetAll())
             {
-                feature.Controllers.Add(controllerInfo.ServiceInterfaceType.GetTypeInfo());
+                if (!feature.Controllers.Contains(controllerInfo.ServiceType.GetTypeInfo()))
+                    feature.Controllers.Add(controllerInfo.ServiceType.GetTypeInfo());
             }
- 
+
         }
 
         protected bool IsController(Type typeInfo)

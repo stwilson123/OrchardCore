@@ -63,7 +63,8 @@ namespace OrchardCore.Mvc
                     else
                     {
                         // Add an "area" route value equal to the module id.
-                        //controller.RouteValues.Add("area", blueprint.Extension.Id);
+                        if (!controller.RouteValues.ContainsKey("area"))
+                            controller.RouteValues.Add("area", blueprint.Extension.Id);
                     }
                 }
             }

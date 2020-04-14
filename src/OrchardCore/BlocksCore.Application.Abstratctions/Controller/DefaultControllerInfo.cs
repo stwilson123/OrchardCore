@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using BlocksCore.Application.Abstratctions.Filters;
 
 namespace BlocksCore.Application.Abstratctions.Controller
@@ -11,17 +12,17 @@ namespace BlocksCore.Application.Abstratctions.Controller
 
         public string ServicePrefix { get; }
 
-         /// <summary>
-         /// Name of the service.
-         /// </summary>
+        /// <summary>
+        /// Name of the service.
+        /// </summary>
         public string ServiceName { get; private set; }
 
-       
+
 
         /// <summary>
         /// Service interface type.
         /// </summary>
-        public Type ServiceInterfaceType { get; private set; }
+        public Type ServiceType { get; private set; }
 
         /// <summary>
         /// Api Controller type.
@@ -48,7 +49,11 @@ namespace BlocksCore.Application.Abstratctions.Controller
         /// </summary>
         public IDictionary<string, TActionInfo> Actions { get; private set; }
 
- 
+        public Type ServiceInterfaceType { get; private set; }
+
+       
+
+
         /// <summary>
         /// Creates a new <see cref="DefaultControllerInfo"/> instance.
         /// </summary>
@@ -61,15 +66,18 @@ namespace BlocksCore.Application.Abstratctions.Controller
         /// <param name="isProxyScriptingEnabled">Is proxy scripting enabled</param>
         public DefaultControllerInfo(
             string servicePrefix,
-            string serviceName, 
-            Type serviceInterfaceType, 
-            Type apiControllerType, 
-            Type interceptorType, 
+            string serviceName,
+            Type serviceType,
+             Type serviceInterfaceType,
+            Type apiControllerType,
+            Type interceptorType,
             IFilter[] filters = null,
-            bool? isApiExplorerEnabled = null )
+            bool? isApiExplorerEnabled = null)
         {
             ServicePrefix = servicePrefix;
             ServiceName = serviceName;
+            ServiceType = serviceType;
+           
             ServiceInterfaceType = serviceInterfaceType;
             ApiControllerType = apiControllerType;
             InterceptorType = interceptorType;
@@ -80,5 +88,5 @@ namespace BlocksCore.Application.Abstratctions.Controller
         }
     }
 
-   
+
 }

@@ -1,8 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using BlocksCore.Application.Abstratctions;
+using BlocksCore.WebAPI.Controllers.Manager;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.Hosting;
 using OrchardCore.Environment.Extensions;
@@ -21,23 +25,27 @@ namespace BlocksCore.WebAPI
         private readonly ITypeFeatureProvider _typeFeatureProvider;
         private readonly IHostEnvironment _hostingEnvironment;
         private readonly ShellSettings _shellSettings;
+        private readonly MvcControllerManager _defaultMvcControllerManager;
 
         public ModularApplicationModelProvider(
             ITypeFeatureProvider typeFeatureProvider,
             IHostEnvironment hostingEnvironment,
             ShellDescriptor shellDescriptor,
-            ShellSettings shellSettings)
+            ShellSettings shellSettings,
+            MvcControllerManager defaultMvcControllerManager
+            )
         {
             _typeFeatureProvider = typeFeatureProvider;
             _hostingEnvironment = hostingEnvironment;
             _shellSettings = shellSettings;
+            _defaultMvcControllerManager = defaultMvcControllerManager;
         }
 
         public int Order
         {
             get
             {
-                return 1000 - 1;
+                return -1000 + 10 - 1;
             }
         }
 
@@ -47,6 +55,11 @@ namespace BlocksCore.WebAPI
             // Or if an 'IActionDescriptorChangeProvider' tells that an action descriptor
             // has changed. E.g 'PageActionDescriptorChangeProvider' after any page update.
 
+
+        }
+
+        public void OnProvidersExecuting(ApplicationModelProviderContext context)
+        {
             foreach (var controller in context.Result.Controllers.Where(c => typeof(IAppService).IsAssignableFrom(c.ControllerType)))
             {
                 var blueprint = _typeFeatureProvider.GetFeatureForDependency(controller.ControllerType);
@@ -57,7 +70,7 @@ namespace BlocksCore.WebAPI
                     controller.RouteValues.Add("controller", controller.ControllerName.Replace("AppService", ""));
                 }
 
-                var areaName = $"api/services/{blueprint.Name}";
+                var areaName = blueprint.Name; //$"api/services/{blueprint.Name}";
 
                 if (!controller.RouteValues.ContainsKey("area"))
                 {
@@ -65,38 +78,36 @@ namespace BlocksCore.WebAPI
                 }
                 else
                 {
-                    controller.RouteValues["area"] =  areaName;
+                    controller.RouteValues["area"] = areaName;
                 }
-                var action = controller.Actions.FirstOrDefault();
 
-              //  var actions = action.Attributes as IList<object>;
-              //  actions.Add(new HttpGetAttribute());
-                //var blueprint = _typeFeatureProvider.GetFeatureForDependency(controllerType);
+                var controllerInfo = _defaultMvcControllerManager.GetAll()
+                    .FirstOrDefault(c => c.ServiceType == controller.ControllerType);
+                var controllerInterfaceAttrs = controllerInfo.ServiceInterfaceType.GetCustomAttributes(false);
+                
+                var filterTypes = new Type[] { typeof(ApiControllerAttribute), typeof(IRouteTemplateProvider) };
+                var defaultControllerAttrs =  new object[] { new ApiControllerAttribute(), new RouteAttribute("{area:exists}/{controller}/{action}") }; 
+                var controllerAttrs = controller.Attributes as List<object>;
+                var addAttrs = new List<object>();
+                foreach (var filterType in filterTypes.Where(t => !controllerAttrs.Any(controllerAttr => t.IsAssignableFrom(controllerAttr.GetType()))))
+                {
+                    addAttrs.Add(controllerInterfaceAttrs.Concat(defaultControllerAttrs).Where(a => filterType.IsAssignableFrom (a.GetType())).First());
+                    if(filterType == typeof(ApiControllerAttribute))
+                    {
+                        controller.Filters.Add(addAttrs.Last() as IFilterMetadata);
+                    }
+                }
 
-                //if (blueprint != null)
-                //{
-                //    if (blueprint.Extension.Id == _hostingEnvironment.ApplicationName &&
-                //        _shellSettings.State != TenantState.Running)
-                //    {
-                //        // Don't serve any action of the application'module which is enabled during a setup.IApplicationFeatureProvider
-                //        foreach (var action in controller.Actions)
-                //        {
-                //            action.Selectors.Clear();
-                //        }
-
-                //        controller.Selectors.Clear();
-                //    }
-                //    else
-                //    {
-                //        // Add an "area" route value equal to the module id.
-                //        controller.RouteValues.Add("area", blueprint.Extension.Id);
-                //    }
-                //}
+                addAttrs.AddRange(controllerAttrs.Where(controllerAttr =>
+                !filterTypes.Any(fType => fType.IsAssignableFrom(controllerAttr.GetType()))));
+                //var action = controller.Actions.FirstOrDefault();
+                if (addAttrs.Count > 0)
+                {
+                    controller.Selectors.Clear();
+                    ConventionHelper.AddRange(controller.Selectors, ConventionHelper.CreateSelectors(addAttrs));
+                }
+              
             }
-        }
-
-        public void OnProvidersExecuting(ApplicationModelProviderContext context)
-        {
         }
     }
 }

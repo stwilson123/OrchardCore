@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BlocksCore.Application.Abstratctions.Controller;
 using BlocksCore.Application.Abstratctions.Controller.Builder;
 using BlocksCore.Application.Abstratctions.Manager;
@@ -35,6 +35,7 @@ namespace BlocksCore.WebAPI.Controllers.Builder
             var controllerInfo = new DefaultControllerInfo<MvcControllerActionInfo>(
                 ServicePrefix,
                 ServiceName,
+                ServiceType,
                 ServiceInterfaceType,
                 ApiControllerType,
                 null, //TODO
