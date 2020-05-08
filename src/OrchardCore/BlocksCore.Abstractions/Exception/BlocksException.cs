@@ -7,7 +7,7 @@ namespace BlocksCore.Abstractions.Exception
     [Serializable]
     public class BlocksException : System.Exception
     {
-        public string Code { protected set; get; }
+        public virtual string Code { protected set; get; }
         public object Content { protected set; get; }
         public BlocksException(string message)
             : base(message)

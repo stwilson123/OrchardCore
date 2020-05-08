@@ -20,6 +20,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddBlocksCore(this IServiceCollection services, Action<OrchardCoreBuilder> configure)
         {
             var builder = services.AddOrchardCore()
+                .AddBlocksCore()
 
                 // .AddCommands()
                 .AddMvc()

@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BlocksCore.WebAPI\BlocksCore.WebAPI.csproj" />
+    <ProjectReference Include="..\BlocksCore\BlocksCore.csproj" />
     <ProjectReference Include="..\OrchardCore.Application.Targets\OrchardCore.Application.Targets.csproj" />
     <ProjectReference Include="..\OrchardCore.Mvc.Core\OrchardCore.Mvc.Core.csproj" />
   </ItemGroup>
