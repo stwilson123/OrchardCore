@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Cache\TestModel\**" />
+    <EmbeddedResource Remove="Cache\TestModel\**" />
+    <None Remove="Cache\TestModel\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="Moq" Version="4.13.1" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+    <PackageReference Include="coverlet.collector" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\OrchardCore.Modules\BlocksCore.Data.EF.Sqlserver\BlocksCore.Data.EF.Sqlserver.csproj" />
+    <ProjectReference Include="..\..\src\OrchardCore\BlocksCore\BlocksCore.csproj" />
+    <ProjectReference Include="..\..\src\OrchardCore\OrchardCore\OrchardCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Linq\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.test.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

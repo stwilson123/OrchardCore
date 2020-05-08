@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlocksCore.Data.Abstractions\BlocksCore.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\BlocksCore.Domain.Abstractions\BlocksCore.Domain.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

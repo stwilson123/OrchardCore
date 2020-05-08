@@ -51,5 +51,61 @@ namespace BlocksCore.Test
             
             Assert.Null(service);
         }
+
+
+        [Fact]
+        public void baseclass_gettype_mustbe_subclass_type()
+        {
+            var cls = new subClass();
+            var clsType = cls.GetCurrentType();
+
+
+            Assert.Equal(typeof(subClass), clsType);
+
+            baseClass baseCls = new subClass();
+            var baseClsType = baseCls.GetCurrentType();
+            Assert.Equal(typeof(subClass), baseClsType);
+
+        }
+
+        [Fact]
+        public void jsonDeserialize_PrivateProperty_Object()
+        {
+
+            var deserializedObj =  Newtonsoft.Json.JsonConvert.DeserializeObject<jsonObj>("{'str':'123'}");
+            
+
+        }
+
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+
+        public void Test_InitData(int i)
+        {
+
+            if (i == 2)
+                throw new Exception();
+
+        }
+    }
+
+    public class jsonObj
+    {
+        public string str { get; }
+    }
+
+    public abstract class baseClass
+    {
+        public Type GetCurrentType()
+        {
+            return this.GetType();
+        }
+    }
+
+    public class subClass : baseClass
+    {
+
     }
 }
