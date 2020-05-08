@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,6 +28,21 @@ namespace WebApiTestApplication
         {
             services.AddBlocksCore();
         }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+
+           
+            // Add any Autofac modules or registrations.
+            // This is called AFTER ConfigureServices so things you
+            // register here OVERRIDE things registered in ConfigureServices.
+            //
+            // You must have the call to `UseServiceProviderFactory(new AutofacServiceProviderFactory())`
+            // when building the host or this won't be called.
+            // builder.RegisterModule(new AutofacModule());
+
+        }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
