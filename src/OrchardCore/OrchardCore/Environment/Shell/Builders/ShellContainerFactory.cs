@@ -133,7 +133,9 @@ namespace OrchardCore.Environment.Shell.Builders
             });
             //Modify DI from Microsoft.Extensions.DependencyInjection to autofac
             //var moduleServiceProvider = moduleServiceCollection.BuildServiceProvider(true);
-            var moduleServiceProvider = BlocksCore.Autofac.Extensions.DependencyInjection.SerivceProviderFactory.CreateServiceProvider(moduleServiceCollection);
+
+           
+            var moduleServiceProvider = BlocksCore.Autofac.Extensions.DependencyInjection.SerivceProviderFactory.CreateServiceProvider(_serviceProvider, moduleServiceCollection);
 
             // Index all service descriptors by their feature id
             var featureAwareServiceCollection = new FeatureAwareServiceCollection(tenantServiceCollection);
@@ -161,7 +163,7 @@ namespace OrchardCore.Environment.Shell.Builders
 
             //Modify DI from Microsoft.Extensions.DependencyInjection to autofac
             //var shellServiceProvider = tenantServiceCollection.BuildServiceProvider(true);
-            var shellServiceProvider = BlocksCore.Autofac.Extensions.DependencyInjection.SerivceProviderFactory.CreateServiceProvider(tenantServiceCollection);
+            var shellServiceProvider = BlocksCore.Autofac.Extensions.DependencyInjection.SerivceProviderFactory.CreateServiceProvider(_serviceProvider, tenantServiceCollection);
 
             // Register all DIed types in ITypeFeatureProvider
             var typeFeatureProvider = shellServiceProvider.GetRequiredService<ITypeFeatureProvider>();

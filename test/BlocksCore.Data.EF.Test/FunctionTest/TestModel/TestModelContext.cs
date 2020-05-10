@@ -109,7 +109,7 @@ namespace BlocksCore.Data.EF.Test.FunctionTest.TestModel
             //{
             //    startup.Configure(null, null, serviceProvider);
             //}
-            ServiceProvider = SerivceProviderFactory.CreateServiceProvider(Services);
+            ServiceProvider = SerivceProviderFactory.CreateServiceProvider(null,Services);
         }
 
         public virtual void Init(IServiceCollection services)
