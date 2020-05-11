@@ -2,6 +2,8 @@ using System;
 using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Hosting;
 
 namespace OrchardCore.Environment.Shell.Builders
 {
@@ -14,6 +16,13 @@ namespace OrchardCore.Environment.Shell.Builders
         /// <param name="serviceCollection">The services to clone.</param>
         public static IServiceCollection CreateChildContainer(this IServiceProvider serviceProvider, IServiceCollection serviceCollection)
         {
+            //TODO remove when orchard support third di.
+            //Import autofac,IHost reference IServiceProvider when childContainer dispose. 
+            var hostServiceType = serviceCollection.FirstOrDefault(s => s.ServiceType == typeof(IHost));
+            if (hostServiceType != null)
+            {
+                serviceCollection.Remove(hostServiceType);
+            }
             IServiceCollection clonedCollection = new ServiceCollection();
             var servicesByType = serviceCollection.GroupBy(s => s.ServiceType);
 
