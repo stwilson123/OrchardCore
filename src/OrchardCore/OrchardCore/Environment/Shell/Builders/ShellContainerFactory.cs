@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,7 +42,8 @@ namespace OrchardCore.Environment.Shell.Builders
 
         public IServiceProvider CreateContainer(ShellSettings settings, ShellBlueprint blueprint)
         {
-            var tenantServiceCollection = _serviceProvider.CreateChildContainer(_applicationServices);
+            // var tenantServiceCollection = _serviceProvider.CreateChildContainer(_applicationServices);
+            var tenantServiceCollection = new ServiceCollection();
 
             tenantServiceCollection.AddSingleton(settings);
             tenantServiceCollection.AddSingleton(sp =>
@@ -58,8 +60,8 @@ namespace OrchardCore.Environment.Shell.Builders
 
             // Execute IStartup registrations
 
-            var moduleServiceCollection = _serviceProvider.CreateChildContainer(_applicationServices);
-
+            // var moduleServiceCollection = _serviceProvider.CreateChildContainer(_applicationServices);
+            var moduleServiceCollection = new ServiceCollection();
             foreach (var dependency in blueprint.Dependencies.Where(t => typeof(IStartup).IsAssignableFrom(t.Key)))
             {
                 moduleServiceCollection.AddSingleton(typeof(IStartup), dependency.Key);
@@ -135,7 +137,7 @@ namespace OrchardCore.Environment.Shell.Builders
             //var moduleServiceProvider = moduleServiceCollection.BuildServiceProvider(true);
 
            
-            var moduleServiceProvider = BlocksCore.Autofac.Extensions.DependencyInjection.SerivceProviderFactory.CreateServiceProvider(_serviceProvider, moduleServiceCollection);
+            var moduleServiceProvider = BlocksCore.Autofac.Extensions.DependencyInjection.SerivceProviderFactory.CreateServiceProvider(_serviceProvider, moduleServiceCollection, moduleServiceCollection.Where(s => s.ServiceType == typeof(IHost)));
 
             // Index all service descriptors by their feature id
             var featureAwareServiceCollection = new FeatureAwareServiceCollection(tenantServiceCollection);
@@ -158,12 +160,12 @@ namespace OrchardCore.Environment.Shell.Builders
                 startup.ConfigureServices(featureAwareServiceCollection);
             }
 
-            (moduleServiceProvider as IDisposable).Dispose();
+          (moduleServiceProvider as IDisposable).Dispose();
 
 
             //Modify DI from Microsoft.Extensions.DependencyInjection to autofac
             //var shellServiceProvider = tenantServiceCollection.BuildServiceProvider(true);
-            var shellServiceProvider = BlocksCore.Autofac.Extensions.DependencyInjection.SerivceProviderFactory.CreateServiceProvider(_serviceProvider, tenantServiceCollection);
+            var shellServiceProvider = BlocksCore.Autofac.Extensions.DependencyInjection.SerivceProviderFactory.CreateServiceProvider(_serviceProvider, tenantServiceCollection, tenantServiceCollection.Where(s => s.ServiceType == typeof(IHost)));
 
             // Register all DIed types in ITypeFeatureProvider
             var typeFeatureProvider = shellServiceProvider.GetRequiredService<ITypeFeatureProvider>();

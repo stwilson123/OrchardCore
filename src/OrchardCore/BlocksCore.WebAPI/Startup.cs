@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using BlocksCore.Application.Abstratctions;
 using BlocksCore.WebAPI.Controllers;
 using BlocksCore.WebAPI.Controllers.Builder;
@@ -10,10 +11,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using OrchardCore.Environment.Extensions;
+using OrchardCore.Environment.Shell;
+using OrchardCore.Environment.Shell.Descriptor.Models;
 using OrchardCore.Modules;
 
 namespace BlocksCore.WebAPI.Providers
@@ -26,11 +30,13 @@ namespace BlocksCore.WebAPI.Providers
         private readonly IServiceProvider _serviceProvider;
 
         private readonly IExtensionManager _extensionManager;
+       // private readonly ShellDescriptor _shellDescriptor;
 
-        public Startup(IServiceProvider serviceProvider, IExtensionManager extensionManager)
+        public Startup(IServiceProvider serviceProvider, IExtensionManager extensionManager/*, ShellDescriptor shellDescriptor*/)
         {
             _serviceProvider = serviceProvider;
             _extensionManager = extensionManager;
+          //  this._shellDescriptor = shellDescriptor;
         }
 
         public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder routes, IServiceProvider serviceProvider)
@@ -58,9 +64,11 @@ namespace BlocksCore.WebAPI.Providers
 
         internal void AddModularFrameworkParts(IServiceProvider services, ApplicationPartManager manager, MvcControllerManager defaultMvcControllerManager)
         {
+            
+           // var features = _shellDescriptor.Features;
 
-            new ApiControllerConventional(_extensionManager, new MvcControllerBuilderFactory(new MvcControllerOption(typeof(IAppService)),
-         defaultMvcControllerManager)).RegisterController();
+            new ApiControllerConventional(_extensionManager.LoadFeaturesAsync().Result,
+                new MvcControllerBuilderFactory(new MvcControllerOption(typeof(IAppService)),defaultMvcControllerManager)).RegisterController();
             //manager.ApplicationParts.Insert(0, new ShellFeatureApplicationPart());
             manager.FeatureProviders.Add(new ServiceControllerFeatureProvider(defaultMvcControllerManager));
         }
@@ -72,6 +80,8 @@ namespace BlocksCore.WebAPI.Providers
                 ServiceDescriptor.Singleton<IApplicationModelProvider, ModularApplicationModelProvider>());
             //services.TryAddEnumerable(
             //    ServiceDescriptor.Singleton<IActionDescriptorProvider, ModularActionDescriptorProvider>());
+
+            services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
         }
 
     }

@@ -27,7 +27,7 @@ namespace BlocksCore.WebApi.Test
 
             var result = await resultContent.Content.ReadAsStringAsync();
 
-            Assert.Equal(result,inputString);
+            Assert.Equal(inputString,result);
 
         }
     }

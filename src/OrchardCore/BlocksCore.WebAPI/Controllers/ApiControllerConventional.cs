@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using BlocksCore.SyntacticAbstractions.Types;
 using OrchardCore.Environment.Extensions;
 using BlocksCore.Web.Abstractions;
+using System.Collections.Generic;
+using OrchardCore.Environment.Extensions.Features;
 
 namespace BlocksCore.WebAPI.Controllers
 {
@@ -17,7 +19,7 @@ namespace BlocksCore.WebAPI.Controllers
     /// </summary>
     public class ApiControllerConventional
     {
-        private readonly IExtensionManager _extensionManager;
+        private readonly IEnumerable<FeatureEntry> _features;
         private readonly MvcControllerBuilderFactory _mvcControllerBuilderFactory;
 
         internal static string GetControllerSerivceName(string area,string controllerName)
@@ -30,9 +32,9 @@ namespace BlocksCore.WebAPI.Controllers
             return new[] {"Service"};
         }
 
-        internal ApiControllerConventional(IExtensionManager extensionManager,MvcControllerBuilderFactory mvcControllerBuilderFactory)
+        internal ApiControllerConventional(IEnumerable<FeatureEntry> features, MvcControllerBuilderFactory mvcControllerBuilderFactory)
         {
-            _extensionManager = extensionManager;
+            _features = features;
             _mvcControllerBuilderFactory = mvcControllerBuilderFactory;
         }
 
@@ -40,12 +42,15 @@ namespace BlocksCore.WebAPI.Controllers
         internal void RegisterController()
         {
 
-            var features = _extensionManager.LoadFeaturesAsync().Result;
+            var features = _features ?? Enumerable.Empty<FeatureEntry>();
             foreach (var feature in features)
             {
+                var controllers = feature.ExportedTypes.Where(IsController);
+                if (!controllers.Any())
+                    continue;
                 _mvcControllerBuilderFactory.ForAll<IAppService>( AreaTemplate.GetAreaKey(new AreaOption() { AreaName = feature.FeatureInfo.Id,
                      FunctionType = "api"
-                }),feature.ExportedTypes.Where(IsController)).Build();
+                }), controllers).Build();
             }
           
         }
