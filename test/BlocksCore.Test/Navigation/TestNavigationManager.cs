@@ -61,19 +61,17 @@ namespace BlocksCore.Test.Navigation
             var navigationManager = serviceProvider.GetService<INavigationManager>();
 
 
-            var menus = await navigationManager.BuildMenuAsync(Platform.Main.ToString(), new Microsoft.AspNetCore.Mvc.ActionContext(new StubHttpContext(), new RouteData(), new ActionDescriptor()));
-
-
-            var mainMenus = menus.First(m => m.Text.Name == Platform.Main.ToString());
+            var mainMenus = await navigationManager.GetFilterMenuAsync(Platform.Main.ToString(), new Microsoft.AspNetCore.Mvc.ActionContext(new StubHttpContext(), new RouteData(), new ActionDescriptor()));
 
 
 
-            Assert.True(mainMenus.Items.Count(i => i.Text.Name == "FactoryWeb") == 1);
+            var factoryWeb = mainMenus.SingleOrDefault(i => i.Text.Name == "FactoryWeb");
+            var workcenterWeb = mainMenus.SingleOrDefault(i => i.Text.Name == "WorkcenterWeb");
 
-            Assert.True(mainMenus.Items.Count(i => i.Text.Name == "WorkcenterWeb") == 1);
+            Assert.NotNull(factoryWeb);
+            Assert.NotNull(workcenterWeb);
 
-
-            Assert.True(mainMenus.Items.Count(i => RouteValuesEquals(i.RouteValues, new RouteValueDictionary()
+            Assert.True(mainMenus.Count(i => RouteValuesEquals(i.RouteValues, new RouteValueDictionary()
             {
                 { "area" ,"TestModule"},
                 { "controller" ,"Workcenter"},
@@ -81,6 +79,8 @@ namespace BlocksCore.Test.Navigation
             })) == 1);
 
 
+            Assert.True(workcenterWeb.Permissions.Count(p => p.Name == "Add") == 1);
+            Assert.True(workcenterWeb.Permissions.Count(p => p.Name == "Index") == 1);
 
         }
 

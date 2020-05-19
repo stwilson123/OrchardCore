@@ -10,7 +10,7 @@ namespace BlocksCore.Test.Navigation.Model
         public IStringLocalizer T { get; set; }
 
         public IDictionary<Platform, string> filePaths => new Dictionary<Platform, string> {
-            { Platform.Main, "Model/WebNavigation.json" }
+            { Platform.Main, "Navigation/Model/WebNavigation.json" }
         };
 
         //public void SetNavigation(INavigationProviderContext context)

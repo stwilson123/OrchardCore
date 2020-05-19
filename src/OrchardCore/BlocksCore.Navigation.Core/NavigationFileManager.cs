@@ -42,7 +42,7 @@ namespace BlocksCore.Navigation.Core
                 var feature = _typeFeatureProvider.GetFeatureForDependency(navigationFileProvider.GetType());
                 foreach (var navigationFile in navigationFileProvider.filePaths)
                 {
-                    var fileProvider = _fileProvider.GetFileInfo(PathExtensions.Combine(feature.Extension.SubPath, "Navigation", navigationFile.Value));
+                    var fileProvider = _fileProvider.GetFileInfo(PathExtensions.Combine(feature.Extension.SubPath,navigationFile.Value));
                     if (!fileProvider.Exists)
                         continue;
 

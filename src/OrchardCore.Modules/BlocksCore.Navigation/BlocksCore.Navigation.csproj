@@ -3,12 +3,24 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Config\Navigation\WebNavigation.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Config\Navigation\WebNavigation.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\OrchardCore\BlocksCore.Abstractions\BlocksCore.Abstractions.csproj" />
+    <ProjectReference Include="..\..\OrchardCore\BlocksCore.Application.Abstratctions\BlocksCore.Application.Abstratctions.csproj" />
     <ProjectReference Include="..\..\OrchardCore\BlocksCore.Navigation.Abstractions\BlocksCore.Navigation.Abstractions.csproj" />
+    <ProjectReference Include="..\..\OrchardCore\BlocksCore.Navigation.Core\BlocksCore.Navigation.Core.csproj" />
     <ProjectReference Include="..\..\OrchardCore\OrchardCore.Abstractions\OrchardCore.Abstractions.csproj" />
     <ProjectReference Include="..\..\OrchardCore\OrchardCore.Navigation.Core\OrchardCore.Navigation.Core.csproj" />
   </ItemGroup>

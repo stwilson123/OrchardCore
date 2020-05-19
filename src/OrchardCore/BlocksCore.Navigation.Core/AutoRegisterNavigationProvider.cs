@@ -26,24 +26,21 @@ namespace BlocksCore.Navigation.Core
             await this._navigationFileManager.Initialize();
             foreach (var navigationConfig in _navigationFileManager.NavigationConfigs.Where(n => n.Key.ToString() == name && n.Value != null))
             {
-                builder.Add(T[name], installed =>
+                foreach (var item in navigationConfig.Value.Items)
                 {
-                    foreach (var item in navigationConfig.Value.Items)
+
+                    builder.Add(T[item.Name], itemBuilder =>
                     {
-
-                        installed.Add(T[item.Name], itemBuilder =>
+                        var menuItem = itemBuilder.Action(item.Action, item.ControllerName, item.AreaName)
+                             .LocalNav();
+                        foreach (var permission in item.Permission)
                         {
-                            var menuItem = itemBuilder.Action(item.Action, item.ControllerName, item.AreaName)
-                                 .LocalNav();
-                            foreach (var permission in item.Permission)
-                            {
-                                menuItem = menuItem.Permission(new Permission(permission));
-                            }
-                        });
+                            menuItem = menuItem.Permission(new Permission(permission));
+                        }
+                    });
 
 
-                    }
-                });
+                }
             }
             //return Task.CompletedTask;
         }

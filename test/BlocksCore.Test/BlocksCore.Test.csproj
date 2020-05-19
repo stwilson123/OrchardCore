@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -11,7 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="Navigation\Model\WebNavigation.json" />
+      <EmbeddedResource Include="Navigation\Model\WebNavigation.json" />
     </ItemGroup>
 
     <ItemGroup>

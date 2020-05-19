@@ -428,6 +428,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.Autofac.Extensio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore", "src\OrchardCore\BlocksCore\BlocksCore.csproj", "{D928E497-F15A-48F9-9F2F-C0AEBF53E80B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlocksCore.Settings", "src\OrchardCore.Modules\BlocksCore.Settings\BlocksCore.Settings.csproj", "{EFB95ACD-DC61-45EF-8EEC-BDE9E049E560}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1150,6 +1152,10 @@ Global
 		{D928E497-F15A-48F9-9F2F-C0AEBF53E80B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D928E497-F15A-48F9-9F2F-C0AEBF53E80B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D928E497-F15A-48F9-9F2F-C0AEBF53E80B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFB95ACD-DC61-45EF-8EEC-BDE9E049E560}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFB95ACD-DC61-45EF-8EEC-BDE9E049E560}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFB95ACD-DC61-45EF-8EEC-BDE9E049E560}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFB95ACD-DC61-45EF-8EEC-BDE9E049E560}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1353,6 +1359,7 @@ Global
 		{D8AE3AD5-DC0B-41A3-9091-E8A5739EF09F} = {D92E7E13-E6D5-4723-AB93-D93C9A4F7416}
 		{15CFF381-700A-41FF-8CA1-CD20EBFDCB2B} = {D0194169-34DC-4762-ADB8-F8A4E189C920}
 		{D928E497-F15A-48F9-9F2F-C0AEBF53E80B} = {D0194169-34DC-4762-ADB8-F8A4E189C920}
+		{EFB95ACD-DC61-45EF-8EEC-BDE9E049E560} = {D92E7E13-E6D5-4723-AB93-D93C9A4F7416}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {46A1D25A-78D1-4476-9CBF-25B75E296341}
