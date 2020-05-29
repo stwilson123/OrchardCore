@@ -14,6 +14,7 @@ using BlocksCore.Extensions;
 using BlocksCore.Security;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Moq;
 using OrchardCore.Environment.Extensions;
@@ -109,7 +110,7 @@ namespace BlocksCore.Data.EF.Test.FunctionTest.TestModel
             //{
             //    startup.Configure(null, null, serviceProvider);
             //}
-            ServiceProvider = SerivceProviderFactory.CreateServiceProvider(null,Services);
+            ServiceProvider = SerivceProviderFactory.CreateServiceProvider(null,Services, Services.Where(s => s.ServiceType == typeof(IHost)));
         }
 
         public virtual void Init(IServiceCollection services)

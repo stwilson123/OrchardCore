@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IdentityModel" Version="4.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\OrchardCore\BlocksCore.Abstractions\BlocksCore.Abstractions.csproj" />
+    <ProjectReference Include="..\..\OrchardCore\BlocksCore.Users.Abstractions\BlocksCore.Users.Abstractions.csproj" />
+    <ProjectReference Include="..\..\OrchardCore\BlocksCore.Utility\BlocksCore.Utility.csproj" />
+    <ProjectReference Include="..\..\OrchardCore\BlocksCore.Web.Abstractions\BlocksCore.Web.Abstractions.csproj" />
+    <ProjectReference Include="..\..\OrchardCore\BlocksCore\BlocksCore.csproj" />
+    <ProjectReference Include="..\..\OrchardCore\OrchardCore.Abstractions\OrchardCore.Abstractions.csproj" />
+    <ProjectReference Include="..\..\OrchardCore\OrchardCore.Infrastructure.Abstractions\OrchardCore.Infrastructure.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApiTestModule
 {
-    [ApiController]
-    [Route("{area:exists}/{controller}/{action}")]
+    //[ApiController]
+    // [Route("{area:exists}/{controller}/{action}")]
     //[Area("WebApiTestModule/api")]
     public class NormalAppService : INormalAppService
     {

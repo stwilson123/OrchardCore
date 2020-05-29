@@ -12,7 +12,7 @@ namespace Blocks.UserModule.AppServices
         //[BlocksAction]
         public string GetUserName(UserDTO a)
         {
-            throw new NotImplementedException();
+            return "";
         }
         [IgnoreAntiforgeryToken]
 

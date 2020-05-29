@@ -394,7 +394,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.WebAPI", "src\Or
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.Web.Abstractions", "src\OrchardCore\BlocksCore.Web.Abstractions\BlocksCore.Web.Abstractions.csproj", "{D6940DF1-8DEB-4F94-AF57-E338C928BCEC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blocks.UserModule", "src\OrchardCore.Modules\Blocks.UserModule\Blocks.UserModule.csproj", "{735E967B-EDD2-45D9-AC97-AB547EA1A7E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.Users", "src\OrchardCore.Modules\Blocks.UserModule\BlocksCore.Users.csproj", "{735E967B-EDD2-45D9-AC97-AB547EA1A7E2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.Module.Targets", "src\OrchardCore\BlocksCore.Module.Targets\BlocksCore.Module.Targets.csproj", "{BA88A44E-49D8-4177-8D30-074E523D8E1E}"
 EndProject
@@ -428,7 +428,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.Autofac.Extensio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore", "src\OrchardCore\BlocksCore\BlocksCore.csproj", "{D928E497-F15A-48F9-9F2F-C0AEBF53E80B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlocksCore.Settings", "src\OrchardCore.Modules\BlocksCore.Settings\BlocksCore.Settings.csproj", "{EFB95ACD-DC61-45EF-8EEC-BDE9E049E560}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.Settings", "src\OrchardCore.Modules\BlocksCore.Settings\BlocksCore.Settings.csproj", "{EFB95ACD-DC61-45EF-8EEC-BDE9E049E560}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.JWTAuthentication", "src\OrchardCore.Modules\BlocksCore.JWTAuthentication\BlocksCore.JWTAuthentication.csproj", "{0A9D72AD-3734-4F9D-B315-A295A44DBF30}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.Utility", "src\OrchardCore\BlocksCore.Utility\BlocksCore.Utility.csproj", "{6AC5E1F7-E7DD-419D-B491-8362AD37D9D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlocksCore.Users.Abstractions", "src\OrchardCore\BlocksCore.Users.Abstractions\BlocksCore.Users.Abstractions.csproj", "{C76B3905-13DD-470F-913D-D6FEAE1CB84D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1156,6 +1162,18 @@ Global
 		{EFB95ACD-DC61-45EF-8EEC-BDE9E049E560}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFB95ACD-DC61-45EF-8EEC-BDE9E049E560}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFB95ACD-DC61-45EF-8EEC-BDE9E049E560}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A9D72AD-3734-4F9D-B315-A295A44DBF30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A9D72AD-3734-4F9D-B315-A295A44DBF30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A9D72AD-3734-4F9D-B315-A295A44DBF30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A9D72AD-3734-4F9D-B315-A295A44DBF30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AC5E1F7-E7DD-419D-B491-8362AD37D9D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AC5E1F7-E7DD-419D-B491-8362AD37D9D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AC5E1F7-E7DD-419D-B491-8362AD37D9D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AC5E1F7-E7DD-419D-B491-8362AD37D9D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C76B3905-13DD-470F-913D-D6FEAE1CB84D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C76B3905-13DD-470F-913D-D6FEAE1CB84D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C76B3905-13DD-470F-913D-D6FEAE1CB84D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C76B3905-13DD-470F-913D-D6FEAE1CB84D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1360,6 +1378,9 @@ Global
 		{15CFF381-700A-41FF-8CA1-CD20EBFDCB2B} = {D0194169-34DC-4762-ADB8-F8A4E189C920}
 		{D928E497-F15A-48F9-9F2F-C0AEBF53E80B} = {D0194169-34DC-4762-ADB8-F8A4E189C920}
 		{EFB95ACD-DC61-45EF-8EEC-BDE9E049E560} = {D92E7E13-E6D5-4723-AB93-D93C9A4F7416}
+		{0A9D72AD-3734-4F9D-B315-A295A44DBF30} = {D92E7E13-E6D5-4723-AB93-D93C9A4F7416}
+		{6AC5E1F7-E7DD-419D-B491-8362AD37D9D0} = {D0194169-34DC-4762-ADB8-F8A4E189C920}
+		{C76B3905-13DD-470F-913D-D6FEAE1CB84D} = {D0194169-34DC-4762-ADB8-F8A4E189C920}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {46A1D25A-78D1-4476-9CBF-25B75E296341}

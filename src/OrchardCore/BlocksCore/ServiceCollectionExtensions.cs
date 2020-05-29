@@ -1,7 +1,7 @@
 using BlocksCore.Abstractions.Extensions;
+using BlocksCore.Abstractions.Security;
 using BlocksCore.Extensions;
-
-
+using BlocksCore.Security;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -16,6 +16,7 @@ namespace Microsoft.Extensions.DependencyInjection
             builder.ConfigureServices((services) =>
             {
                 services.AddSingleton<ITypeFeatureExtensionsProvider, DefaultTypeFeatureExtensionsProvider>();
+                services.AddSingleton<IUserContext, DefaultUserContext>();
             });
 
             return builder;

@@ -19,6 +19,8 @@ using OrchardCore.Environment.Extensions;
 using OrchardCore.Environment.Shell;
 using OrchardCore.Environment.Shell.Descriptor.Models;
 using OrchardCore.Modules;
+using Microsoft.AspNetCore.Mvc;
+using BlocksCore.Web.Abstractions.Filters;
 
 namespace BlocksCore.WebAPI.Providers
 {
@@ -30,13 +32,13 @@ namespace BlocksCore.WebAPI.Providers
         private readonly IServiceProvider _serviceProvider;
 
         private readonly IExtensionManager _extensionManager;
-       // private readonly ShellDescriptor _shellDescriptor;
+        // private readonly ShellDescriptor _shellDescriptor;
 
         public Startup(IServiceProvider serviceProvider, IExtensionManager extensionManager/*, ShellDescriptor shellDescriptor*/)
         {
             _serviceProvider = serviceProvider;
             _extensionManager = extensionManager;
-          //  this._shellDescriptor = shellDescriptor;
+            //  this._shellDescriptor = shellDescriptor;
         }
 
         public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder routes, IServiceProvider serviceProvider)
@@ -55,20 +57,24 @@ namespace BlocksCore.WebAPI.Providers
                 //options.Conventions.Add(new ControllerModelConvention(defaultMvcControllerManager));
                 options.Conventions.Add(new ActionModelConvention(defaultMvcControllerManager));
 
+
                 options.Filters.Add(new HttpResponseExceptionFilter());
-                }
-            ); ;
+                var autoValidate = options.Filters.FirstOrDefault(f => f is TypeFilterAttribute typeFilter && typeFilter.ImplementationType == typeof(AutoValidateAntiforgeryTokenAttribute));
+                if (autoValidate != null)
+                    options.Filters.Remove(autoValidate);
+            });
+           
             AddModularFrameworkParts(_serviceProvider, builder.PartManager, defaultMvcControllerManager);
             AddMvcModuleCoreServices(services);
         }
 
         internal void AddModularFrameworkParts(IServiceProvider services, ApplicationPartManager manager, MvcControllerManager defaultMvcControllerManager)
         {
-            
-           // var features = _shellDescriptor.Features;
+
+            // var features = _shellDescriptor.Features;
 
             new ApiControllerConventional(_extensionManager.LoadFeaturesAsync().Result,
-                new MvcControllerBuilderFactory(new MvcControllerOption(typeof(IAppService)),defaultMvcControllerManager)).RegisterController();
+                new MvcControllerBuilderFactory(new MvcControllerOption(typeof(IAppService)), defaultMvcControllerManager)).RegisterController();
             //manager.ApplicationParts.Insert(0, new ShellFeatureApplicationPart());
             manager.FeatureProviders.Add(new ServiceControllerFeatureProvider(defaultMvcControllerManager));
         }

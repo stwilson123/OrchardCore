@@ -1,11 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OrchardCore.Modules\Blocks.UserModule\Blocks.UserModule.csproj" />
+    <ProjectReference Include="..\OrchardCore.Modules\Blocks.UserModule\BlocksCore.Users.csproj" />
+    <ProjectReference Include="..\OrchardCore.Modules\BlocksCore.Diagnostics\BlocksCore.Diagnostics.csproj" />
+    <ProjectReference Include="..\OrchardCore.Modules\BlocksCore.JWTAuthentication\BlocksCore.JWTAuthentication.csproj" />
     <ProjectReference Include="..\OrchardCore.Modules\BlocksCore.Navigation\BlocksCore.Navigation.csproj" />
     <ProjectReference Include="..\OrchardCore.Modules\BlocksCore.Settings\BlocksCore.Settings.csproj" />
     <ProjectReference Include="..\OrchardCore\BlocksCore.Application.Mvc.Targets\BlocksCore.Application.Mvc.Targets.csproj" />

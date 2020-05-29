@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AspNet.Security.OpenIdConnect.Primitives;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -29,6 +30,7 @@ namespace OrchardCore.Users.Controllers
         private readonly ILogger _logger;
         private readonly ISiteService _siteService;
         private readonly IEnumerable<ILoginFormEvent> _accountEvents;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
         public AccountController(
             IUserService userService,
@@ -37,7 +39,9 @@ namespace OrchardCore.Users.Controllers
             ILogger<AccountController> logger,
             ISiteService siteService,
             IStringLocalizer<AccountController> stringLocalizer,
-            IEnumerable<ILoginFormEvent> accountEvents)
+            IEnumerable<ILoginFormEvent> accountEvents,
+            IHttpContextAccessor httpContextAccessor
+            )
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -45,7 +49,7 @@ namespace OrchardCore.Users.Controllers
             _logger = logger;
             _siteService = siteService;
             _accountEvents = accountEvents;
-
+            this.httpContextAccessor = httpContextAccessor;
             T = stringLocalizer;
         }
 

@@ -1,12 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using OrchardCore.Security;
 using OrchardCore.Security.Permissions;
 
-namespace OrchardCore.Security.AuthorizationHandlers
+namespace BlocksCore.Users.Services
 {
-    /// <summary>
-    /// This authorization handler ensures that the user has the required permission.
-    /// </summary>
     public class PermissionHandler : AuthorizationHandler<PermissionRequirement>
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
@@ -15,11 +16,8 @@ namespace OrchardCore.Security.AuthorizationHandlers
             {
                 return Task.CompletedTask;
             }
-            else if (context.User.HasClaim(Permission.ClaimType, requirement.Permission.Name))
-            {   
-                context.Succeed(requirement);
-            }
-
+           
+            context.Succeed(requirement);
             return Task.CompletedTask;
         }
     }

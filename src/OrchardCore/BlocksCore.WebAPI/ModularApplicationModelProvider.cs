@@ -81,22 +81,25 @@ namespace BlocksCore.WebAPI
                     controller.RouteValues["area"] = areaName;
                 }
 
-                var controllerInfo = _defaultMvcControllerManager.GetAll()
+                var controllerServiceInfo = _defaultMvcControllerManager.GetAll()
                     .FirstOrDefault(c => c.ServiceType == controller.ControllerType);
-                var controllerInterfaceAttrs = controllerInfo.ServiceInterfaceType.GetCustomAttributes(false);
+                var controllerServiceInterfaceAttrs = controllerServiceInfo.ServiceInterfaceType.GetCustomAttributes(false);
                 
                 var filterTypes = new Type[] { typeof(ApiControllerAttribute), typeof(IRouteTemplateProvider) };
                 var defaultControllerAttrs =  new object[] { new ApiControllerAttribute(), new RouteAttribute("{area:exists}/{controller}/{action}") }; 
                 var controllerAttrs = controller.Attributes as List<object>;
+               
                 var addAttrs = new List<object>();
+                var isDefaultApiControllerAttribute = false;
                 foreach (var filterType in filterTypes.Where(t => !controllerAttrs.Any(controllerAttr => t.IsAssignableFrom(controllerAttr.GetType()))))
                 {
-                    addAttrs.Add(controllerInterfaceAttrs.Concat(defaultControllerAttrs).Where(a => filterType.IsAssignableFrom (a.GetType())).First());
+                    addAttrs.Add(controllerServiceInterfaceAttrs.Concat(defaultControllerAttrs).Where(a => filterType.IsAssignableFrom (a.GetType())).First());
                     if(filterType == typeof(ApiControllerAttribute))
                     {
                         controller.Filters.Add(addAttrs.Last() as IFilterMetadata);
+                        isDefaultApiControllerAttribute = true;
                     }
-                }
+                } 
 
                 addAttrs.AddRange(controllerAttrs.Where(controllerAttr =>
                 !filterTypes.Any(fType => fType.IsAssignableFrom(controllerAttr.GetType()))));
@@ -106,7 +109,11 @@ namespace BlocksCore.WebAPI
                     controller.Selectors.Clear();
                     ConventionHelper.AddRange(controller.Selectors, ConventionHelper.CreateSelectors(addAttrs));
                 }
-              
+
+                if (isDefaultApiControllerAttribute)
+                    controllerAttrs.Add(new ApiControllerAttribute());
+
+
             }
         }
     }

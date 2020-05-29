@@ -1,22 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Blocks.UserModule.DTO;
 using BlocksCore.Application.Abstratctions;
 using BlocksCore.Web.Abstractions.Authentication;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Blocks.UserModule.AppServices
 {
-    public interface IUserAppService : IAppService
+    public interface IAccountAppService: IAppService,IAuthenticationService
     {
-        string GetUserName(UserDTO a);
-
-
-        [IgnoreAntiforgeryToken]
-        string PostData();
+        Task<LoginDTO> Login(LoginDTO model);
     }
-
-
-
 }
