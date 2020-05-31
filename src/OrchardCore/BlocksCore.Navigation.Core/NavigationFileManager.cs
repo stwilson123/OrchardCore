@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using BlocksCore.Abstractions;
-using BlocksCore.Abstractions.extensions;
+using BlocksCore.Abstractions.Extensions;
 using BlocksCore.Navigation.Abstractions;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;

@@ -13,7 +13,7 @@ namespace OrchardCore.Environment.Extensions.Loaders
         public static IFileInfo GetFileInfo(this ExtensionEntry extensionEntry, string subpath)
         {
             if (extensionEntry == null || extensionEntry.Assembly == null)
-                throw new BlocksException("ExtensionEntry or ExtensionEntry.Assembly is null.");
+                throw new BlocksException("101","ExtensionEntry or ExtensionEntry.Assembly is null.");
 
 
             var assembly = extensionEntry.Assembly;

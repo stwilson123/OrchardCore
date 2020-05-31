@@ -90,7 +90,7 @@ namespace BlocksCore.Abstractions.DependencyInjection
             var lastestType = serviceProvider.GetService<NamedServiceDicionary>().Get(dicKey).LastOrDefault();
             if (lastestType == null)
             {
-                throw new BlocksException($"Type {serviceType} is not register.");
+                throw new BlocksException("101",$"Type {serviceType} is not register.");
             }
 
             return serviceProvider.GetService(lastestType);

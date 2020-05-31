@@ -23,7 +23,7 @@ namespace BlocksCore.JWTAuthentication
 
                 var sourceResult = context.Result;
                 if (!(sourceResult is IUser))
-                    throw new BlocksException("Implement AuthenticationService return null IUser paramters");
+                    throw new BlocksException("101","Implement AuthenticationService return null IUser paramters");
                 var jObject = JObject.FromObject(sourceResult);
                 jObject.Add("token", JObject.FromObject(tokenService.GetToken(sourceResult as IUser)));
                 context.Result = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(jObject));

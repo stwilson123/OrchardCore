@@ -86,7 +86,7 @@ namespace BlocksCore.WebAPI
                 var controllerServiceInterfaceAttrs = controllerServiceInfo.ServiceInterfaceType.GetCustomAttributes(false);
                 
                 var filterTypes = new Type[] { typeof(ApiControllerAttribute), typeof(IRouteTemplateProvider) };
-                var defaultControllerAttrs =  new object[] { new ApiControllerAttribute(), new RouteAttribute("{area:exists}/{controller}/{action}") }; 
+                var defaultControllerAttrs =  new object[] { new ApiControllerAttribute(), new RouteAttribute("api/services/{area:exists}/{controller}/{action}") }; 
                 var controllerAttrs = controller.Attributes as List<object>;
                
                 var addAttrs = new List<object>();

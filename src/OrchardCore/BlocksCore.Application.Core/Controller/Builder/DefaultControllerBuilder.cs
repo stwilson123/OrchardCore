@@ -93,7 +93,7 @@ namespace BlocksCore.Application.Core.Controller.Builder
         {
             if (!_actionBuilders.ContainsKey(methodName))
             {
-                throw new BlocksException($"There is no method with name " + methodName + " in type " + typeof(T).Name);
+                throw new BlocksException("101",$"There is no method with name " + methodName + " in type " + typeof(T).Name);
             }
 
             return _actionBuilders[methodName];

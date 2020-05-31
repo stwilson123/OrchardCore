@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.FileProviders;
-namespace BlocksCore.Abstractions.extensions
+namespace BlocksCore.Abstractions.Extensions
 {
     public static class FileInfoExtensions
     {

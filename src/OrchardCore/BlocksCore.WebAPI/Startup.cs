@@ -56,9 +56,11 @@ namespace BlocksCore.WebAPI.Providers
             {
                 //options.Conventions.Add(new ControllerModelConvention(defaultMvcControllerManager));
                 options.Conventions.Add(new ActionModelConvention(defaultMvcControllerManager));
+                options.Filters.Add(new DefaultActionFilter());
+                options.Filters.Add(new DefaultResultFilter());
+                options.Filters.Add(new DefaultExceptionFilter());
 
 
-                options.Filters.Add(new HttpResponseExceptionFilter());
                 var autoValidate = options.Filters.FirstOrDefault(f => f is TypeFilterAttribute typeFilter && typeFilter.ImplementationType == typeof(AutoValidateAntiforgeryTokenAttribute));
                 if (autoValidate != null)
                     options.Filters.Remove(autoValidate);
