@@ -22,7 +22,7 @@ namespace WebApiTestApplication
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseStartup<ManagerSystemStartup>();
                 });
     }
 }
