@@ -13,5 +13,12 @@ namespace BlocksCore.Navigation.Abstractions
         public string AreaName { get; set; }
         public int? NavigationType { get; set; }
         public string[] Permission { get; set; }
+
+        public string Url {
+            get {
+                return $"{AreaName ?? ""}/{ControllerName ?? ""}{Action ?? ""}"; 
+
+            }
+        }
     }
 }

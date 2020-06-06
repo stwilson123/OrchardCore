@@ -33,16 +33,17 @@ namespace BlocksCore.Navigation.Core
                     {
                         var menuItem = itemBuilder.Action(item.Action, item.ControllerName, item.AreaName)
                              .LocalNav();
+                        //menuItem = menuItem.Permission(new Permission(item.Url));
                         foreach (var permission in item.Permission)
                         {
-                            menuItem = menuItem.Permission(new Permission(permission));
+                            menuItem = menuItem.Permission(new Permission(item.Url + "/" + permission, permission));
                         }
                     });
 
 
                 }
             }
-            //return Task.CompletedTask;
+           
         }
     }
 }
