@@ -1,6 +1,7 @@
 using System;
 using System.Data;
 using System.Data.Common;
+using System.Threading.Tasks;
 using BlocksCore.Abstractions.Extensions;
 using BlocksCore.Autofac.Extensions.DependencyInjection;
 using BlocksCore.Autofac.Extensions.DependencyInjection.Paramters;
@@ -33,15 +34,32 @@ namespace BlocksCore.Data.EF
             return _serviceProvider.GetService<BlocksDbContext>(new NamedParam("entityTypes",lists));
         }
 
-        public void Begin()
+        public void Begin(UnitOfWorkOptions options)
         {
-            _dbTransaction = DbConnection.BeginTransaction(IsolationLevel.ReadCommitted);
+            _dbTransaction = DbConnection.BeginTransaction(options.IsolationLevel ?? IsolationLevel.ReadCommitted);
         }
 
-        public void Commit()
+
+        public void Complete()
         {
             if (_dbTransaction != null)
                 _dbTransaction.Commit();
+            _dbTransaction = null;
+        }
+
+        public Task CompleteAsync()
+        {
+            if (_dbTransaction != null)
+                _dbTransaction.Commit();
+            _dbTransaction = null;
+            return Task.CompletedTask;
+        }
+
+        public void Rollback()
+        {
+            if (_dbTransaction != null)
+                _dbTransaction.Rollback();
+            _dbTransaction = null;
         }
     }
 }

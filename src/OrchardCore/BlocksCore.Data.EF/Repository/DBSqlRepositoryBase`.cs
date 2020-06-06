@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using BlocksCore.Abstractions.Data.Paging;
 using BlocksCore.Abstractions.Security;
 using BlocksCore.Data.Abstractions.Entities;
+using BlocksCore.Data.Abstractions.UnitOfWork;
 using BlocksCore.Data.EF.DBContext;
 using BlocksCore.Data.EF.Linq;
 using BlocksCore.Domain.Abstractions;
@@ -38,7 +39,7 @@ namespace BlocksCore.Data.EF.Repository
         /// Constructor
         /// </summary>
         /// <param name="unitProvider"></param>
-        public DBSqlRepositoryBase(IUnitOfWork unitOfwork) : base(unitOfwork)
+        public DBSqlRepositoryBase(IUnitOfWorkManager unitOfwork) : base(unitOfwork)
         {
         }
 

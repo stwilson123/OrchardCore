@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using BlocksCore.Data.Abstractions.Entities;
+using BlocksCore.Data.Abstractions.UnitOfWork;
 using BlocksCore.Domain.Abstractions;
 using BlocksCore.SyntacticAbstractions.Types.Collections;
 using Microsoft.EntityFrameworkCore;
@@ -48,9 +49,9 @@ namespace BlocksCore.Data.EF.Repository
         /// Constructor
         /// </summary>
         /// <param name="unitProvider"></param>
-        public DBSqlRepositoryBase(IUnitOfWork unitOfwork)
+        public DBSqlRepositoryBase(IUnitOfWorkManager unitOfWorkManager)
         {
-            _unitOfwork = unitOfwork;
+            _unitOfwork = unitOfWorkManager.Current;
 
             Context = _unitOfwork.GetOrCreateDataContext<TEntity>() as DbContext;
             // _unitProvider = unitProvider;

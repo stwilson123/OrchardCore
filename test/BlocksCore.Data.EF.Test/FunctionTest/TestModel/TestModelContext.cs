@@ -45,7 +45,7 @@ namespace BlocksCore.Data.EF.Test.FunctionTest.TestModel
         public TestModelContext()
         {
             var builder = new OrchardCoreBuilder(Services);
-            builder.AddDataAccess()
+            builder.AddEFDataAccess()
             .ConfigureServices(s =>
             {
                 s.AddSingleton<ITypeFeatureExtensionsProvider, DefaultTypeFeatureExtensionsProvider>();

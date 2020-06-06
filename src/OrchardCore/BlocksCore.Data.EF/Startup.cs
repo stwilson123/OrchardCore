@@ -4,6 +4,7 @@ using System.Linq;
 using BlocksCore.Abstractions.Security;
 using BlocksCore.Autofac.Extensions.DependencyInjection;
 using BlocksCore.Data.Abstractions;
+using BlocksCore.Data.Abstractions.UnitOfWork;
 using BlocksCore.Data.Core;
 using BlocksCore.Data.EF.DBContext;
 using BlocksCore.Data.EF.Logging;
@@ -51,7 +52,7 @@ namespace BlocksCore.Data.EF
             services.AddDbContext<BlocksDbContext>(  (serviceProvider, options) =>
             {
                 var dbProviderManager = serviceProvider.GetService<IDataBaseProviderManager>();
-                var connection = serviceProvider.GetService<IUnitOfWork>().DbConnection;
+                var connection = serviceProvider.GetService<IUnitOfWorkManager>().Current.DbConnection;
                 var currentDbProvider = dbProviderManager.GetCurrentDatabaseProvider();
                 if(!(currentDbProvider is DatabaseProvider))
                 {
@@ -60,7 +61,7 @@ namespace BlocksCore.Data.EF
                 ((DatabaseProvider)currentDbProvider).configBuilder(options, connection);
             }, ServiceLifetime.Transient);
            
-            services.AddScoped<IUnitOfWork, EFUnitOfWork>();
+            services.AddTransient<IUnitOfWork, EFUnitOfWork>();
             RegisterRepository(services);
         }
 
@@ -75,10 +76,9 @@ namespace BlocksCore.Data.EF
                   );
                 foreach (var rep in repositories)
                 {
-
+                    services.AddTransient(rep);
                     foreach (var defaultInterface in rep.DefaultInterface())
                     {
-                        services.AddTransient(rep);
                         services.AddTransient(defaultInterface, (serviceProvider) => {
                             var repObj = serviceProvider.GetService(rep);
                             rep.GetProperties().Where(p => p.PropertyType == typeof(IClock)).FirstOrDefault()?.SetValue(repObj, serviceProvider.GetService<IClock>());

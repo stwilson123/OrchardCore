@@ -12,9 +12,9 @@ namespace BlocksCore.Data.Core
         private readonly IDataBaseProviderManager _dataBaseProviderManager;
         private readonly ShellSettings _shellSettings;
 
-        public DbConnectionAccessor(IDataBaseProviderManager dataBaseProviderManager ,ShellSettings shellSettings)
+        public DbConnectionAccessor(IDataBaseProviderManager dataBaseProviderManager, ShellSettings shellSettings)
         {
-            if(dataBaseProviderManager?.GetDatabaseProviders() == null)
+            if (dataBaseProviderManager?.GetDatabaseProviders() == null)
                 throw new ArgumentNullException(nameof(IDatabaseProvider));
             _dataBaseProviderManager = dataBaseProviderManager;
             this._shellSettings = shellSettings;
@@ -22,8 +22,8 @@ namespace BlocksCore.Data.Core
 
         public DbConnection CreateConnection()
         {
-          var currentDBProvider = _dataBaseProviderManager.GetCurrentDatabaseProvider();
-            if(currentDBProvider == null)
+            var currentDBProvider = _dataBaseProviderManager.GetCurrentDatabaseProvider();
+            if (currentDBProvider == null)
             {
                 throw new BlocksDataException("CurrentDBProvider is null.");
             }

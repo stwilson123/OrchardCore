@@ -17,7 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <summary>
         /// Adds tenant level data access services.
         /// </summary>
-        public static OrchardCoreBuilder AddDataAccess(this OrchardCoreBuilder builder)
+        public static OrchardCoreBuilder AddEFDataAccess(this OrchardCoreBuilder builder)
         {
 
             return builder.RegisterStartup<Startup>().ConfigureServices((services, serviceProvider) =>

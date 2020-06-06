@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using BlocksCore.Abstractions.Data.Paging;
 using BlocksCore.Data.Abstractions.Entities;
+using BlocksCore.Data.Abstractions.UnitOfWork;
 using BlocksCore.Data.EF.Linq;
 using BlocksCore.Data.EF.Paging;
 using BlocksCore.Data.EF.Repository;
@@ -15,7 +16,7 @@ namespace BlocksCore.Data.EF.Test.FunctionTest.TestModel
 {
     public class TestRepository : DBSqlRepositoryBase<TESTENTITY>, ITestRepository
     {
-        public TestRepository(IUnitOfWork unitOfwork) : base(unitOfwork)
+        public TestRepository(IUnitOfWorkManager unitOfwork) : base(unitOfwork)
         {
         }
 
@@ -189,7 +190,7 @@ namespace BlocksCore.Data.EF.Test.FunctionTest.TestModel
 
     public class TestRepository3 : DBSqlRepositoryBase<TESTENTITY3>, ITestRepository3
     {
-        public TestRepository3(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public TestRepository3(IUnitOfWorkManager unitOfWork) : base(unitOfWork)
         {
         }
     }

@@ -7,12 +7,13 @@ namespace BlocksCore.Data.Abstractions
 {
     public class BlocksDataException : BlocksException
     {
-        public override string Code { get; protected set; } = "1001";
-        public BlocksDataException(string message) : base(message)
+        static string ExceptionCode = "1001";
+        public override string Code { get; protected set; } = ExceptionCode;
+        public BlocksDataException(string message) : this(message,null)
         {
         }
 
-        public BlocksDataException(string message, Exception innerException) : base(message, innerException)
+        public BlocksDataException(string message, Exception innerException) : base(ExceptionCode, message, innerException)
         {
         }
     }

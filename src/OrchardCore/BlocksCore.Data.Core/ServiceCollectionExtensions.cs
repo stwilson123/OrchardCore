@@ -1,5 +1,7 @@
 using System;
 using BlocksCore.Data.Abstractions;
+using BlocksCore.Data.Abstractions.UnitOfWork;
+using BlocksCore.Data.Core.UnitOfWork;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BlocksCore.Data.Core
@@ -10,6 +12,9 @@ namespace BlocksCore.Data.Core
         {
             services.AddTransient<IDbConnectionAccessor, DbConnectionAccessor>();
             services.AddSingleton<IDataBaseProviderManager, DataBaseProviderManager>();
+            services.AddScoped<IUnitOfWorkManager, DefaultUnitOfWorkManager>();
+            services.AddScoped<ICurrentUnitOfWorkProvider, DefaultCurrentUnitOfWorkProvider>();
+
 
             return services;
         }

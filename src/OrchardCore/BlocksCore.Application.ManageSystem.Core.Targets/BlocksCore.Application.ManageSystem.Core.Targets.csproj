@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlocksCore.Data.EF\BlocksCore.Data.EF.csproj" />
+    <ProjectReference Include="..\BlocksCore.WebAPI\BlocksCore.WebAPI.csproj" />
+    <ProjectReference Include="..\BlocksCore\BlocksCore.csproj" />
+    <ProjectReference Include="..\OrchardCore.Application.Targets\OrchardCore.Application.Targets.csproj" />
+    <ProjectReference Include="..\OrchardCore.Infrastructure\OrchardCore.Infrastructure.csproj" />
+    <ProjectReference Include="..\OrchardCore.Mvc.Core\OrchardCore.Mvc.Core.csproj" />
+  </ItemGroup>
+
+</Project>
