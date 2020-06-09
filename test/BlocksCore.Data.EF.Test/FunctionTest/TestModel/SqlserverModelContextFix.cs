@@ -12,20 +12,21 @@ namespace BlocksCore.Data.EF.Test.FunctionTest.TestModel
     {
         public override string ProviderName { get; } = DatabaseProviderName.Sqlserver;
 
-        public override string ConnectionString { get; } = String.Format(ConfigurationHelper.Config[TestBlocksDbContext.SqlserverConnectString], Guid.NewGuid().ToString("N"));
+        public override string ConnectionString { get; protected set; }
 
-        public SqlserverModelContextFix() : base()
+        public SqlserverModelContextFix(string connectionString) : base()
         {
-
+            ConnectionString = connectionString;
            
         }
 
-        public override void Init(IServiceCollection services)
+        public override void Init()
         {
             ShellSettings shellSettings = new ShellSettings();
             shellSettings["DatabaseProvider"] = ProviderName;
             shellSettings["ConnectionString"] = ConnectionString;
             Services.AddSingleton(shellSettings);
+            base.Init();
         }
     }
 }

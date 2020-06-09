@@ -14,9 +14,18 @@ namespace WebApiTestModule.AppServices
         {
             this.testRepository = testRepository;
         }
-        public string TransactionSuccess(dynamic inputData)
+        public void TransactionSuccess(dynamic inputData)
         {
+            testRepository.Insert(new TESTENTITY()
+            {
+                Id = inputData.Id,
+                STRING = inputData.str
+            });
 
+        }
+
+        public string TransactionWhenException(dynamic inputData)
+        {
             testRepository.Insert(new TESTENTITY()
             {
                 Id = inputData.Id,

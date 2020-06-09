@@ -9,8 +9,9 @@ namespace WebApiTestModule
 {
     public interface IDbAppService : IAppService
     {
-        string TransactionSuccess(dynamic inputData);
+        void TransactionSuccess(dynamic inputData);
 
+        string TransactionWhenException(dynamic inputData);
     }
 
 

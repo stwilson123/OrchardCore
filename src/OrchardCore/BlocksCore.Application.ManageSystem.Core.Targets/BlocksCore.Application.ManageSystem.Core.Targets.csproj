@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\OrchardCore.Modules\BlocksCore.Data.Transaction\BlocksCore.Data.Transaction.csproj" />
     <ProjectReference Include="..\BlocksCore.Data.EF\BlocksCore.Data.EF.csproj" />
     <ProjectReference Include="..\BlocksCore.WebAPI\BlocksCore.WebAPI.csproj" />
     <ProjectReference Include="..\BlocksCore\BlocksCore.csproj" />

@@ -33,7 +33,7 @@ namespace BlocksCore.Data.EF.Test.TestModel.BlockTestContext
 
             //builder.HasOne(t => t.TESTENTITY2).WithMany().HasForeignKey(t => t.TESTENTITY2ID);
             //builder.HasMany(t => t.TESTENTITY3s).WithOne().HasForeignKey(t => t.TESTENTITYID1);
-            builder.HasOne(t => t.TESTENTITY2).WithMany().HasForeignKey();//.HasForeignKey(t => t.TESTENTITY2ID);
+            builder.HasOne(t => t.TESTENTITY2).WithMany().HasForeignKey(t => t.TESTENTITY2ID);//.HasForeignKey(t => t.TESTENTITY2ID);
             builder.HasMany(t => t.TESTENTITY3s).WithOne().HasForeignKey(t => t.TESTENTITYID1);
         }
 

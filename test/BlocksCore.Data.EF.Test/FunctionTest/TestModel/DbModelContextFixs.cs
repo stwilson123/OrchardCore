@@ -5,28 +5,49 @@ using System.Text;
 using BlocksCore.Autofac.Extensions.DependencyInjection;
 using BlocksCore.Autofac.Extensions.DependencyInjection.Paramters;
 using BlocksCore.Data.EF.DBContext;
+using BlocksCore.Data.EF.Test.TestModel;
 using BlocksCore.Data.EF.Test.TestModel.BlockTestContext;
 using BlocksCore.SyntacticAbstractions.Types.Collections;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
+using Xunit;
+
 namespace BlocksCore.Data.EF.Test.FunctionTest.TestModel
 {
-    public class DbModelContextFixs : IDisposable
+    public class DbModelContextFixs : BaseDbModelContextFixs<AutoGenernateConnectionStringProvider>
     {
-        public IEnumerable<TestModelContext> testModelContexts { get; } 
-        public DbModelContextFixs()
+        public DbModelContextFixs() : base()
         {
-            testModelContexts = new List<TestModelContext>() {
-                new SqlserverModelContextFix()
-            };
+        }
+    }
 
+    public class SpecialDbModelContextFixs : BaseDbModelContextFixs<DefaultConnectionStringProvider>
+    {
+        public SpecialDbModelContextFixs() : base()
+        {
+        }
+    }
+
+
+    public class BaseDbModelContextFixs<T> : IDisposable, IClassFixture<T> where T : BaseConnectionStinrgProvider,new()
+    {
+        public IEnumerable<TestModelContext> testModelContexts { get; }
+        public BaseDbModelContextFixs()
+        {
+            T connectionStinrgProvider = new T();
+            var dbName = connectionStinrgProvider.getDbName();
+            var autoConnectString = String.Format(ConfigurationHelper.Config[TestBlocksDbContext.SqlserverConnectString],dbName);
+            testModelContexts = new List<TestModelContext>() {
+                new SqlserverModelContextFix(autoConnectString)
+            };
 
             foreach (var modelContext in testModelContexts)
             {
+                modelContext.Init();
                 using (var dbContext = modelContext.ServiceProvider.GetService<MigrateDbContext>(new NamedParam("entityTypes", TestModelContext.registerTypes)))
                 {
-                   // dbContext.ExecuteSqlCommand("SELECT 1;");
+                    // dbContext.ExecuteSqlCommand("SELECT 1;");
                     dbContext.GetService<IRelationalDatabaseCreator>().EnsureCreated();
                 }
             }
@@ -51,7 +72,7 @@ namespace BlocksCore.Data.EF.Test.FunctionTest.TestModel
                     //}
                     modelContext.Dispose();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     listExceptions.Add(ex);
                 }
@@ -60,8 +81,8 @@ namespace BlocksCore.Data.EF.Test.FunctionTest.TestModel
 
                 }
             }
-            if(!listExceptions.IsNullOrEmpty())
-                 throw new Exception(string.Join("\r\n",listExceptions.Select(e => e.Message)));
+            if (!listExceptions.IsNullOrEmpty())
+                throw new Exception(string.Join("\r\n", listExceptions.Select(e => e.Message)));
         }
     }
 }
