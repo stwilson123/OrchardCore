@@ -79,8 +79,8 @@ namespace BlocksCore.Test.Navigation
             })) == 1);
 
 
-            Assert.True(workcenterWeb.Permissions.Count(p => p.Name == "Add") == 1);
-            Assert.True(workcenterWeb.Permissions.Count(p => p.Name == "Index") == 1);
+            Assert.True(workcenterWeb.Permissions.Count(p => p.Name == "TestModule/WorkcenterIndex/Add") == 1);
+            Assert.True(workcenterWeb.Permissions.Count(p => p.Name == "TestModule/WorkcenterIndex/Index") == 1);
 
         }
 
