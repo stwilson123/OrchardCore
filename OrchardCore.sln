@@ -444,6 +444,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.Test.Abstraction
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.Data.Transaction", "src\OrchardCore.Modules\BlocksCore.Data.Transaction\BlocksCore.Data.Transaction.csproj", "{D523112D-33F7-436F-A8D0-86244C531F4A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlocksCore.Localization.Core", "src\OrchardCore\BlocksCore.Localization.Core\BlocksCore.Localization.Core.csproj", "{C1DB2793-04AC-42C6-A7D5-71C83FEC1E1D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1198,6 +1200,10 @@ Global
 		{D523112D-33F7-436F-A8D0-86244C531F4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D523112D-33F7-436F-A8D0-86244C531F4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D523112D-33F7-436F-A8D0-86244C531F4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1DB2793-04AC-42C6-A7D5-71C83FEC1E1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1DB2793-04AC-42C6-A7D5-71C83FEC1E1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1DB2793-04AC-42C6-A7D5-71C83FEC1E1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1DB2793-04AC-42C6-A7D5-71C83FEC1E1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1409,6 +1415,7 @@ Global
 		{A1EA0D93-6255-4392-ADE1-42CF5A930A3B} = {3398AB60-2DB7-464C-B211-C4120BE75582}
 		{9B842F4F-5E31-4428-B0E5-08C5BA3B2D17} = {D0194169-34DC-4762-ADB8-F8A4E189C920}
 		{D523112D-33F7-436F-A8D0-86244C531F4A} = {D92E7E13-E6D5-4723-AB93-D93C9A4F7416}
+		{C1DB2793-04AC-42C6-A7D5-71C83FEC1E1D} = {D0194169-34DC-4762-ADB8-F8A4E189C920}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {46A1D25A-78D1-4476-9CBF-25B75E296341}

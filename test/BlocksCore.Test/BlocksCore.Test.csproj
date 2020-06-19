@@ -29,6 +29,7 @@
       <ProjectReference Include="..\..\src\OrchardCore\BlocksCore.Navigation.Core\BlocksCore.Navigation.Core.csproj" />
       <ProjectReference Include="..\..\src\OrchardCore\BlocksCore.Web.Abstractions\BlocksCore.Web.Abstractions.csproj" />
       <ProjectReference Include="..\..\src\OrchardCore\BlocksCore.WebAPI\BlocksCore.WebAPI.csproj" />
+      <ProjectReference Include="..\..\src\OrchardCore\OrchardCore.Localization.Core\OrchardCore.Localization.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>
