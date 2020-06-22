@@ -21,6 +21,7 @@ using OrchardCore.Environment.Shell.Descriptor.Models;
 using OrchardCore.Modules;
 using Microsoft.AspNetCore.Mvc;
 using BlocksCore.Web.Abstractions.Filters;
+using BlocksCore.Application.Abstratctions.Datatransfer;
 
 namespace BlocksCore.WebAPI.Providers
 {
@@ -64,8 +65,12 @@ namespace BlocksCore.WebAPI.Providers
                 var autoValidate = options.Filters.FirstOrDefault(f => f is TypeFilterAttribute typeFilter && typeFilter.ImplementationType == typeof(AutoValidateAntiforgeryTokenAttribute));
                 if (autoValidate != null)
                     options.Filters.Remove(autoValidate);
+            })
+            .AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ContractResolver = new JsonAttribuateContractResolver();
             });
-           
+
             AddModularFrameworkParts(_serviceProvider, builder.PartManager, defaultMvcControllerManager);
             AddMvcModuleCoreServices(services);
         }
