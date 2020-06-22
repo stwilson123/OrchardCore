@@ -25,6 +25,8 @@
     <ItemGroup>
       <ProjectReference Include="..\..\src\OrchardCore\BlocksCore.Abstractions\BlocksCore.Abstractions.csproj" />
       <ProjectReference Include="..\..\src\OrchardCore\BlocksCore.Application.Core\BlocksCore.Application.Core.csproj" />
+      <ProjectReference Include="..\..\src\OrchardCore\BlocksCore.Infrastructure.Abstractions\BlocksCore.Infrastructure.Abstractions.csproj" />
+      <ProjectReference Include="..\..\src\OrchardCore\BlocksCore.Infrastructure\BlocksCore.Infrastructure.csproj" />
       <ProjectReference Include="..\..\src\OrchardCore\BlocksCore.Navigation.Abstractions\BlocksCore.Navigation.Abstractions.csproj" />
       <ProjectReference Include="..\..\src\OrchardCore\BlocksCore.Navigation.Core\BlocksCore.Navigation.Core.csproj" />
       <ProjectReference Include="..\..\src\OrchardCore\BlocksCore.Web.Abstractions\BlocksCore.Web.Abstractions.csproj" />
