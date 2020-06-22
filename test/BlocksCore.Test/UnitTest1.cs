@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using BlocksCore.Test.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
@@ -77,7 +78,31 @@ namespace BlocksCore.Test
 
         }
 
+        [Fact]
+        public void IEnumableToListThrowExceptionAlwaysTrigger()
+        {
 
+            IEnumerable<string> list = new List<string>() { "1"};
+
+            IEnumerable<string> listAlwaysException = list.Where(t =>
+            {
+                throw new Exception();
+            });
+
+            Assert.Throws<Exception>(() => { listAlwaysException.ToList(); });
+            Assert.Throws<Exception>(() => { listAlwaysException.ToList(); });
+            var i = 0;
+            IEnumerable<string> listSecondException = list.Where(t =>
+            {
+                if(i++ > 1)
+                    throw new Exception();
+                return t == "";
+            });
+
+            listSecondException.ToList();
+            listSecondException.ToList();
+
+        }
         [Theory]
         [InlineData(1)]
         [InlineData(2)]
