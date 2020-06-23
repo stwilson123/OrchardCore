@@ -7,7 +7,7 @@ using BlocksCore.Abstractions.Data.Paging;
 using BlocksCore.Data.Abstractions.Entities;
 using BlocksCore.Data.EF.Paging;
 using Microsoft.EntityFrameworkCore;
-
+using BlocksCore.Abstractions.UI.Paging;
 namespace BlocksCore.Data.EF.DBContext
 {
     public static class DbContextExtensions

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -12,7 +12,7 @@ using BlocksCore.Data.EF.Linq.Extends;
 using BlocksCore.Data.EF.Paging;
 using Microsoft.EntityFrameworkCore;
 using DynamicQueryableExtensions = System.Linq.Dynamic.Core.DynamicQueryableExtensions;
-
+using BlocksCore.Abstractions.UI.Paging;
 namespace BlocksCore.Data.EF.Linq
 {
     public static class ValueTypeExtensions

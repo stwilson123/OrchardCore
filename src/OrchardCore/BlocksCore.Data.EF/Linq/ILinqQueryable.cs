@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BlocksCore.Data.Abstractions.Entities;
 using BlocksCore.Data.EF.Paging;
-
+using BlocksCore.Abstractions.UI.Paging;
 namespace BlocksCore.Data.EF.Linq
 {
     public interface IDbLinqQueryable<TEntity> : IDbLinqQueryable where TEntity : Entity
