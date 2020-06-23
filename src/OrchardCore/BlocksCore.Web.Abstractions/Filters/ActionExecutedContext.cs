@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace BlocksCore.Web.Abstractions.Filters
@@ -8,13 +9,12 @@ namespace BlocksCore.Web.Abstractions.Filters
     {
         IDictionary<string, object> ActionArguments { get; }
 
-        public object Controller { get; }
+    
        
         public object Result { get; set; }
 
-        public ActionExecutedContext(object controller, IServiceProvider serviceProvider) : base(serviceProvider)
+        public ActionExecutedContext(IServiceProvider serviceProvider, TypeInfo controllerType) : base(serviceProvider, controllerType)
         {
-            Controller = controller;
         }
     }
 }

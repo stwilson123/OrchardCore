@@ -28,7 +28,7 @@ namespace BlocksCore.WebAPI.Filter
             var orderedActionFilters = actionFilters.OrderBy(f => f is BlocksCore.Web.Abstractions.Filters.IOrderedFilter order ? order.Order : 0);
             foreach (var actionFilter in orderedActionFilters)
             {
-                actionFilter.OnActionExecuting(new BlocksCore.Web.Abstractions.Filters.ActionExecutingContext(context.ActionArguments, serviceProvider));
+                actionFilter.OnActionExecuting(new BlocksCore.Web.Abstractions.Filters.ActionExecutingContext(context.ActionArguments, serviceProvider, ((ControllerActionDescriptor)context.ActionDescriptor)?.ControllerTypeInfo));
             }
         }
 
@@ -47,7 +47,7 @@ namespace BlocksCore.WebAPI.Filter
         {
             foreach (var actionFilter in orderedActionFilters)
             {
-                var actionContext = new BlocksCore.Web.Abstractions.Filters.ActionExecutedContext(context.Controller, serviceProvider) { Result = resultObj };
+                var actionContext = new BlocksCore.Web.Abstractions.Filters.ActionExecutedContext(serviceProvider, ((ControllerActionDescriptor)context.ActionDescriptor)?.ControllerTypeInfo) { Result = resultObj };
                 actionFilter.OnActionExecuted(actionContext);
                 resultObj = actionContext.Result;
             }

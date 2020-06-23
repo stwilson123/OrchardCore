@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using BlocksCore.Web.Abstractions.Result;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -30,7 +31,7 @@ namespace BlocksCore.WebAPI.Filter
         {
             foreach (var actionFilter in orderedActionFilters)
             {
-                var actionContext = new BlocksCore.Web.Abstractions.Filters.ExceptionContext(serviceProvider) { Result = resultObj, Exception = context.Exception, ExceptionHandled = context.ExceptionHandled };
+                var actionContext = new BlocksCore.Web.Abstractions.Filters.ExceptionContext(serviceProvider, ((ControllerActionDescriptor)context.ActionDescriptor)?.ControllerTypeInfo) { Result = resultObj, Exception = context.Exception, ExceptionHandled = context.ExceptionHandled };
                 actionFilter.OnException(actionContext);
                 resultObj = actionContext.Result;
             }

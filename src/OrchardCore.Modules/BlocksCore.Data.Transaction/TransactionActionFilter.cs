@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Text;
+using BlocksCore.Data.Abstractions.Transaction;
 using BlocksCore.Data.Abstractions.UnitOfWork;
 using BlocksCore.Domain.Abstractions;
 using BlocksCore.Web.Abstractions.Filters;
@@ -12,6 +15,8 @@ namespace BlocksCore.Data.Transaction
     {
         public void OnActionExecuted(ActionExecutedContext context)
         {
+            if (context.ControllerType.GetCustomAttribute<TransactionAttribute>()?.IsTransaction == false)
+                return;
              var unitOfWorkManager = context.ServiceProvider.GetService<IUnitOfWorkManager>();
 
             unitOfWorkManager.Current.Complete();
@@ -20,6 +25,8 @@ namespace BlocksCore.Data.Transaction
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
+            if (context.ControllerType.GetCustomAttribute<TransactionAttribute>()?.IsTransaction == false)
+                return;
             var unitOfWorkManager = context.ServiceProvider.GetService<IUnitOfWorkManager>();
             unitOfWorkManager.Begin();
         }
