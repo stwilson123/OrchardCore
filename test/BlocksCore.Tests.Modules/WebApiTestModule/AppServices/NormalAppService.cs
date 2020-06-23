@@ -4,12 +4,14 @@ using System.Text;
 using WebApiTestModule.DTO;
 using BlocksCore.Web.Abstractions.HttpMethod;
 using Microsoft.AspNetCore.Mvc;
+using BlocksCore.Data.Abstractions.Transaction;
 
 namespace WebApiTestModule
 {
     //[ApiController]
     // [Route("{area:exists}/{controller}/{action}")]
     //[Area("WebApiTestModule/api")]
+    [Transaction(false)]
     public class NormalAppService : INormalAppService
     {
         //[BlocksAction]

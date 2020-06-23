@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using BlocksCore.Abstractions.Exception;
+using BlocksCore.Data.Abstractions.Transaction;
 
 namespace WebApiTestModule.AppServices
 {
+    [Transaction(false)]
     public class ResultAppService : IResultAppService
     {
         public object GetObject(object obj)
