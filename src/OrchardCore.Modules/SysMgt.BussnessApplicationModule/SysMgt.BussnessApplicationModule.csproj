@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\OrchardCore\BlocksCore.AutoMapper.Abstractions\BlocksCore.AutoMapper.Abstractions.csproj" />
+    <ProjectReference Include="..\SysMgt.BussnessDomainModule\SysMgt.BussnessDomainModule.csproj" />
+    <ProjectReference Include="..\SysMgt.BussnessDTOModule\SysMgt.BussnessDTOModule.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\OrchardCore\BlocksCore.Audit.Abstractions\BlocksCore.Audit.Abstractions.csproj" />
+    <ProjectReference Include="..\..\OrchardCore\BlocksCore.Event.Abstractions\BlocksCore.Event.Abstractions.csproj" />
+    <ProjectReference Include="..\..\OrchardCore\BlocksCore.Infrastructure.Abstractions\BlocksCore.Infrastructure.Abstractions.csproj" />
+    <ProjectReference Include="..\..\OrchardCore\BlocksCore.Localization.Abtractions\BlocksCore.Localization.Abtractions.csproj" />
+    <ProjectReference Include="..\..\OrchardCore\BlocksCore.Navigation.Abstractions\BlocksCore.Navigation.Abstractions.csproj" />
+    <ProjectReference Include="..\SysMgt.BussnessRespositoryModule\SysMgt.BussnessRespositoryModule.csproj" />
+  </ItemGroup>
+
+</Project>

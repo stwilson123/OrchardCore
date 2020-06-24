@@ -1,0 +1,156 @@
+{
+  "Items": [
+    {
+      "Name": "SysRoleInfo_New_Index",
+      "DisplayName": "Role_management",
+      "ControllerName": "SysRoleInfo_New",
+      "Action": "Index",
+      "Permission": [
+        "index",
+        "add",
+        "edit",
+        "delete",
+        "copy"
+      ]
+    },
+    {
+      "Name": "SysUserInfo_New_Index",
+      "DisplayName": "User_management",
+      "ControllerName": "SysUserInfo_New",
+      "Action": "Index",
+      "Permission": [
+        "index",
+        "add",
+        "edit"
+      ]
+    },
+    {
+      "Name": "ThirdSystemCallWeb",
+      "DisplayName": "Interface_use_management",
+      "ControllerName": "ThirdSystemCallWeb",
+      "Action": "Index",
+      "Permission": [
+        "index",
+        "edit"
+      ]
+    },
+    {
+      "Name": "ThirdSystemTypeWeb",
+      "DisplayName": "System_type",
+      "ControllerName": "ThirdSystemTypeWeb",
+      "Action": "Index",
+      "Permission": [
+        "index",
+        "add",
+        "edit",
+        "delete"
+      ]
+    },
+    {
+      "Name": "MenuWeb",
+      "DisplayName": "Menu_management",
+      "ControllerName": "Menu",
+      "Action": "Index",
+      "Permission": [
+        "index",
+        "add",
+        "edit",
+        "delete",
+        "bind"
+      ]
+    },
+    {
+      "Name": "InterfaceAuditWeb",
+      "DisplayName": "InterfaceAudit",
+      "ControllerName": "InterfaceAudit",
+      "Action": "Index",
+      "Permission": [
+        "index"
+      ]
+    },
+    {
+      "Name": "LanguagesWeb",
+      "DisplayName": "Languages_management",
+      "ControllerName": "Languages",
+      "Action": "Index",
+      "Permission": [
+        "index",
+        "add",
+        "edit",
+        "delete"
+      ]
+    },
+    {
+      "Name": "SetupWeb",
+      "DisplayName": "System_setup",
+      "ControllerName": "SetupWeb",
+      "Action": "Index",
+      "Permission": [
+        "index"
+      ]
+    },
+    {
+      "Name": "DepartmentWeb",
+      "DisplayName": "Department_management",
+      "ControllerName": "DepartmentWeb",
+      "Action": "Index",
+      "Permission": [
+        "index"
+      ]
+    },
+    {
+      "Name": "EmployeeWeb",
+      "DisplayName": "Employee_management",
+      "ControllerName": "EmployeeWeb",
+      "Action": "Index",
+      "Permission": [
+        "index"
+      ]
+    },
+    {
+      "Name": "QuestionFeedBackWeb",
+      "DisplayName": "FAQ_management",
+      "ControllerName": "QuestionFeedBackWeb",
+      "Action": "Index",
+      "Permission": [
+        "index"
+      ]
+    },
+    {
+      "Name": "ConfigFilesWeb",
+      "DisplayName": "Config_management",
+      "ControllerName": "ConfigFilesWeb",
+      "Action": "Index",
+      "Permission": [
+        "index"
+      ]
+    },
+    {
+      "Name": "QuestionFeedBackWeb_add",
+      "DisplayName": "FAQ_management",
+      "ControllerName": "QuestionFeedBackWeb",
+      "Action": "Add",
+      "Permission": [
+        "index"
+      ]
+    },
+    {
+      "Name": "SAPInterfaceWeb",
+      "DisplayName": "ERP_interface_log_view",
+      "ControllerName": "SAPInterface",
+      "Action": "Index",
+      "Permission": [
+        "index"
+      ]
+    },
+    {
+      "Name": "ERPDataWeb",
+      "DisplayName": "ERP_voucher_view",
+      "ControllerName": "ERPData",
+      "Action": "Index",
+      "Permission": [
+        "index"
+      ]
+    }
+  ]
+}
