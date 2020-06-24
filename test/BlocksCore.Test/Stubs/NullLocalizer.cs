@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -36,5 +37,18 @@ namespace BlocksCore.Test.Stubs
 
     public class NullStringLocalizer<T> : NullStringLocalizer, IStringLocalizer<T>
     {
+    }
+
+    public class NullStringLocalizerFactory : IStringLocalizerFactory
+    {
+        public IStringLocalizer Create(string baseName, string location)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IStringLocalizer Create(Type resourceSource)
+        {
+            return new NullStringLocalizer();
+        }
     }
 }

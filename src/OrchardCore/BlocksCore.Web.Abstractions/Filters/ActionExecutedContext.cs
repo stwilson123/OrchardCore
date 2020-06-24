@@ -9,12 +9,13 @@ namespace BlocksCore.Web.Abstractions.Filters
     {
         IDictionary<string, object> ActionArguments { get; }
 
-    
-       
+        public object Controller { get; }
+
         public object Result { get; set; }
 
-        public ActionExecutedContext(IServiceProvider serviceProvider, TypeInfo controllerType) : base(serviceProvider, controllerType)
+        public ActionExecutedContext(IServiceProvider serviceProvider, TypeInfo controllerType, object controller) : base(serviceProvider, controllerType)
         {
+            Controller = controller;
         }
     }
 }

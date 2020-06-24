@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BlocksCore.Data.Abstractions.Entities;
-using BlocksCore.Data.EF.Paging;
+using BlocksCore.Data.Abstractions.Paging;
 using BlocksCore.Abstractions.UI.Paging;
 namespace BlocksCore.Data.EF.Linq
 {

@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BlocksCore.Abstractions\BlocksCore.Abstractions.csproj" />
+    <ProjectReference Include="..\BlocksCore.Infrastructure.Abstractions\BlocksCore.Infrastructure.Abstractions.csproj" />
+    <ProjectReference Include="..\BlocksCore.Localization.Abtractions\BlocksCore.Localization.Abtractions.csproj" />
     <ProjectReference Include="..\OrchardCore.Navigation.Core\OrchardCore.Navigation.Core.csproj" />
   </ItemGroup>
 

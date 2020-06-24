@@ -9,7 +9,7 @@ using BlocksCore.Abstractions.Exception;
 using BlocksCore.Data.Abstractions;
 using BlocksCore.Data.Abstractions.Entities;
 using BlocksCore.Data.EF.Linq.Extends;
-using BlocksCore.Data.EF.Paging;
+using BlocksCore.Data.Abstractions.Paging;
 using Microsoft.EntityFrameworkCore;
 using DynamicQueryableExtensions = System.Linq.Dynamic.Core.DynamicQueryableExtensions;
 using BlocksCore.Abstractions.UI.Paging;
@@ -394,7 +394,7 @@ namespace BlocksCore.Data.EF.Linq
             else
             {
 //                var pageResult =
-//                    BlocksCore.Data.EF.Paging.DynamicQueryableExtensions.PageResult<dynamic>(orderByQueryable,
+//                    BlocksCore.Data.Abstractions.Paging.DynamicQueryableExtensions.PageResult<dynamic>(orderByQueryable,
 //                        page.page, page.pageSize.Value);
 //                pageResult.PagerInfo.sortColumn = page.sortColumn;
 //                pageResult.PagerInfo.sortOrder = page.sortOrder;

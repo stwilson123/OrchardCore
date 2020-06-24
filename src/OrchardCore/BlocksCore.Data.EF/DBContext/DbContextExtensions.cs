@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using BlocksCore.Abstractions.Data.Paging;
 using BlocksCore.Data.Abstractions.Entities;
-using BlocksCore.Data.EF.Paging;
+using BlocksCore.Data.Abstractions.Paging;
 using Microsoft.EntityFrameworkCore;
 using BlocksCore.Abstractions.UI.Paging;
 namespace BlocksCore.Data.EF.DBContext
 {
     public static class DbContextExtensions
     {
-        public static List<TElement> SqlQuery<TElement>([NotNull]this DbContext context ,string sql, params object[] paramters)
+        public static IList<TElement> SqlQuery<TElement>([NotNull]this DbContext context ,string sql, params object[] paramters)
            where TElement : class, IQueryEntity
         {
             return context.Set<TElement>().FromSqlRaw(sql, paramters).ToList();

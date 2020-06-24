@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using BlocksCore.Data.Abstractions.Paging;
 using BlocksCore.Data.Abstractions.Repository;
-using BlocksCore.Data.EF.Paging;
 using BlocksCore.Data.EF.Test.TestModel.BlockTestContext;
 
 namespace BlocksCore.Data.EF.Test.FunctionTest.TestModel

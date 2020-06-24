@@ -4,7 +4,7 @@ using System.Text;
 using BlocksCore.Abstractions.Data.Paging;
 using BlocksCore.SyntacticAbstractions.Types;
 
-namespace BlocksCore.Data.EF.Paging
+namespace BlocksCore.Data.Abstractions.Paging
 {
     public static  class PageExtensions
     {

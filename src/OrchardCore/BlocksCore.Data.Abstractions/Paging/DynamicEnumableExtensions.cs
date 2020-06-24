@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BlocksCore.SyntacticAbstractions.Types;
 
-namespace BlocksCore.Data.EF.Paging
+namespace BlocksCore.Data.Abstractions.Paging
 {
     public static class DynamicEnumableExtensions
     {

@@ -6,6 +6,6 @@ namespace BlocksCore.Navigation.Abstractions
 {
     public class NavigationConfig
     {
-        public IList<NavigationItem> Items { get; set; }
+        public IList<NavigationConfigItem> Items { get; set; }
     }
 }

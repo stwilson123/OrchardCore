@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using BlocksCore.Abstractions.Data.Paging;
 
-namespace BlocksCore.Data.EF.Paging
+namespace BlocksCore.Data.Abstractions.Paging
 {
     [Serializable]
     public class PageList<T> : IPageList<T>
