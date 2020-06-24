@@ -6,7 +6,7 @@ using OrchardCore.Security.Permissions;
 
 namespace BlocksCore.Infrastructure.Abstractions.Security.Permissions
 {
-    public interface IPermissionProvider : OrchardCore.Security.Permissions.IPermissionProvider
+    public interface IPermissionProvider //: OrchardCore.Security.Permissions.IPermissionProvider
     {
         Task<PermissionStereotype> GetStereotype(string name);
     }

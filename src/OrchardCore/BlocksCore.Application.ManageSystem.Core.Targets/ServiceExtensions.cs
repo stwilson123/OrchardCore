@@ -26,7 +26,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddMvc()
                 .AddWebAPI()
                 .AddEFDataAccess()
-                .AddLocalization();
+                .AddLocalization()
+                .AddEventCore();
                 //.AddSetupFeatures("OrchardCore.Setup")
 
             //.AddDataAccess()

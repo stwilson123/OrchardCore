@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using BlocksCore.Infrastructure.Abstractions.Security.Permissions;
 using Microsoft.Extensions.Caching.Memory;
 using OrchardCore.Modules;
-using OrchardCore.Security.Permissions;
 
 namespace BlocksCore.Infrastructure.Security.Permissions
 {
@@ -22,7 +21,7 @@ namespace BlocksCore.Infrastructure.Security.Permissions
             this._permissionProviders = permissionProviders;
             this._cache = cache;
         }
-        public async Task<IDictionary<string, Permission>> GetPermissionsAsync(string permissionStereotypeName)
+        public async Task<IDictionary<string, Abstractions.Security.Permissions.Permission>> GetPermissionsAsync(string permissionStereotypeName)
         {
             
            var cachedDictionary = await _cache.GetOrCreateAsync(CacheKeyPrefix + permissionStereotypeName, k => Task.Factory.StartNew<IDictionary<string, Permission>>((t) =>
@@ -37,9 +36,9 @@ namespace BlocksCore.Infrastructure.Security.Permissions
             return cachedDictionary;
         }
 
-        public Task<IEnumerable<Permission>> GetPermissionsAsync()
-        {
-            throw new NotImplementedException();
-        }
+        //public Task<IEnumerable<Permission>> GetPermissionsAsync()
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

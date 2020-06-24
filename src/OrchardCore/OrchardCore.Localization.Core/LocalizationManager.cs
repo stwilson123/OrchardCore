@@ -20,8 +20,8 @@ namespace OrchardCore.Localization
             IEnumerable<IPluralRuleProvider> pluralRuleProviders,
             ITranslationProvider translationProvider,
             IMemoryCache cache)
-        {
-            _pluralRuleProviders = pluralRuleProviders.OrderBy(o => o.Order).ToArray();
+        { 
+             _pluralRuleProviders = pluralRuleProviders.OrderBy(o => o.Order).ToArray();
             _translationProvider = translationProvider;
             _cache = cache;
         }

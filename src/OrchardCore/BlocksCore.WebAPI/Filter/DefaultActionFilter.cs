@@ -47,7 +47,7 @@ namespace BlocksCore.WebAPI.Filter
         {
             foreach (var actionFilter in orderedActionFilters)
             {
-                var actionContext = new BlocksCore.Web.Abstractions.Filters.ActionExecutedContext(serviceProvider, ((ControllerActionDescriptor)context.ActionDescriptor)?.ControllerTypeInfo) { Result = resultObj };
+                var actionContext = new BlocksCore.Web.Abstractions.Filters.ActionExecutedContext(serviceProvider, ((ControllerActionDescriptor)context.ActionDescriptor)?.ControllerTypeInfo, context.Controller) { Result = resultObj };
                 actionFilter.OnActionExecuted(actionContext);
                 resultObj = actionContext.Result;
             }

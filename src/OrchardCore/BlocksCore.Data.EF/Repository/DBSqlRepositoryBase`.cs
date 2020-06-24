@@ -169,6 +169,11 @@ namespace BlocksCore.Data.EF.Repository
         {
             return this.Context.SqlQueryPaging<TElement>(page, sql, paramters);
         }
+        public IList<TElement> SqlQuery<TElement>(string sql, params object[] paramters) where TElement : class, IQueryEntity
+        {
+            return this.Context.SqlQuery<TElement>(sql, paramters);
+        }
+
         public int ExecuteSqlCommand(string sql, params object[] paramters)
         {
            return  this.Context.ExecuteSqlCommand(sql, paramters);

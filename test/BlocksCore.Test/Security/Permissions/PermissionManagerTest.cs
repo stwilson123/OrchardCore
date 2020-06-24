@@ -6,7 +6,6 @@ using BlocksCore.Infrastructure.Abstractions.Security.Permissions;
 using BlocksCore.Infrastructure.Security.Permissions;
 using Microsoft.Extensions.Caching.Memory;
 using Moq;
-using OrchardCore.Security.Permissions;
 using Xunit;
 
 namespace BlocksCore.Test.Security.Permissions

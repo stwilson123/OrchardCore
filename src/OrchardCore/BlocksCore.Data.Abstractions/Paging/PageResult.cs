@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
-namespace BlocksCore.Data.EF.Paging
+namespace BlocksCore.Data.Abstractions.Paging
 {
     public class PagedResult<Source>
     {

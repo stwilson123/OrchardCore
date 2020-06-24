@@ -13,20 +13,23 @@ using OrchardCore.Environment.Extensions;
 using OrchardCore.Environment.Shell;
 using OrchardCore.Modules.FileProviders;
 using BlocksCore.SyntacticAbstractions.Types.Collections;
+using Microsoft.Extensions.Localization;
+using BlocksCore.Localization.Abtractions;
 
 namespace BlocksCore.Navigation.Core
 {
     public class NavigationFileManager : INavigationFileManager
     {
-        public NavigationFileManager(IEnumerable<INavigationFileProvider> navigationFileProviders, IHostEnvironment hostingEnvironment, ITypeFeatureProvider typeFeatureProvider)
+        public NavigationFileManager(IEnumerable<INavigationFileProvider> navigationFileProviders, IHostEnvironment hostingEnvironment, ITypeFeatureProvider typeFeatureProvider, IStringLocalizerFactory stringLocalizerFactory)
         {
             this._navigationFileProviders = navigationFileProviders;
             this._typeFeatureProvider = typeFeatureProvider;
-
+            this._stringLocalizerFactory = stringLocalizerFactory;
             _fileProvider = hostingEnvironment.ContentRootFileProvider;
         }
         private readonly IEnumerable<INavigationFileProvider> _navigationFileProviders;
         private readonly ITypeFeatureProvider _typeFeatureProvider;
+        private readonly IStringLocalizerFactory _stringLocalizerFactory;
         private IFileProvider _fileProvider;
 
         public IDictionary<Platform, NavigationConfig> NavigationConfigs => _navigationConfigs;
@@ -54,6 +57,7 @@ namespace BlocksCore.Navigation.Core
                     {
                         foreach (var navItem in navgationConfig.Items)
                         {
+                            navItem.SourceName = feature.Name;
                             navItem.AreaName = string.IsNullOrEmpty(navItem.AreaName) ? feature.Name : navItem.AreaName;
                         }
                     }

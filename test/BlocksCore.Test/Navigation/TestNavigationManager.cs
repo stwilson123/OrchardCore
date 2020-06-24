@@ -42,6 +42,7 @@ namespace BlocksCore.Test.Navigation
             serviceCollection.AddSingleton<INavigationManager, NavigationManager>();
             serviceCollection.AddSingleton<ILogger<NavigationManager>, NullLogger<NavigationManager>>();
             serviceCollection.AddSingleton<IStringLocalizer<AutoRegisterNavigationProvider>, NullStringLocalizer<AutoRegisterNavigationProvider>>();
+            serviceCollection.AddSingleton<IStringLocalizerFactory , NullStringLocalizerFactory>();
 
 
             serviceCollection.AddSingleton<ShellSettings>(new ShellSettings());
