@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 
 namespace BlocksCore.Localization.Abtractions
 {
-    public interface ILanguageManager
+    public interface ILanguageProvider
     {
-        Task<LanguageInfo> CurrentLanguage { get; }
-
         Task<IEnumerable<LanguageInfo>> GetLanguages();
     }
 }

@@ -20,15 +20,24 @@ namespace BlocksCore.Data.EF.Repository
     public class DBSqlRepositoryBase<TEntity, TPrimaryKey> : Abstractions.Repository.IRepository<TEntity, TPrimaryKey>,
         ISupportsExplicitLoading<TEntity, TPrimaryKey>,
         IRepositoryWithDbContext
-        where TEntity :  Entity<TPrimaryKey>
+        where TEntity : Entity<TPrimaryKey>
     {
         /// <summary>
         /// Gets EF DbContext object.
         /// </summary>
       //  public virtual TDbContext Context => _unitProvider.GetDbContext<TDbContext, TEntity>();
 
-        public virtual DbContext Context { get; set; }
-      
+        public virtual DbContext Context
+        {
+            get
+            {
+                if (context == null)
+                    context = _unitOfwork.GetOrCreateDataContext<TEntity>() as DbContext;
+                return context;
+            }
+        }
+
+        protected DbContext context;
         /// <summary>
         /// Gets DbSet for given entity.
         /// </summary>
@@ -53,7 +62,6 @@ namespace BlocksCore.Data.EF.Repository
         {
             _unitOfwork = unitOfWorkManager.Current;
 
-            Context = _unitOfwork.GetOrCreateDataContext<TEntity>() as DbContext;
             // _unitProvider = unitProvider;
             //Type type = typeof(TEntity);
             //var attr = type.GetSingleAttributeOfTypeOrBaseTypesOrNull<MultiTenancySideAttribute>();
@@ -178,8 +186,8 @@ namespace BlocksCore.Data.EF.Repository
         }
 
         public virtual TEntity Insert(TEntity entity)
-        { 
-          
+        {
+
             var EntityEntry = Table.Add(entity);
             Context.SaveChanges();
             return EntityEntry.Entity;
@@ -191,7 +199,7 @@ namespace BlocksCore.Data.EF.Repository
         /// <param name="entitites">Inserted entitites</param>
         public virtual IList<TEntity> Insert(IList<TEntity> entitites)
         {
-           // Table.BulkInsert(entitites,o => o.);
+            // Table.BulkInsert(entitites,o => o.);
             Table.AddRange(entitites);
             Context.SaveChanges();
 
@@ -227,7 +235,7 @@ namespace BlocksCore.Data.EF.Repository
 
         public virtual TEntity InsertOrUpdate(TEntity entity)
         {
-      
+
             return entity.IsTransient()
                 ? Insert(entity)
                 : Update(entity);
@@ -392,7 +400,7 @@ namespace BlocksCore.Data.EF.Repository
 
         protected virtual void AttachIfNot(TEntity entity)
         {
-            var entry = Context.ChangeTracker.Entries().FirstOrDefault(ent => entity == ent.Entity );
+            var entry = Context.ChangeTracker.Entries().FirstOrDefault(ent => entity == ent.Entity);
 
             if (entry != null)
             {

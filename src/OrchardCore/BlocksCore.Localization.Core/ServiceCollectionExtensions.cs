@@ -1,4 +1,5 @@
 using System;
+using BlocksCore.Localization.Abtractions;
 using BlocksCore.Localization.Core;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -29,7 +30,8 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddPortableObjectLocalization();
             services.Replace(ServiceDescriptor.Singleton<IStringLocalizerFactory, ModularPortableObjectStringLocalizerFactory>());
-            
+            services.AddSingleton<ILanguageManager, LanguageManager>();
+
             if (setupAction != null)
             {
                 services.Configure(setupAction);

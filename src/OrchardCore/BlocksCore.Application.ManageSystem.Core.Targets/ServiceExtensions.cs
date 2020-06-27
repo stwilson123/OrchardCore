@@ -21,13 +21,14 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             var builder = services.AddOrchardCore()
                 .AddBlocksCore()
-                .AddSitesFolder()
+                //.AddSitesFolder()
                 // .AddCommands()
                 .AddMvc()
                 .AddWebAPI()
                 .AddEFDataAccess()
                 .AddLocalization()
-                .AddEventCore();
+                .AddEventCore()
+                .AddDomainCore();
                 //.AddSetupFeatures("OrchardCore.Setup")
 
             //.AddDataAccess()
