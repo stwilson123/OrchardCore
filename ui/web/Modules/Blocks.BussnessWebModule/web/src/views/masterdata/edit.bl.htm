@@ -1,0 +1,56 @@
+<bl-container type="dialog">
+    <bl-main type="dialog">
+        <bl-form :model="ruleForm" :rules="rules" ref="ruleFormRef">
+            <bl-row>
+                <bl-col>
+                    <bl-form-item label="姓名" prop="city">
+                        <bl-input v-model="ruleForm.city"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col>
+                    <bl-form-item label="年龄" prop="num">
+                        <bl-input v-model="ruleForm.num"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col>
+                    <bl-form-item label="日期" prop="registerTime">
+                        <bl-datepicker dateFmt="yyyy-MM-dd" v-model="ruleForm.registerTime"></bl-datepicker>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col>
+                    <bl-form-item label="选择框">
+                        <bl-select :optionsData="selectData" clearable v-model="ruleForm.combobox"></bl-select>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col>
+                    <bl-form-item label="多选选择框">
+                        <bl-select :optionsData="selectData" multiple v-model="theSelect2"></bl-select>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col>
+                    <bl-form-item label="可搜索选择框">
+                        <bl-select :optionsData="selectData" filterable v-model="theSelect3"></bl-select>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col>
+                    <bl-form-item label="远程搜索框">
+                        <bl-select :loading="loading" :optionsData="selectRemoteData" :remoteMethod="remoteMethod"
+                            :remoteUrl="remoteUrl" filterable multiple ref="theSelect4" remote v-model="theSelect4">
+                        </bl-select>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col>
+                    <bl-form-item label="远程搜索框2">
+                        <bl-select :optionsData="selectRemoteData4" :remoteMethod="remoteMethod" :remoteUrl="remoteUrl"
+                            filterable multiple ref="theSelect5" remote v-model="theSelect5">
+                        </bl-select>
+                    </bl-form-item>
+                </bl-col>
+            </bl-row>
+        </bl-form>
+    </bl-main>
+    <bl-footer type="dialog">
+        <bl-button @blocks-click="closeDialog">取消</bl-button>
+        <bl-button @blocks-click="submitForm" loading type="primary">{{$l("add")}}</bl-button>
+    </bl-footer>
+</bl-container>

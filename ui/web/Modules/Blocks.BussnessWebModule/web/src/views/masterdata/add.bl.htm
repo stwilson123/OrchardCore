@@ -1,0 +1,62 @@
+<bl-container type="dialog">
+    <bl-main :style="{height:mainHeight+'px'}" ref="theMain" type="dialog">
+        <bl-form :model="ruleForm" :rules="rules" ref="ruleForm">
+            <bl-row>
+                <bl-col>
+                    <bl-form-item label="姓名" prop="city">
+                        <bl-input v-model="ruleForm.city">
+                            <bl-button slot="prepend">https://www.</bl-button>
+                            <bl-button slot="append">.com</bl-button>
+                        </bl-input>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col>
+                    <bl-form-item label="年龄" prop="num">
+                        <bl-input v-model="ruleForm.num"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col>
+                    <bl-form-item label="日期" prop="registerTime">
+                        <bl-datepicker dateFmt="yyyy-MM-dd" name="registerTime" v-model="ruleForm.registerTime">
+                        </bl-datepicker>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col>
+                    <bl-form-item label="选择框" prop="combobox">
+                        <bl-select :optionsData="selectData" clearable v-model="ruleForm.combobox"></bl-select>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col>
+                    <bl-form-item label="多选选择框">
+                        <bl-select :optionsData="selectData" multiple v-model="theSelect2"></bl-select>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col>
+                    <bl-form-item label="可搜索选择框">
+                        <bl-select :optionsData="selectData" filterable v-model="theSelect3"></bl-select>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col>
+                    <bl-form-item label="远程搜索框">
+                        <bl-select :remoteMethod="remoteMethod" :remoteUrl="remoteUrl" filterable multiple remote
+                            v-model="theSelect4">
+                        </bl-select>
+                    </bl-form-item>
+                </bl-col>
+            </bl-row>
+        </bl-form>
+        <bl-row>
+            <div :style="{height:gridHeight+'px',background:'black'}">
+                <bl-validation-provider :rules="['required']" name="姓名" vid="文本框">
+                    <bl-input v-model="inputModel"></bl-input>
+                </bl-validation-provider>
+            </div>
+        </bl-row>
+    </bl-main>
+    <bl-footer ref="footer" type="dialog">
+        <bl-button @blocks-click="closeDialog">取消</bl-button>
+        <bl-button @blocks-click="submitForm" loading type="primary" v-permission:save>{{$l("add")}}
+        </bl-button>
+        <bl-button v-permission:NotFound>无权限按钮</bl-button>
+    </bl-footer>
+</bl-container>

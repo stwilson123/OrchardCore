@@ -1,0 +1,20 @@
+<bl-container>
+    <bl-header ref="header">
+        <bl-button @blocks-click="addClick" icon="el-icon-plus" v-permission:add>{{$l("add")}}</bl-button>
+        <bl-button v-permission:NotFound>无权限按钮</bl-button>
+        <bl-button @blocks-click="addFromOtherModuleClick" icon="el-icon-plus">新增(来源于其他模块)</bl-button>
+        <bl-button @blocks-click="editClick" icon="el-icon-check">修改</bl-button>
+        <bl-button @blocks-click="deleteClick" icon="el-icon-close" loading>删除</bl-button>
+        <bl-button @blocks-click="exportExcel">导出excel</bl-button>
+        <bl-button @blocks-click="exceptionClick">异常测试</bl-button>
+        <bl-button @blocks-click="temp2">样板二</bl-button>
+        <bl-button @blocks-click="getRowEditingData">获取RowEditingData</bl-button>
+    </bl-header>
+    <bl-main>
+        <bl-grid :grid-options="gridOptions" :grid-style="{height:gridHeight}" @gridData="gridData" ref="AgGrid"
+            unique-key="Id"></bl-grid>
+        <!-- <bl-grid ref="AgGrid" grid-style="height:calc(var(--global-container-height) - 36px)" :grid-options="gridOptions" unique-key="Id"
+            @gridData="gridData" @cellEditingStopped="cellEditingStopped"></bl-grid> -->
+    </bl-main>
+    <bl-confirm :visible.sync="confirmVisible" @blocks-cancel="confirmCancel" @blocks-ok="confirmOk"></bl-confirm>
+</bl-container>

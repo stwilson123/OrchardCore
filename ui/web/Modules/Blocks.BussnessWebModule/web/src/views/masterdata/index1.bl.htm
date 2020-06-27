@@ -1,0 +1,9 @@
+<bl-container>
+    <bl-header>
+        <bl-button @blocks-click="temp1">样板一</bl-button>
+    </bl-header>
+    <bl-main>
+        <bl-grid :grid-options="gridOptions" :grid-style="{height:gridHeight}" @gridData="gridData" grid-type="client"
+            ref="TheGrid"></bl-grid>
+    </bl-main>
+</bl-container>

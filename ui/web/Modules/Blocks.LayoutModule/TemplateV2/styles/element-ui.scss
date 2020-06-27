@@ -1,0 +1,195 @@
+//覆盖一些element-ui样式
+
+.el-breadcrumb__inner,
+.el-breadcrumb__inner a {
+  font-weight: 400 !important;
+}
+
+.el-upload {
+  input[type="file"] {
+    display: none !important;
+  }
+}
+
+.el-upload__input {
+  display: none;
+}
+
+.cell {
+  .el-tag {
+    margin-right: 0px;
+  }
+}
+
+.small-padding {
+  .cell {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
+
+.fixed-width {
+  .el-button--mini {
+    padding: 7px 10px;
+    width: 60px;
+  }
+}
+
+.status-col {
+  .cell {
+    padding: 0 10px;
+    text-align: center;
+
+    .el-tag {
+      margin-right: 0px;
+    }
+  }
+}
+
+//暂时性解决dialog 问题 https://github.com/ElemeFE/element/issues/2461
+.el-dialog {
+  transform: none;
+  left: 0;
+  position: relative;
+  margin: 0 auto;
+}
+
+//文章页textarea修改样式
+.article-textarea {
+  textarea {
+    padding-right: 40px;
+    resize: none;
+    border: none;
+    border-radius: 0px;
+    border-bottom: 1px solid #bfcbd9;
+  }
+}
+
+//element ui upload
+.upload-container {
+  .el-upload {
+    width: 100%;
+
+    .el-upload-dragger {
+      width: 100%;
+      height: 200px;
+    }
+  }
+}
+
+//dropdown
+.el-dropdown-menu {
+  z-index: 7900 !important;
+  a {
+    display: block
+  }
+}
+
+.el-scrollbar__view {
+  position: relative;
+}
+
+//dialogks
+.el-dialog__wrapper{
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  bottom: 14px;
+  right: 14px;
+}
+.v-modal{
+  position: absolute;
+}
+
+//message
+.el-message{
+  z-index: 8000 !important;
+  top: 50% !important;
+  margin-top: -30px !important;
+}
+
+.el-form-item__label{
+  padding: 0 !important;
+  margin: 0;
+}
+.el-select{
+  width: 100%;
+}
+.blocks-web-dialog{
+  width: auto;
+  height: calc(100vh - 133px);
+  margin: 0px !important;
+  box-shadow: none;
+  border: 1px solid #bdc3c7;
+  border-radius: 0;
+  .el-dialog__header{
+    border-bottom:1px solid #bdc3c7;
+    padding: 0 0 0 21px;
+    height: 40px;
+    line-height: 40px;
+    .el-dialog__title{
+      line-height: normal;
+      font-size: 16px;
+    }
+    .el-dialog__headerbtn {
+      top: 10px;
+      right: 10px;
+      i {
+        font-weight: bold;
+      }
+    }
+  }
+  .el-dialog__body{
+    height: calc(100vh - 175px);
+    padding: 0;
+    overflow: auto;
+  }
+}
+
+.blocks-web-page-container{
+  background: #fff;
+  // margin: 14px;
+  padding: 14px;
+  height: calc(100vh - 104px);
+  overflow: auto;
+}
+.blocks-web-dialog-container{
+  background: #fff;
+  height: 100%;
+  overflow: auto;
+}
+.blocks-web-page-header{
+  padding: 0 14px;
+  height: 40px !important;
+  line-height: 40px;border:1px solid #bdc3c7;border-bottom:none;
+  text-align: right;
+}
+.blocks-web-dialog-header{
+  border-bottom: 1px solid #bdc3c7;
+  padding: 0 14px;
+  height: 40px !important;
+  line-height: 40px;
+}
+.blocks-web-page-main{
+  padding: 0;
+}
+.blocks-web-dialog-main{
+  padding:24px 28px;
+  flex: none;
+  height: calc(100vh - 237px);
+  width: 100%;
+}
+.blocks-web-page-footer{
+  padding:0 21px;height:62px !important;line-height: 62px; border:1px solid #bdc3c7;border-top:none;
+}
+.blocks-web-dialog-footer{
+  padding:0 21px;height:62px !important;line-height: 62px; border-top:1px solid #bdc3c7;text-align: right;
+}
+.blocks-button-default{
+  padding: 0 10px;
+  height:32px;
+  font-size: 14px;
+  border:1px solid rgba(226,226,226,1);
+  border-radius:2px;
+  margin: 0 9px 0 0 !important;
+}

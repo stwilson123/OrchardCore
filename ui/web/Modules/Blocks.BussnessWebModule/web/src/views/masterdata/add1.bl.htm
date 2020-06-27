@@ -1,0 +1,40 @@
+<fragment>
+    <el-form :model="ruleForm" :rules="rules" label-width="100px" ref="ruleForm">
+        <el-col :sm="8" :xs="12">
+            <el-form-item label="姓名" prop="name">
+                <el-input v-model="name"></el-input>
+            </el-form-item>
+        </el-col>
+        <el-col :sm="8" :xs="12">
+            <el-form-item label="年龄" prop="age">
+                <el-input v-model="age"></el-input>
+            </el-form-item>
+        </el-col>
+        <el-col :sm="8" :xs="12">
+            <el-form-item label="日期" prop="theDate">
+                <bl-datepicker dateFmt="yyyy/MM/dd HH:mm:ss" v-model="theDate"></bl-datepicker>
+            </el-form-item>
+        </el-col>
+        <el-col :sm="8" :xs="12">
+            <el-form-item label="选择框" prop="theSelect">
+                <bl-select :optionsData="selectData" clearable v-model="theSelect"></bl-select>
+            </el-form-item>
+        </el-col>
+        <el-divider></el-divider>
+        <el-form-item label="多选选择框">
+            <bl-select :optionsData="selectData" multiple v-model="theSelect2"></bl-select>
+        </el-form-item>
+        <el-form-item label="可搜索选择框">
+            <bl-select :optionsData="selectData" filterable v-model="theSelect3"></bl-select>
+        </el-form-item>
+        <el-form-item label="远程搜索框">
+            <bl-select :optionsData="selectRemoteData" :remoteMethod="remoteMethod" filterable remote
+                v-model="theSelect4">
+            </bl-select>
+        </el-form-item>
+    </el-form>
+    <div class="bl-dialog__footer">
+        <bl-button @blocks-click="closeDialog">取消</bl-button>
+        <bl-button :loading="btnloading" @blocks-click="submitForm" type="primary">保存</bl-button>
+    </div>
+</fragment>

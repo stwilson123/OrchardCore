@@ -470,11 +470,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.Event.Core", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.Audit.Abstractions", "src\OrchardCore\BlocksCore.Audit.Abstractions\BlocksCore.Audit.Abstractions.csproj", "{FC881F5C-6FA3-4311-8CAE-1E5305914502}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SysMgt.BussnessApplicationModule", "src\OrchardCore.Modules\SysMgt.BussnessApplicationModule\SysMgt.BussnessApplicationModule.csproj", "{3DD295DC-4727-4525-8F18-A8DBC6AAED27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SysMgt.BussnessApplicationModule", "src\OrchardCore.Modules\SysMgt.BussnessApplicationModule\SysMgt.BussnessApplicationModule.csproj", "{3DD295DC-4727-4525-8F18-A8DBC6AAED27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlocksCore.AutoMapper.Abstractions", "src\OrchardCore\BlocksCore.AutoMapper.Abstractions\BlocksCore.AutoMapper.Abstractions.csproj", "{6E09A3AF-E7EC-44C1-98D5-A83F295DAA32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.AutoMapper.Abstractions", "src\OrchardCore\BlocksCore.AutoMapper.Abstractions\BlocksCore.AutoMapper.Abstractions.csproj", "{6E09A3AF-E7EC-44C1-98D5-A83F295DAA32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlocksCore.Ms.Web", "src\BlocksCore.Ms.Web\BlocksCore.Ms.Web.csproj", "{DB6E1F2B-71BB-4154-80C4-3BF6C85C95FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.Ms.Web", "src\BlocksCore.Ms.Web\BlocksCore.Ms.Web.csproj", "{DB6E1F2B-71BB-4154-80C4-3BF6C85C95FB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.Domain.Core", "src\OrchardCore\BlocksCore.Domain.Core\BlocksCore.Domain.Core.csproj", "{11007168-F93B-469E-AA9D-6DA16DFD628F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlocksCore.Localization", "src\OrchardCore.Modules\BlocksCore.Localization\BlocksCore.Localization.csproj", "{C0A7F46F-8830-42B1-A6D3-C584DC233C06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1290,6 +1294,14 @@ Global
 		{DB6E1F2B-71BB-4154-80C4-3BF6C85C95FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB6E1F2B-71BB-4154-80C4-3BF6C85C95FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB6E1F2B-71BB-4154-80C4-3BF6C85C95FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11007168-F93B-469E-AA9D-6DA16DFD628F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11007168-F93B-469E-AA9D-6DA16DFD628F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11007168-F93B-469E-AA9D-6DA16DFD628F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11007168-F93B-469E-AA9D-6DA16DFD628F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0A7F46F-8830-42B1-A6D3-C584DC233C06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0A7F46F-8830-42B1-A6D3-C584DC233C06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0A7F46F-8830-42B1-A6D3-C584DC233C06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0A7F46F-8830-42B1-A6D3-C584DC233C06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1517,6 +1529,8 @@ Global
 		{3DD295DC-4727-4525-8F18-A8DBC6AAED27} = {4F8BD601-FD95-47F4-9712-EA83216A826F}
 		{6E09A3AF-E7EC-44C1-98D5-A83F295DAA32} = {D0194169-34DC-4762-ADB8-F8A4E189C920}
 		{DB6E1F2B-71BB-4154-80C4-3BF6C85C95FB} = {275E087F-A4E2-4A7B-A924-ED68E3A52086}
+		{11007168-F93B-469E-AA9D-6DA16DFD628F} = {D0194169-34DC-4762-ADB8-F8A4E189C920}
+		{C0A7F46F-8830-42B1-A6D3-C584DC233C06} = {D92E7E13-E6D5-4723-AB93-D93C9A4F7416}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {46A1D25A-78D1-4476-9CBF-25B75E296341}

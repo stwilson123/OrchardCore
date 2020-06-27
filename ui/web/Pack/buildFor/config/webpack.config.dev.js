@@ -1,0 +1,1 @@
+const baseWebpackConfig = require('./webpack.config')
