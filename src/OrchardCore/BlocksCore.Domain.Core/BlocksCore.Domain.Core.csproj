@@ -5,9 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BlocksCore.Localization.Abtractions\BlocksCore.Localization.Abtractions.csproj" />
+    <ProjectReference Include="..\BlocksCore.Domain.Abstractions\BlocksCore.Domain.Abstractions.csproj" />
     <ProjectReference Include="..\OrchardCore.Abstractions\OrchardCore.Abstractions.csproj" />
-    <ProjectReference Include="..\OrchardCore.Localization.Core\OrchardCore.Localization.Core.csproj" />
   </ItemGroup>
 
 </Project>

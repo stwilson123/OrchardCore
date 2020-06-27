@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using BlocksCore.Abstractions.Extensions;
 using BlocksCore.Application.Abstratctions;
 using BlocksCore.WebAPI.Controllers.Manager;
 using Microsoft.AspNetCore.Mvc;
@@ -22,13 +23,13 @@ namespace BlocksCore.WebAPI
     /// </summary>
     public class ModularApplicationModelProvider : IApplicationModelProvider
     {
-        private readonly ITypeFeatureProvider _typeFeatureProvider;
+        private readonly ITypeFeatureExtensionsProvider _typeFeatureProvider;
         private readonly IHostEnvironment _hostingEnvironment;
         private readonly ShellSettings _shellSettings;
         private readonly MvcControllerManager _defaultMvcControllerManager;
 
         public ModularApplicationModelProvider(
-            ITypeFeatureProvider typeFeatureProvider,
+            ITypeFeatureExtensionsProvider typeFeatureProvider,
             IHostEnvironment hostingEnvironment,
             ShellDescriptor shellDescriptor,
             ShellSettings shellSettings,
@@ -62,7 +63,7 @@ namespace BlocksCore.WebAPI
         {
             foreach (var controller in context.Result.Controllers.Where(c => typeof(IAppService).IsAssignableFrom(c.ControllerType)))
             {
-                var blueprint = _typeFeatureProvider.GetFeatureForDependency(controller.ControllerType);
+                var blueprint = _typeFeatureProvider.GetMainFeatureForDependency(controller.ControllerType);
                 if (blueprint == null)
                     continue;
                 if (!controller.RouteValues.ContainsKey("controller"))
