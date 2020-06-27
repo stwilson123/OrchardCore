@@ -8,6 +8,8 @@
     <ProjectReference Include="..\..\OrchardCore\BlocksCore.Abstractions\BlocksCore.Abstractions.csproj" />
     <ProjectReference Include="..\..\OrchardCore\BlocksCore.Application.Abstratctions\BlocksCore.Application.Abstratctions.csproj" />
     <ProjectReference Include="..\..\OrchardCore\BlocksCore.Localization.Abtractions\BlocksCore.Localization.Abtractions.csproj" />
+    <ProjectReference Include="..\..\..\src\OrchardCore\OrchardCore.Module.Targets\OrchardCore.Module.Targets.csproj" />
   </ItemGroup>
+  <Import Project="..\..\..\src\OrchardCore\OrchardCore.Module.Targets\OrchardCore.Module.Targets.targets" />
 
 </Project>

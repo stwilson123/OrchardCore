@@ -7,6 +7,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\OrchardCore\BlocksCore.Data.Abstractions\BlocksCore.Data.Abstractions.csproj" />
     <ProjectReference Include="..\..\OrchardCore\BlocksCore.Data.EF\BlocksCore.Data.EF.csproj" />
+    <ProjectReference Include="..\SysMgr.EntityModule\SysMgr.EntityModule.csproj" />
+    <ProjectReference Include="..\SysMgt.BussnessDTOModule\SysMgt.BussnessDTOModule.csproj" />
+    <ProjectReference Include="..\..\..\src\OrchardCore\OrchardCore.Module.Targets\OrchardCore.Module.Targets.csproj" />
   </ItemGroup>
+  <Import Project="..\..\..\src\OrchardCore\OrchardCore.Module.Targets\OrchardCore.Module.Targets.targets" />
 
 </Project>

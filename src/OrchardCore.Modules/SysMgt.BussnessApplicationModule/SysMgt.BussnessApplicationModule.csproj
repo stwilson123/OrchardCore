@@ -8,6 +8,8 @@
     <ProjectReference Include="..\..\OrchardCore\BlocksCore.AutoMapper.Abstractions\BlocksCore.AutoMapper.Abstractions.csproj" />
     <ProjectReference Include="..\SysMgt.BussnessDomainModule\SysMgt.BussnessDomainModule.csproj" />
     <ProjectReference Include="..\SysMgt.BussnessDTOModule\SysMgt.BussnessDTOModule.csproj" />
+    <ProjectReference Include="..\..\..\src\OrchardCore\OrchardCore.Module.Targets\OrchardCore.Module.Targets.csproj" />
   </ItemGroup>
+  <Import Project="..\..\..\src\OrchardCore\OrchardCore.Module.Targets\OrchardCore.Module.Targets.targets" />
 
 </Project>

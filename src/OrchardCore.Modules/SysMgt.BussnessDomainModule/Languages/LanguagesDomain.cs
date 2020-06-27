@@ -295,7 +295,7 @@ namespace SysMgt.BussnessDomainModule.Languages
 
         public virtual PageList<ComboboxData> GetLanguageComboxList(LanguagesSearchModel search)
         {
-            var a = LanguagesManager.GetLanguages().ToList();
+            var a = LanguagesManager.GetLanguages().Result.ToList();
             
             PageList<ComboboxData> details = new PageList<ComboboxData>();
             details.Rows = new List<ComboboxData>();

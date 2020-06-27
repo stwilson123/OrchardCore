@@ -11,6 +11,8 @@
     <ProjectReference Include="..\..\OrchardCore\BlocksCore.Localization.Abtractions\BlocksCore.Localization.Abtractions.csproj" />
     <ProjectReference Include="..\..\OrchardCore\BlocksCore.Navigation.Abstractions\BlocksCore.Navigation.Abstractions.csproj" />
     <ProjectReference Include="..\SysMgt.BussnessRespositoryModule\SysMgt.BussnessRespositoryModule.csproj" />
+    <ProjectReference Include="..\..\..\src\OrchardCore\OrchardCore.Module.Targets\OrchardCore.Module.Targets.csproj" />
   </ItemGroup>
+  <Import Project="..\..\..\src\OrchardCore\OrchardCore.Module.Targets\OrchardCore.Module.Targets.targets" />
 
 </Project>
