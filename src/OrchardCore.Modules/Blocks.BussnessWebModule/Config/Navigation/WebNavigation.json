@@ -1,0 +1,33 @@
+{
+  "Items": [
+    {
+      "Name": "MasterData",
+      "DisplayName": "Template1",
+      "ControllerName": "MasterData",
+      "Action": "Index",
+      "Permission": [
+        "index",
+        "add"
+      ]
+    },
+    {
+      "Name": "MasterDataAdd",
+      "DisplayName": "MasterDataAdd",
+      "ControllerName": "MasterData",
+      "Action": "Add",
+      "Permission": [
+        "save"
+      ]
+    },
+    {
+      "Name": "MasterData1",
+      "DisplayName": "Template2",
+      "ControllerName": "MasterData",
+      "Action": "Index1",
+      "Permission": [
+        "index"
+      ]
+    }
+
+  ]
+}
