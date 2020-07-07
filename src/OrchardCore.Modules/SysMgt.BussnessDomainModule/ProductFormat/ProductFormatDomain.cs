@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BlocksCore.Abstractions.UI.Combobox;
 using BlocksCore.Domain.Abstractions;
-using BlocksCore.Localization.Abtractions;
+using Microsoft.Extensions.Localization;
 using SysMgt.BussnessDomainModule.ProductElement;
 using SysMgt.BussnessDTOModule.Combobox;
 using SysMgt.BussnessDTOModule.ProductFormat;
@@ -29,7 +29,7 @@ namespace SysMgt.BussnessDomainModule.ProductFormat
         public IProduct4VarElementRepository Product4VarElementRepository { get; set; }
         private IBdtaQueueRepository BdtaQueueRepository { get; set; }
         private ILogger Ilog { get; set; }
-        public Localizer L { get; set; }
+        public IStringLocalizer L { get; set; }
         public ProductFormatDomain(ILogger<ProductFormatDomain> Ilog,IProductFormatRepository productFormatRepository, IProductFormatDetailRepository productFormatDetailRepository, IBdtaQueueRepository BdtaQueueRepository, ISetupRepository setupRepository, IProductElementRepository productElementRepository, IProduct4ElementRuleRepository product4ElementRuleRepository, IProduct4VarElementRepository product4VarElementRepository)
         {
             this.ProductFormatRepository = productFormatRepository;
@@ -48,12 +48,12 @@ namespace SysMgt.BussnessDomainModule.ProductFormat
             if (productFormat != null)
             {
 
-                throw new BlocksBussnessException("101", L("编码不能相同!"), null);
+                throw new BlocksBussnessException("101", L["编码不能相同!"], null);
             }
 
             if (productFormatData.ProductElements == null || !productFormatData.ProductElements.Any())
             {
-                throw new BlocksBussnessException("101", L("未包含任何编码元素!"), null);
+                throw new BlocksBussnessException("101", L["未包含任何编码元素!"], null);
                
             }
 
@@ -61,12 +61,12 @@ namespace SysMgt.BussnessDomainModule.ProductFormat
             bdtaProductformat.Id = Guid.NewGuid().ToString();
             //if (productFormatData.Code == "")
             //{
-            //    throw new BlocksBussnessException("101", L("编码不能为空!"), null);
+            //    throw new BlocksBussnessException("101", L["编码不能为空!"], null);
             //}
             bdtaProductformat.PRODUCTFORMAT_CODE = productFormatData.Code;
             //if (productFormatData.Name == "")
             //{
-            //    throw new BlocksBussnessException("101", L("名称不能为空!"), null);
+            //    throw new BlocksBussnessException("101", L["名称不能为空!"], null);
             //}
             bdtaProductformat.PRODUCTFORMAT_NAME = productFormatData.Name;
             bdtaProductformat.PRODUCTFORMAT_DESCRIPTION = productFormatData.Description;
@@ -79,15 +79,15 @@ namespace SysMgt.BussnessDomainModule.ProductFormat
             {
                 if (item.ProductElementName == "")
                 {
-                    throw new BlocksBussnessException("101", L("明细名称必选!"), null);
+                    throw new BlocksBussnessException("101", L["明细名称必选!"], null);
                 }
                 if (item.ProductformatStart == "")
                 {
-                    throw new BlocksBussnessException("101", L("起始位必填!"), null);
+                    throw new BlocksBussnessException("101", L["起始位必填!"], null);
                 }
                 if (item.ProductformatEnd == "")
                 {
-                    throw new BlocksBussnessException("101", L("终止位必填!"), null);
+                    throw new BlocksBussnessException("101", L["终止位必填!"], null);
                 }
                 BDTA_PRODUCTFORMAT_DETAIL bdtaProductformatDetail = new BDTA_PRODUCTFORMAT_DETAIL()
                 {
@@ -120,7 +120,7 @@ namespace SysMgt.BussnessDomainModule.ProductFormat
                 var exsitData = ProductFormatRepository.FirstOrDefault(t => t.Id == id);
                 if (exsitData == null)
                 {
-                    throw new BlocksBussnessException("101", L("未查到对象"), null);
+                    throw new BlocksBussnessException("101", L["未查到对象"], null);
                 }
                 ProductFormatRepository.Delete(t => t.Id == id);
                 ProductFormatDetailRepository.Delete(t => t.PRODUCTFORMATID == id);
@@ -129,7 +129,7 @@ namespace SysMgt.BussnessDomainModule.ProductFormat
             //var exsitDataDetail = ProductFormatDetailRepository.FirstOrDefault(t => t.PRODUCTFORMATID == productFormatData.ID);
             //if (exsitDataDetail != null)
             //{
-            //    throw new BlocksBussnessException("101", L("已绑定明细，请先删除明细再执行此操作!"), null);
+            //    throw new BlocksBussnessException("101", L["已绑定明细，请先删除明细再执行此操作!"], null);
             //}
 
             
@@ -142,19 +142,19 @@ namespace SysMgt.BussnessDomainModule.ProductFormat
             var productFormat = ProductFormatRepository.FirstOrDefault(t => t.Id == productFormatData.ID);
             if (productFormat == null)
             {
-                throw new BlocksBussnessException("101", L("未查询到任何元素!"), null);
+                throw new BlocksBussnessException("101", L["未查询到任何元素!"], null);
               
             }
 
             //if (productFormat.PRODUCTFORMAT_CODE == productFormatData.Code)
             //{
-            //    throw new BlocksBussnessException("101", L("编码不能相同!"), null);
+            //    throw new BlocksBussnessException("101", L["编码不能相同!"], null);
                
             //}
 
             if (productFormatData.ProductElements == null || !productFormatData.ProductElements.Any())
             {
-                throw new BlocksBussnessException("101", L("未包含任何编码元素!"), null);
+                throw new BlocksBussnessException("101", L["未包含任何编码元素!"], null);
                
             }
 
@@ -168,15 +168,15 @@ namespace SysMgt.BussnessDomainModule.ProductFormat
                 {
                     if (productFormatData.ProductElements[i].ProductElementName == "")
                     {
-                        throw new BlocksBussnessException("101", L("明细名称必选!"), null);
+                        throw new BlocksBussnessException("101", L["明细名称必选!"], null);
                     }
                     if (productFormatData.ProductElements[i].ProductformatStart == "")
                     {
-                        throw new BlocksBussnessException("101", L("起始位必填!"), null);
+                        throw new BlocksBussnessException("101", L["起始位必填!"], null);
                     }
                     if (productFormatData.ProductElements[i].ProductformatEnd == "")
                     {
-                        throw new BlocksBussnessException("101", L("终止位必填!"), null);
+                        throw new BlocksBussnessException("101", L["终止位必填!"], null);
                     }
                 }
                 BDTA_PRODUCTFORMAT_DETAIL bdtaProductformatDetail = new BDTA_PRODUCTFORMAT_DETAIL()
@@ -213,7 +213,7 @@ namespace SysMgt.BussnessDomainModule.ProductFormat
             var productFormat = ProductFormatRepository.FirstOrDefault(t => t.Id == productFormatData.ID);
             if (productFormat == null)
             {
-                throw new BlocksBussnessException("101", L("未查到对象"), null);
+                throw new BlocksBussnessException("101", L["未查到对象"], null);
             }
 
             var productFormatDetail = ProductFormatDetailRepository.GetAllList(t=>t.PRODUCTFORMATID==productFormatData.ID).OrderBy(t=>t.PRODUCTFORMAT_DETAIL_SEQ);
@@ -266,25 +266,25 @@ namespace SysMgt.BussnessDomainModule.ProductFormat
             var setup = SetupRepository.FirstOrDefault(t => t.SETUP_TYPE == "SYS_BUSINESS" && t.SETUP_NO == code);
             if (setup == null)
             {
-                throw new BlocksBussnessException("101", L("未查找到相关功能点！"), null);
+                throw new BlocksBussnessException("101", L["未查找到相关功能点！"], null);
             }
             //查找功能点对应编码规则，提示没有对应编码规则
             var rule = Product4ElementRuleRepository.FirstOrDefault(t => t.PRODUCT_FUNC_ID == setup.Id);
             if (rule == null || rule.PRODUCT_ELEMENT_RULE_ID == null || rule.PRODUCT_ELEMENT_RULE_ID == "")
             {
-                throw new BlocksBussnessException("101", L("功能点未维护对应的编码规则！"), null);
+                throw new BlocksBussnessException("101", L["功能点未维护对应的编码规则！"], null);
             }
             //查找编码规则
             var productFormat = ProductFormatRepository.FirstOrDefault(t => t.Id == rule.PRODUCT_ELEMENT_RULE_ID);
             if (productFormat == null)
             {
-                throw new BlocksBussnessException("101", L("未查找到对应编码规则！"), null);
+                throw new BlocksBussnessException("101", L["未查找到对应编码规则！"], null);
             }
             //查找编码规则明细
             var productFormatDetail = ProductFormatDetailRepository.GetListByFormatId(productFormat.Id).OrderBy(t=>t.Seq);
             if (!productFormatDetail.Any())
             {
-                throw new BlocksBussnessException("101", L("未查找到相关编码规则明细！"), null);
+                throw new BlocksBussnessException("101", L["未查找到相关编码规则明细！"], null);
             }
             //编码规则是否符合功能点要求已在功能点对应编码规则维护时判断，此处就不再额外判断
 
@@ -350,7 +350,7 @@ namespace SysMgt.BussnessDomainModule.ProductFormat
                                         //如果起始值大于变量长度即报错，如果结束值大于变量长度则以变量长度为结束值
                                         if (startNum > varlength)
                                         {
-                                            throw new BlocksBussnessException("101", L("截取长度起始值大于变量长度，请检查编码规则设置！"), null);
+                                            throw new BlocksBussnessException("101", L["截取长度起始值大于变量长度，请检查编码规则设置！"], null);
                                         }
                                         if (lengthNum > varlength)
                                         {
@@ -364,7 +364,7 @@ namespace SysMgt.BussnessDomainModule.ProductFormat
                                     }
                                     else
                                     {
-                                        throw new BlocksBussnessException("101", L("未查找到相关变量数据！"), null);
+                                        throw new BlocksBussnessException("101", L["未查找到相关变量数据！"], null);
                                     }
                                 case "Supplier_B":
                                     if (dic.ContainsKey("Supplier_B"))
@@ -374,7 +374,7 @@ namespace SysMgt.BussnessDomainModule.ProductFormat
                                         //如果起始值大于变量长度即报错，如果结束值大于变量长度则以变量长度为结束值
                                         if (startNum > varlength)
                                         {
-                                            throw new BlocksBussnessException("101", L("截取长度起始值大于变量长度，请检查编码规则设置！"), null);
+                                            throw new BlocksBussnessException("101", L["截取长度起始值大于变量长度，请检查编码规则设置！"], null);
                                         }
                                         if (lengthNum > varlength)
                                         {
@@ -388,7 +388,7 @@ namespace SysMgt.BussnessDomainModule.ProductFormat
                                     }
                                     else
                                     {
-                                        throw new BlocksBussnessException("101", L("未查找到相关变量数据！"), null);
+                                        throw new BlocksBussnessException("101", L["未查找到相关变量数据！"], null);
                                     }
                                 case "00210":
                                     break;
@@ -465,7 +465,7 @@ namespace SysMgt.BussnessDomainModule.ProductFormat
                                 //如果起始值大于变量长度即报错，如果结束值大于变量长度则以变量长度为结束值
                                 if (startNum > varlength)
                                 {
-                                    throw new BlocksBussnessException("101", L("截取长度起始值大于变量长度，请检查编码规则设置！"), null);
+                                    throw new BlocksBussnessException("101", L["截取长度起始值大于变量长度，请检查编码规则设置！"], null);
                                 }
                                 if (lengthNum > varlength)
                                 {
@@ -479,7 +479,7 @@ namespace SysMgt.BussnessDomainModule.ProductFormat
                             }
                             else
                             {
-                                throw new BlocksBussnessException("101", L("未查找到相关变量数据！"), null);
+                                throw new BlocksBussnessException("101", L["未查找到相关变量数据！"], null);
                             }
                         case "Supplier_B":
                             if (dic.ContainsKey("Supplier_B"))
@@ -489,7 +489,7 @@ namespace SysMgt.BussnessDomainModule.ProductFormat
                                 //如果起始值大于变量长度即报错，如果结束值大于变量长度则以变量长度为结束值
                                 if (startNum > varlength)
                                 {
-                                    throw new BlocksBussnessException("101", L("截取长度起始值大于变量长度，请检查编码规则设置！"), null);
+                                    throw new BlocksBussnessException("101", L["截取长度起始值大于变量长度，请检查编码规则设置！"], null);
                                 }
                                 if (lengthNum > varlength)
                                 {
@@ -503,7 +503,7 @@ namespace SysMgt.BussnessDomainModule.ProductFormat
                             }
                             else
                             {
-                                throw new BlocksBussnessException("101", L("未查找到相关变量数据！"), null);
+                                throw new BlocksBussnessException("101", L["未查找到相关变量数据！"], null);
                             }
                         case "00210":
                             break;
@@ -541,7 +541,7 @@ namespace SysMgt.BussnessDomainModule.ProductFormat
                     var returnId = BdtaQueueRepository.InsertAndGetId(bdtaQueueEntity);
                     if (string.IsNullOrEmpty(returnId))
                     {
-                        throw new BlocksBussnessException("101", L("插入流水码初始值失败"), null);
+                        throw new BlocksBussnessException("101", L["插入流水码初始值失败"], null);
                     }
                 }
                 else
@@ -561,7 +561,7 @@ namespace SysMgt.BussnessDomainModule.ProductFormat
             {
                 message = String.Format("******************GetSequenceStartIndex,indentity-{0},number-{1},increment-{2}****** error: {3} ***************", indentity, number, increment, ex.Message);
                 Ilog.LogInformation(message);
-                throw new BlocksBussnessException(L(ex.Message), null);
+                throw new BlocksBussnessException("101",L[ex.Message], null);
             }
 
 
@@ -575,7 +575,7 @@ namespace SysMgt.BussnessDomainModule.ProductFormat
             //   var returnId=BdtaQueueRepository.InsertAndGetId(bdtaQueueEntity);
             //    if (string.IsNullOrEmpty(returnId))
             //    {
-            //        throw new BlocksBussnessException("101", L("插入流水码初始值失败"), null);
+            //        throw new BlocksBussnessException("101", L["插入流水码初始值失败"], null);
             //    }
             //}
             //else

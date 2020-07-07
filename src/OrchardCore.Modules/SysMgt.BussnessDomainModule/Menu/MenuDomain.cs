@@ -7,7 +7,7 @@ using BlocksCore.Domain.Abstractions.Domain;
 using Blocks.BussnessEntityModule;
 using BlocksCore.Data.Abstractions.Paging;
 using BlocksCore.Domain.Abstractions;
-using BlocksCore.Localization.Abtractions;
+using Microsoft.Extensions.Localization;
 using SysMgt.BussnessDTOModule.Menu;
 using SysMgt.BussnessRespositoryModule;
 using BlocksCore.Abstractions.Security;
@@ -17,7 +17,7 @@ namespace SysMgt.BussnessDomainModule.Menu
 {
 	public class MenuDomain : IDomainService
 	{
-		public Localizer L { get; set; }
+		public IStringLocalizer L { get; set; }
 		public IMenuRepository MenuRepository { get; set; }
 		public ISysProgramRepository SysProgramRepository { get; set; }
 		public IUserNavigationManager NavigationManager { get; set; }
@@ -39,25 +39,25 @@ namespace SysMgt.BussnessDomainModule.Menu
 		{
 			//if (menuData.Name == "")
 			//{
-			//	throw new BlocksBussnessException("101", L("名称不能为空!"), null);
+			//	throw new BlocksBussnessException("101", L["名称不能为空!"], null);
 			//}
 
 			if (menuData.Code == "")
 			{
-				throw new BlocksBussnessException("101", L("编号不能为空!"), null);
+				throw new BlocksBussnessException("101", L["编号不能为空!"], null);
 			}
 
 
 			//var menuInfo = MenuRepository.FirstOrDefault(t => t.NAME == menuData.Name);
 			//if (menuInfo != null)
 			//{
-			//	throw new BlocksBussnessException("101", L("名称重复"), null);
+			//	throw new BlocksBussnessException("101", L["名称重复"], null);
 			//}
 
 			var menuInfo2 = MenuRepository.FirstOrDefault(t => t.CODE == menuData.Code);
 			if (menuInfo2 != null)
 			{
-				throw new BlocksBussnessException("101", L("编号重复"), null);
+				throw new BlocksBussnessException("101", L["编号重复"], null);
 			}
 
 			SYS_MENUS sysMenus = new SYS_MENUS();
@@ -88,24 +88,24 @@ namespace SysMgt.BussnessDomainModule.Menu
 		{
 			//if (menuData.Name == "")
 			//{
-			//	throw new BlocksBussnessException("101", L("名称不能为空!"), null);
+			//	throw new BlocksBussnessException("101", L["名称不能为空!"], null);
 			//}
 
 			//if (menuData.Code == "")
 			//{
-			//	throw new BlocksBussnessException("101", L("编号不能为空!"), null);
+			//	throw new BlocksBussnessException("101", L["编号不能为空!"], null);
 			//}
 
 			//var sysRoleInfo = MenuRepository.FirstOrDefault(t => t.NAME == menuData.Name && t.Id != menuData.ID);
 			//if (sysRoleInfo != null)
 			//{
-			//	throw new BlocksBussnessException("101", L("名称重复"), null);
+			//	throw new BlocksBussnessException("101", L["名称重复"], null);
 			//}
 
 			//var sysRoleInfo2 = MenuRepository.FirstOrDefault(t => t.CODE == menuData.Code && t.Id != menuData.ID);
 			//if (sysRoleInfo2 != null)
 			//{
-			//	throw new BlocksBussnessException("101", L("编号重复"), null);
+			//	throw new BlocksBussnessException("101", L["编号重复"], null);
 			//}
 
 			int successCount = MenuRepository.Update(t => t.Id == menuData.ID, t => new SYS_MENUS()
@@ -134,7 +134,7 @@ namespace SysMgt.BussnessDomainModule.Menu
 			//var menuInfos = MenuRepository.Delete(t => t.PID == id);
 			//if (successCount <= 0 || rows < 0 || menuInfos < 0)
 			//{
-			//	throw new BlocksBussnessException("101", L("删除失败"), null);
+			//	throw new BlocksBussnessException("101", L["删除失败"], null);
 			//}
 			var childMenu = MenuRepository.GetAllList().Where(n => n.PID == id).ToList();
 			if (childMenu.Count != 0)
@@ -172,7 +172,7 @@ namespace SysMgt.BussnessDomainModule.Menu
 			var menuInfo = MenuRepository.FirstOrDefault(t => t.Id == menuData.ID);
 			if (menuInfo == null)
 			{
-				throw new BlocksBussnessException("101", L("未找到对象"), null);
+				throw new BlocksBussnessException("101", L["未找到对象"], null);
 			}
 			//menuData.Name = menuInfo.NAME;
 			menuData.Code = menuInfo.CODE;

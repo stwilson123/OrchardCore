@@ -1,4 +1,4 @@
-﻿using BlocksCore.Application.Abstratctions.Datatransfer;
+using BlocksCore.Abstractions.Datatransfer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,5 +22,7 @@ namespace SysMgt.BussnessDTOModule.LanguageTexts
     {
         public string LanguageKey { get; set; }
         public string LanguageValue { get; set; }
+
+        public string ModuleName { get; set; }
     }
 }

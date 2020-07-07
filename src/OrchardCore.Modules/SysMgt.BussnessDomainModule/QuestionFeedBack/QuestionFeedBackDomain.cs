@@ -2,7 +2,7 @@ using Blocks.BussnessEntityModule;
 
 using BlocksCore.Domain.Abstractions.Domain;
 using BlocksCore.Domain.Abstractions;
-using BlocksCore.Localization.Abtractions;
+using Microsoft.Extensions.Localization;
 using SysMgt.BussnessRespositoryModule.QuestionFeedBack;
 using System; 
 using System.Collections.Generic;
@@ -18,7 +18,7 @@ namespace SysMgt.BussnessDomainModule.QuestionFeedBack
 {
   public class QuestionFeedBackDomain : IDomainService
     {
-        public Localizer L { get; set; }
+        public IStringLocalizer L { get; set; }
         private IQuestionFeedBackRepository  questionFeedBackRepository { get; set; }
 
         public QuestionFeedBackDomain(IQuestionFeedBackRepository questionFeedBackRepository)
@@ -36,7 +36,7 @@ namespace SysMgt.BussnessDomainModule.QuestionFeedBack
             var questionFeedBackInfo = questionFeedBackRepository.FirstOrDefault(t => t.Id == questionFeedBackData.ID);
             if (questionFeedBackInfo == null)
             {
-                throw new BlocksBussnessException("101", L("failed"), null);
+                throw new BlocksBussnessException("101", L["failed"], null);
             }
             questionFeedBackData.FeedbackType = questionFeedBackInfo.FEEDBACK_TYPE;
             questionFeedBackData.FeedbackTitle = questionFeedBackInfo.FEEDBACK_TITLE;
@@ -51,24 +51,24 @@ namespace SysMgt.BussnessDomainModule.QuestionFeedBack
             #region 数据校验
             if (info == null)
             {
-                throw new BlocksBussnessException("101", L("notnull", L("PARAMETER")), null); 
+                throw new BlocksBussnessException("101", L["notnull", L["PARAMETER"]], null); 
             }
             if (string.IsNullOrEmpty(info.FeedbackType))
             {
-                throw new BlocksBussnessException("101", L("notnull", L("FEEDBACK_TYPE")), null);
+                throw new BlocksBussnessException("101", L["notnull", L["FEEDBACK_TYPE"]], null);
             }
             if (string.IsNullOrEmpty(info.FeedbackTitle))
             {
-                throw new BlocksBussnessException("101", L("notnull", L("FEEDBACK_TITLE")), null);
+                throw new BlocksBussnessException("101", L["notnull", L["FEEDBACK_TITLE"]], null);
             }
             if (info.FeedbackContent.Length==0)
             {
-                throw new BlocksBussnessException("101", L("notnull", L("FEEDBACK_CONTENT")), null);
+                throw new BlocksBussnessException("101", L["notnull", L["FEEDBACK_CONTENT"]], null);
             }
             //var feedBackData = questionFeedBackRepository.FirstOrDefault(t => t.FEEDBACK_TITLE==info.FeedbackTitle && t.CREATER== userId);
             //if (feedBackData != null)
             //{
-            //    throw new BlocksBussnessException("101", L("您已经提过相同问题啦!"), null);
+            //    throw new BlocksBussnessException("101", L["您已经提过相同问题啦!"], null);
             //}
             #endregion
 
@@ -83,11 +83,11 @@ namespace SysMgt.BussnessDomainModule.QuestionFeedBack
             string addResultId=questionFeedBackRepository.InsertAndGetId(data);
             if (string.IsNullOrEmpty(addResultId))
             {
-                throw new BlocksBussnessException("101", L("failed"), null);//反馈添加失败
+                throw new BlocksBussnessException("101", L["failed"], null);//反馈添加失败
             }
             #endregion
 
-            return L("FEEDBACK_TIP_003");//"感谢您提交宝贵建议！"
+            return L["FEEDBACK_TIP_003"];//"感谢您提交宝贵建议！"
         }
 
         public QuestionFeedBackData GetOneByIdNew(QuestionFeedBackData questionFeedBackData)
@@ -95,7 +95,7 @@ namespace SysMgt.BussnessDomainModule.QuestionFeedBack
             var questionFeedBackInfo = questionFeedBackRepository.FirstOrDefault(t => t.Id == questionFeedBackData.ID);
             if (questionFeedBackInfo == null)
             {
-                throw new BlocksBussnessException("101", L("failed"), null);
+                throw new BlocksBussnessException("101", L["failed"], null);
             }
             questionFeedBackData.FeedbackType = questionFeedBackInfo.FEEDBACK_TYPE;
             questionFeedBackData.FeedbackTitle = questionFeedBackInfo.FEEDBACK_TITLE;
@@ -108,19 +108,19 @@ namespace SysMgt.BussnessDomainModule.QuestionFeedBack
             #region 数据校验
             if (info == null)
             {
-                throw new BlocksBussnessException("101", L("notnull", L("PARAMETER")), null);
+                throw new BlocksBussnessException("101", L["notnull", L["PARAMETER"]], null);
             }
             if (string.IsNullOrEmpty(info.FeedbackType))
             {
-                throw new BlocksBussnessException("101", L("notnull", L("FEEDBACK_TYPE")), null);
+                throw new BlocksBussnessException("101", L["notnull", L["FEEDBACK_TYPE"]], null);
             }
             if (string.IsNullOrEmpty(info.FeedbackTitle))
             {
-                throw new BlocksBussnessException("101", L("notnull", L("FEEDBACK_TITLE")), null);
+                throw new BlocksBussnessException("101", L["notnull", L["FEEDBACK_TITLE"]], null);
             }
             if (info.FeedbackContent.Length == 0)
             {
-                throw new BlocksBussnessException("101", L("notnull", L("FEEDBACK_CONTENT")), null);
+                throw new BlocksBussnessException("101", L["notnull", L["FEEDBACK_CONTENT"]], null);
             }
             #endregion
 
@@ -133,11 +133,11 @@ namespace SysMgt.BussnessDomainModule.QuestionFeedBack
             string addResultId = questionFeedBackRepository.InsertAndGetId(data);
             if (string.IsNullOrEmpty(addResultId))
             {
-                throw new BlocksBussnessException("101", L("failed"), null);//反馈添加失败
+                throw new BlocksBussnessException("101", L["failed"], null);//反馈添加失败
             }
             #endregion
 
-            return L("FEEDBACK_TIP_003");//"感谢您提交宝贵建议！"
+            return L["FEEDBACK_TIP_003"];//"感谢您提交宝贵建议！"
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace SysMgt.BussnessDomainModule.QuestionFeedBack
         {
             if (!File.Exists(path))
             {
-                throw new BlocksBussnessException("101", L("FEEDBACK_TIP_004"), null);//反馈内容文件已缺失
+                throw new BlocksBussnessException("101", L["FEEDBACK_TIP_004"], null);//反馈内容文件已缺失
             }
             string line;
             StringBuilder sb = new StringBuilder();             

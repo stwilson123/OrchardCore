@@ -1,6 +1,6 @@
 //using BlocksCore.Domain.Abstractions.Domain;
 //using BlocksCore.Domain.Abstractions;
-//using BlocksCore.Localization.Abtractions;
+//using Microsoft.Extensions.Localization;
 //using BlocksCore.Abstractions.Security;
 //using System;
 //using System.Collections.Generic;
@@ -29,7 +29,7 @@
 //                HttpFileCollection fileCollection = request.Files;
 //                if (request.Files.Count == 0)
 //                {
-//                    throw new BlocksBussnessException("101", L("没有要上传的文件"), null);
+//                    throw new BlocksBussnessException("101", L["没有要上传的文件"], null);
 //                }
 //                var filePath = System.Web.Hosting.HostingEnvironment.MapPath(@"/upload/");
 //                for (int i = 0; i < request.Files.Count; i++)

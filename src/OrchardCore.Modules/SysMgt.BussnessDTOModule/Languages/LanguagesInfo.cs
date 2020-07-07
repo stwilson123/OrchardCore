@@ -1,4 +1,4 @@
-﻿using BlocksCore.Application.Abstratctions.Datatransfer;
+using BlocksCore.Abstractions.Datatransfer;
 using SysMgt.BussnessDTOModule.LanguageTexts;
 using System;
 using System.Collections.Generic;

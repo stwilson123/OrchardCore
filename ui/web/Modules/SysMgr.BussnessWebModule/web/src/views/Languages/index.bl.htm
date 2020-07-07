@@ -1,0 +1,16 @@
+<bl-container>
+    <bl-header ref="header">
+        <bl-button icon="el-icon-plus" @blocks-click="addClick" v-permission:add>{{$l('add')}}</bl-button>
+        <bl-button icon="el-icon-edit" @blocks-click="editClick" v-permission:edit>{{$l('edit')}}</bl-button>
+        <bl-button icon="el-icon-delete" @blocks-click="deleteClick" v-permission:delete loading>{{$l('delete')}}
+        </bl-button>
+    </bl-header>
+    <bl-main>
+        <bl-grid columns-auto-fit ref="TopGrid" @rowClicked="rowClicked" :grid-style="{height:gridHeight}"
+            :grid-options="topGridOptions" @gridData="topGridData">
+        </bl-grid>
+        <bl-grid ref="BottomGrid" no-load-data :grid-style="{height:gridHeight}" :grid-options="bottomGridOptions"
+            @gridData="bottomGridData">
+        </bl-grid>
+    </bl-main>
+</bl-container>

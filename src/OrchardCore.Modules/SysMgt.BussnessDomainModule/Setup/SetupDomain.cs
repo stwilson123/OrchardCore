@@ -3,7 +3,7 @@ using Blocks.BussnessEntityModule;
 using BlocksCore.Abstractions.UI.Combobox;
 using BlocksCore.Data.Abstractions.Paging;
 using BlocksCore.Domain.Abstractions;
-using BlocksCore.Localization.Abtractions;
+using Microsoft.Extensions.Localization;
 using SysMgt.BussnessDomainModule.Common;
 using SysMgt.BussnessDTOModule.Combobox;
 using SysMgt.BussnessDTOModule.Setup;
@@ -27,7 +27,7 @@ namespace SysMgt.BussnessDomainModule.Setup
         private ISetupRepository setupRepository { get; set; }
         private ISetupTypeRepository setupTypeRepository { get; set; }
 
-        public Localizer L { get; set; }
+        public IStringLocalizer L { get; set; }
         /// <summary>
         /// 构造函数,实例化对象
         /// </summary>
@@ -49,19 +49,19 @@ namespace SysMgt.BussnessDomainModule.Setup
             #region 校验
             if (string.IsNullOrEmpty(setupTypeInfo.SetupTypeNo))
             {
-                throw new BlocksBussnessException("101", L("系统配置类型编码不能为空！"), null);
+                throw new BlocksBussnessException("101", L["系统配置类型编码不能为空！"], null);
             }
             var curEntity = setupTypeRepository.FirstOrDefault(t => t.SETUP_TYPE_NO == setupTypeInfo.SetupTypeNo);
             if (curEntity != null)
             {
-                throw new BlocksBussnessException("101", L("系统配置类型编码已存在！"), null);
+                throw new BlocksBussnessException("101", L["系统配置类型编码已存在！"], null);
             }
             if (setupTypeInfo.SetupList != null || setupTypeInfo.SetupList.Count > 0)
             {
                 var setupNos = setupTypeInfo.SetupList.Select(x => x.SetupNo).Distinct().ToList();
                 if (setupNos.Count() < setupTypeInfo.SetupList.Count())
                 {
-                    throw new BlocksBussnessException("101", L("系统配置明细数据中的编码不能重复！"), null);
+                    throw new BlocksBussnessException("101", L["系统配置明细数据中的编码不能重复！"], null);
                 }
             }
             #endregion
@@ -96,14 +96,14 @@ namespace SysMgt.BussnessDomainModule.Setup
             string isSuccessed = setupTypeRepository.InsertAndGetId(model);
             if (string.IsNullOrEmpty(isSuccessed))
             {
-                throw new BlocksBussnessException("101", L("系统配置类型添加失败！"), null);
+                throw new BlocksBussnessException("101", L["系统配置类型添加失败！"], null);
             }
             if (setupList.Count > 0)
             {
                 var sucFlag = setupRepository.Insert(setupList);
                 if (sucFlag.Count <= 0)
                 {
-                    throw new BlocksBussnessException("101", L("系统配置明细数据添加失败！"), null);
+                    throw new BlocksBussnessException("101", L["系统配置明细数据添加失败！"], null);
                 }
             }
 
@@ -123,7 +123,7 @@ namespace SysMgt.BussnessDomainModule.Setup
             var model = setupTypeRepository.FirstOrDefault(t => t.Id == setupTypeData.ID);
             if (model == null)
             {
-                throw new BlocksBussnessException("101", L("未查到系统配置类型编码数据！"), null);
+                throw new BlocksBussnessException("101", L["未查到系统配置类型编码数据！"], null);
             }
             var list = setupRepository.GetAllList(x => x.SETUP_TYPE_ID == setupTypeData.ID);
             List<SetupInfo> setupList = new List<SetupInfo>();
@@ -153,23 +153,23 @@ namespace SysMgt.BussnessDomainModule.Setup
             #region 校验
             if (string.IsNullOrEmpty(setupTypeInfo.ID))
             {
-                throw new BlocksBussnessException("101", L("系统配置类型ID不能为空！"), null);
+                throw new BlocksBussnessException("101", L["系统配置类型ID不能为空！"], null);
             }
             if (string.IsNullOrEmpty(setupTypeInfo.SetupTypeNo))
             {
-                throw new BlocksBussnessException("101", L("系统配置类型编码不能为空！"), null);
+                throw new BlocksBussnessException("101", L["系统配置类型编码不能为空！"], null);
             }
             var curEntity = setupTypeRepository.FirstOrDefault(t => t.SETUP_TYPE_NO == setupTypeInfo.SetupTypeNo && t.Id!= setupTypeInfo.ID);
             if (curEntity != null)
             {
-                throw new BlocksBussnessException("101", L("系统配置类型编码已存在！"), null);
+                throw new BlocksBussnessException("101", L["系统配置类型编码已存在！"], null);
             }
             if (setupTypeInfo.SetupList != null || setupTypeInfo.SetupList.Count > 0)
             {
                 var setupNos = setupTypeInfo.SetupList.Select(x => x.SetupNo).Distinct().ToList();
                 if (setupNos.Count() < setupTypeInfo.SetupList.Count())
                 {
-                    throw new BlocksBussnessException("101", L("系统配置明细数据中的编码不能重复！"), null);
+                    throw new BlocksBussnessException("101", L["系统配置明细数据中的编码不能重复！"], null);
                 }
             }
             #endregion
@@ -201,7 +201,7 @@ namespace SysMgt.BussnessDomainModule.Setup
             });            
             if (isSuccessed<=0)
             {
-                throw new BlocksBussnessException("101", L("系统配置类型更新失败！"), null);
+                throw new BlocksBussnessException("101", L["系统配置类型更新失败！"], null);
             }
             long delFlag = setupRepository.Delete(x => x.SETUP_TYPE_ID == setupTypeInfo.ID);
             if (setupList.Count > 0)
@@ -209,7 +209,7 @@ namespace SysMgt.BussnessDomainModule.Setup
                 var sucFlag = setupRepository.Insert(setupList);
                 if (sucFlag.Count <= 0)
                 {
-                    throw new BlocksBussnessException("101", L("系统配置明细数据添加失败！"), null);
+                    throw new BlocksBussnessException("101", L["系统配置明细数据添加失败！"], null);
                 }
             }
             return "保存成功！";
@@ -220,14 +220,14 @@ namespace SysMgt.BussnessDomainModule.Setup
         {
             //if (Ids == null || Ids.Count <= 0)
             //{
-            //    HelperBLL.ThrowEx("101", L("请选择一条系统配置类型数据删除！"));
+            //    HelperBLL.ThrowEx("101", L["请选择一条系统配置类型数据删除！"]);
             //}
             foreach (var setupTypeId in Ids)
             {
                 var delType = setupTypeRepository.Delete(x => x.Id == setupTypeId && x.ISUSED == 0);
                 if (delType <= 0)
                 {
-                    throw new BlocksBussnessException("101", L("系统配置类型删除失败！"), null);
+                    throw new BlocksBussnessException("101", L["系统配置类型删除失败！"], null);
                 }
                 var delinfo = setupRepository.Delete(x => x.SETUP_TYPE_ID == setupTypeId && x.ISUSED == 0);
             }
@@ -252,12 +252,12 @@ namespace SysMgt.BussnessDomainModule.Setup
             var curEntity = setupRepository.FirstOrDefault(t => t.SETUP_NO == setupData.SetupNo);
             if (curEntity != null)
             {
-                throw new BlocksBussnessException("101", L("编码已存在！"), null);
+                throw new BlocksBussnessException("101", L["编码已存在！"], null);
 
             }
             if (setupData.SetupNo == "")
             {
-                throw new BlocksBussnessException("101", L("编码不能为空！"), null);
+                throw new BlocksBussnessException("101", L["编码不能为空！"], null);
             }
             #region 解析json数据，并且赋值对象
 
@@ -273,7 +273,7 @@ namespace SysMgt.BussnessDomainModule.Setup
             string isSuccessed = setupRepository.InsertAndGetId(model);
             if (string.IsNullOrEmpty(isSuccessed))
             {
-                //throw new BlocksBussnessException("101", L("保存失败！"), null);
+                //throw new BlocksBussnessException("101", L["保存失败！"], null);
                 return "保存失败";
             }
             else
@@ -298,7 +298,7 @@ namespace SysMgt.BussnessDomainModule.Setup
             var curEntity = setupRepository.FirstOrDefault(t => t.SETUP_NO == setupData.SetupNo && t.Id != setupData.ID);
             if (curEntity != null)
             {
-                throw new BlocksBussnessException("101", L("编号已存在！"), null);
+                throw new BlocksBussnessException("101", L["编号已存在！"], null);
             }
 
             #endregion
@@ -366,7 +366,7 @@ namespace SysMgt.BussnessDomainModule.Setup
             var model = setupRepository.FirstOrDefault(t => t.Id == setupData.ID);
             if (model == null)
             {
-                throw new BlocksBussnessException("101", L("未查到对象！"), null);        
+                throw new BlocksBussnessException("101", L["未查到对象！"], null);        
             }
 
             return new SetupData()
@@ -391,7 +391,7 @@ namespace SysMgt.BussnessDomainModule.Setup
             var model = setupRepository.FirstOrDefault(t => t.SETUP_NO == setupData.SetupNo);
             if (model == null)
             {
-                throw new BlocksBussnessException("101", L("未查到对象！"), null);
+                throw new BlocksBussnessException("101", L["未查到对象！"], null);
             }
 
             return new SetupData()

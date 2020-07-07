@@ -1,0 +1,37 @@
+<bl-container type="dialog">
+    <bl-main type="dialog">
+        <bl-form :model="ruleForm" :rules="rules" ref="ruleForm">
+            <bl-row>
+                <bl-col xs="24" sm="24">
+                    <bl-form-item label="编码" prop="Code">
+                        <bl-input v-model="ruleForm.Code" maxlength="32"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col xs="24" sm="24">
+                    <bl-form-item label="图标">
+                        <bl-input v-model="ruleForm.Icon" maxlength="32"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col xs="24" sm="24">
+                    <bl-form-item label="首页图标">
+                        <bl-input v-model="ruleForm.IndexIcon" maxlength="32"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col xs="24" sm="24">
+                    <bl-form-item label="备注">
+                        <bl-input v-model="ruleForm.Desc" maxlength="50"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col xs="24" sm="24">
+                    <bl-form-item label="排序号">
+                        <bl-input v-model="ruleForm.Sort" maxlength="2"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+            </bl-row>
+        </bl-form>
+    </bl-main>
+    <bl-footer type="dialog">
+        <bl-button @blocks-click="cancelClick">{{$l("close")}}</bl-button>
+        <bl-button @blocks-click="saveClick" type="primary" loading>{{$l("save")}}</bl-button>
+    </bl-footer>
+</bl-container>

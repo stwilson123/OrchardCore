@@ -1,0 +1,33 @@
+<bl-container>
+    <bl-aside style="width:420px;padding:10px;">
+        <div>
+            <bl-button ref="pcMenuButton" disabled @blocks-click="pcMenuClick" loading>PC端菜单</bl-button>
+            <bl-button ref="mobileMenuButton" @blocks-click="mobileMenuClick" loading>手机端菜单</bl-button>
+            <bl-button ref="allowDragButton" @blocks-click="allowDropClick" loading>允许拖拽</bl-button>
+            <bl-button ref="forbidDragButton" disabled @blocks-click="cancelDropClick" loading>禁止拖拽</bl-button>
+        </div>
+        <div class="treeContainer">
+            <el-tree v-loading="treeLoading" :expand-on-click-node="false" :data="treeData" node-key="id"
+                @node-drop="handleDrop" :draggable="draggable" :allow-drop="allowDrop" :allow-drag="allowDrag"
+                @node-click="treeClick">
+            </el-tree>
+        </div>
+    </bl-aside>
+    <bl-main>
+        <bl-container style="padding:0;" :style="{height:mainHeight+'px'}">
+            <bl-header ref="header">
+                <bl-button icon="el-icon-plus" v-show="showAddButton" @blocks-click="addClick" v-permission:add>
+                    {{$l('add')}}</bl-button>
+                <bl-button icon="el-icon-edit" @blocks-click="editClick" v-permission:edit>{{$l('edit')}}</bl-button>
+                <bl-button icon="el-icon-delete" @blocks-click="deleteClick" v-permission:delete loading>
+                    {{$l('delete')}}
+                </bl-button>
+                <bl-button @blocks-click="bindClick" v-permission:bind>绑定明细</bl-button>
+            </bl-header>
+            <bl-main>
+                <bl-grid ref="AgGrid" :grid-style="{height:gridHeight+'px'}" :grid-options="gridOptions" unique-key="ID"
+                    @gridData="gridData"></bl-grid>
+            </bl-main>
+        </bl-container>
+    </bl-main>
+</bl-container>

@@ -1,0 +1,71 @@
+<bl-container type="dialog">
+    <bl-main type="dialog">
+        <bl-form :model="ruleForm" :rules="rules" ref="ruleForm">
+            <bl-row>
+                <bl-col>
+                    <bl-form-item label="系统编号" prop="SystemNo">
+                        <bl-input v-model="ruleForm.SystemNo" disabled="true"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col>
+                    <bl-form-item label="系统名称" prop="SystemName">
+                        <bl-input v-model="ruleForm.SystemName" disabled="true"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col>
+                    <bl-form-item label="方法名称" prop="FunctionName">
+                        <bl-input v-model="ruleForm.FunctionName" disabled="true"> </bl-input>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col>
+                    <bl-form-item label="请求次数" prop="RequestTimes">
+                        <bl-input v-model="ruleForm.RequestTimes" disabled="true"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col>
+                    <bl-form-item label="开始处理时间" prop="ProcessTimeBegin">
+                        <bl-datepicker dateFmt="yyyy-MM-dd HH:mm:ss" disabled="true"
+                            v-model="ruleForm.ProcessTimeBegin">
+                        </bl-datepicker>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col>
+                    <bl-form-item label="结束处理时间" prop="ProcessTimeEnd">
+                        <bl-datepicker dateFmt="yyyy-MM-dd HH:mm:ss" disabled="true" v-model="ruleForm.ProcessTimeEnd">
+                        </bl-datepicker>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col>
+                    <bl-form-item label="处理结果" prop="ProcessResult">
+                        <bl-input v-model="ruleForm.ProcessResult" disabled="true"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+            </bl-row>
+            <bl-row>
+                <bl-col xs="24" sm="24">
+                    <bl-form-item label="传入参数" prop="ParameterIn">
+                        <bl-input type="textarea" v-model="ruleForm.ParameterIn" :disabled="NumDisable"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+            </bl-row>
+            <bl-row>
+                <bl-col xs="24" sm="24">
+                    <bl-form-item label="返回值" prop="ResponseValue">
+                        <bl-input type="textarea" v-model="ruleForm.ResponseValue" disabled="true"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+            </bl-row>
+            <bl-row>
+                <bl-col xs="24" sm="24">
+                    <bl-form-item label="异常" prop="ExceptionMsg">
+                        <bl-input v-model="ruleForm.ExceptionMsg" disabled="true"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+            </bl-row>
+        </bl-form>
+    </bl-main>
+    <bl-footer type="dialog">
+        <bl-button @blocks-click="closeDialog">{{$l("close")}}</bl-button>
+        <bl-button @blocks-click="submitForm" type="primary" loading :disabled="NumDisable">{{$l("save")}}</bl-button>
+    </bl-footer>
+</bl-container>

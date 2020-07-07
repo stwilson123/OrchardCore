@@ -2,7 +2,7 @@ using Blocks.BussnessEntityModule;
 
 using BlocksCore.Domain.Abstractions.Domain;
 using BlocksCore.Domain.Abstractions;
-using BlocksCore.Localization.Abtractions;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using BlocksCore.Abstractions.Security;
 using Newtonsoft.Json;
@@ -23,7 +23,7 @@ namespace SysMgt.BussnessDomainModule.Api
 {
     public class SystemManageApi : ISystemManageApi
     {
-        public Localizer L { get; set; }
+        public IStringLocalizer L { get; set; }
         private ILogger Ilog { get; set; }
         private IUserContext userContext { get; set; }
         private IThirdSystemCallRepository thirdSystemCallRepository { get; set; }
@@ -45,20 +45,20 @@ namespace SysMgt.BussnessDomainModule.Api
             #region 入参校验
             if (pInfo == null)
             {
-                throw new BlocksBussnessException("101", L("传入参数为空"), null);
+                throw new BlocksBussnessException("101", L["传入参数为空"], null);
             }
             if (string.IsNullOrEmpty(pInfo.SystemNo))
             {
-                throw new BlocksBussnessException("101", L("系统编号参数SystemNo为空"), null);
+                throw new BlocksBussnessException("101", L["系统编号参数SystemNo为空"], null);
             }
             var systemType = thirdSystemTypeRepository.FirstOrDefault(t => t.SYSTEM_NO == pInfo.SystemNo);
             if (systemType == null)
             {
-                throw new BlocksBussnessException("101", L("系统编号在系统类型中未维护，请先维护系统类型"), null);
+                throw new BlocksBussnessException("101", L["系统编号在系统类型中未维护，请先维护系统类型"], null);
             }
             if (string.IsNullOrEmpty(pInfo.FunctionName))
             {
-                throw new BlocksBussnessException("101", L("方法名称参数FunctionName为空"), null);
+                throw new BlocksBussnessException("101", L["方法名称参数FunctionName为空"], null);
             }
             if (!string.IsNullOrEmpty(pInfo.ParameterIn))
             {
@@ -68,7 +68,7 @@ namespace SysMgt.BussnessDomainModule.Api
                 }
                 catch
                 {
-                    throw new BlocksBussnessException("101", L("方法名称参数ParameterIn不是正确的JSON字符串格式"), null);
+                    throw new BlocksBussnessException("101", L["方法名称参数ParameterIn不是正确的JSON字符串格式"], null);
                 }
             }
             #endregion
@@ -93,11 +93,11 @@ namespace SysMgt.BussnessDomainModule.Api
             string newId = thirdSystemCallRepository.InsertAndGetId(applyData);
             if (string.IsNullOrEmpty(newId))
             {
-                throw new BlocksBussnessException("101", L("接口调用申请失败"), null);
+                throw new BlocksBussnessException("101", L["接口调用申请失败"], null);
             }
             #endregion
 
-            return L("succeed");
+            return L["succeed"];
         }
         /// <summary>
         /// 上架单新增方法，新增数据包括基础主信息及明细信息，上架单号请于前置逻辑中调用通用编码生成逻辑进行生成，或自行编写生成逻辑生成。
@@ -129,7 +129,7 @@ namespace SysMgt.BussnessDomainModule.Api
 
             RtnData RtnData = new RtnData();
             RtnData.RtnCode = "1";
-            RtnData.RtnNote = L("succeed");
+            RtnData.RtnNote = L["succeed"];
             return RtnData;
         }
 

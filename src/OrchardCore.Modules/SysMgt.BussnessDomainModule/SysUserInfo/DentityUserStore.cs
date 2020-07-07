@@ -1,5 +1,5 @@
 
-//using BlocksCore.Localization.Abtractions;
+//using Microsoft.Extensions.Localization;
 //using Microsoft.Extensions.Logging;
 //using BlocksCore.Abstractions.Security;
 //using Blocks.Framework.Security.Authorization;
@@ -18,7 +18,7 @@
 //	{
 //		private ISysUserInfoRepository SysUserInfoRepository { get; set; }
 //		private ISysRoleUserRepository SysRoleUserRepository { get; set; }
-//		public Localizer L { get; set; }
+//		public IStringLocalizer L { get; set; }
 
 //		public ILog log { get; set; }
 
@@ -34,7 +34,7 @@
 //			//var userInfo = SysUserInfoRepository.FirstOrDefault(t => t.USERCODE == UserAccount);
 //			//if (userInfo == null)
 //			//{
-//			//	HelperBLL.ThrowEx("101", L(L("InvalidUserNameOrPassword").AutoMapTo<string>()));
+//			//	HelperBLL.ThrowEx("101", L(L["InvalidUserNameOrPassword"].AutoMapTo<string>()));
 //			//}
 //			//var userRoles = SysRoleUserRepository.GetAllList(u => u.SYS_USERINFOID == userInfo.Id)
 //			//	.Select(r => r.SYS_ROLEINFOID).ToList();
@@ -46,7 +46,7 @@
 
 //            if (userInfo == null)
 //            {
-//                HelperBLL.ThrowEx("101", L(L("InvalidUserNameOrPassword").AutoMapTo<string>()));
+//                HelperBLL.ThrowEx("101", L(L["InvalidUserNameOrPassword"].AutoMapTo<string>()));
 //            }
 
 //            UserIdentifier userIdentifier = new UserIdentifier(userInfo.USERID, null, userInfo.USERCODE, userInfo.UserRoles);
@@ -63,12 +63,12 @@
 //			{
 //				if (userInfo.STATE == 2)
 //				{
-//					HelperBLL.ThrowEx("101", L(L("InvalidUserState2").AutoMapTo<string>()));
+//					HelperBLL.ThrowEx("101", L(L["InvalidUserState2"].AutoMapTo<string>()));
 //				}
 //			}
 //			else
 //			{
-//				HelperBLL.ThrowEx("101", L(L("InvalidUserState2").AutoMapTo<string>()));
+//				HelperBLL.ThrowEx("101", L(L["InvalidUserState2"].AutoMapTo<string>()));
 //			}
 //		}
 //	}

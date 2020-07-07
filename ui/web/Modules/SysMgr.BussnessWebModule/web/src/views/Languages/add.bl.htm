@@ -1,0 +1,38 @@
+<bl-container type="dialog">
+    <bl-main :style="{height:mainHeight+'px'}" ref="theMain" type="dialog">
+        <bl-form :model="ruleForm" :rules="rules" ref="ruleForm">
+            <bl-row>
+                <bl-col>
+                    <bl-form-item label="语言编码：" prop="LanguageCode">
+                        <bl-input v-model="ruleForm.LanguageCode"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col>
+                    <bl-form-item label="语言名称：" prop="LanguageName">
+                        <bl-input v-model="ruleForm.LanguageName"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+            </bl-row>
+            <bl-row>
+                <bl-col>
+                    <bl-form-item label="语言图标：" prop="LanguageIcon">
+                        <bl-input v-model="ruleForm.LanguageIcon"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+            </bl-row>
+        </bl-form>
+        <bl-row>
+            <bl-button icon="el-icon-plus" @blocks-click="addClick">{{$l("add")}}</bl-button>
+            <bl-button icon="el-icon-delete" @blocks-click="deleteClick">{{$l("delete")}}</bl-button>
+        </bl-row>
+        <bl-row>
+            <bl-grid ref="AgGrid" grid-type="client" :columns-auto-fit="false" :grid-style="{height:gridHeight+'px'}"
+                :grid-options="gridOptions" no-load-data>
+            </bl-grid>
+        </bl-row>
+    </bl-main>
+    <bl-footer ref="footer" type="dialog">
+        <bl-button @blocks-click="cancelClick">{{$l("close")}}</bl-button>
+        <bl-button @blocks-click="saveClick" type="primary" loading>{{$l("save")}}</bl-button>
+    </bl-footer>
+</bl-container>

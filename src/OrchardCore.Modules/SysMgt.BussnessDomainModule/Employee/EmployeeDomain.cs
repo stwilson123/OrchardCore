@@ -3,7 +3,7 @@ using Blocks.BussnessEntityModule;
 using BlocksCore.Abstractions.UI.Combobox;
 using BlocksCore.Data.Abstractions.Paging;
 using BlocksCore.Domain.Abstractions;
-using BlocksCore.Localization.Abtractions;
+using Microsoft.Extensions.Localization;
 using SysMgt.BussnessDomainModule.Common;
 using SysMgt.BussnessDTOModule.Combobox;
 using SysMgt.BussnessDTOModule.Employee;
@@ -24,7 +24,7 @@ namespace SysMgt.BussnessDomainModule.Employee
         /// </summary>
         private IEmployeeRepository employeeRepository { get; set; }
 
-        public Localizer L { get; set; }
+        public IStringLocalizer L { get; set; }
         /// <summary>
         /// 构造函数,实例化对象
         /// </summary>
@@ -69,19 +69,19 @@ namespace SysMgt.BussnessDomainModule.Employee
         {
             if (employeeData.Code == "")
             {
-                HelperBLL.ThrowEx("101", L("编码不能为空！"));
+                HelperBLL.ThrowEx("101", L["编码不能为空！"]);
             }
             if (employeeData.Name == "")
             {
-                HelperBLL.ThrowEx("101", L("名称不能为空！"));
+                HelperBLL.ThrowEx("101", L["名称不能为空！"]);
             }
             if (employeeData.EmpType == "")
             {
-                HelperBLL.ThrowEx("101", L("类型不能为空！"));
+                HelperBLL.ThrowEx("101", L["类型不能为空！"]);
             }
             if (employeeData.combobox == "")
             {
-                HelperBLL.ThrowEx("101", L("所属部门不能为空！"));
+                HelperBLL.ThrowEx("101", L["所属部门不能为空！"]);
             }
             #region 解析json数据，并且赋值对象
 
@@ -102,7 +102,7 @@ namespace SysMgt.BussnessDomainModule.Employee
             var curEntity = employeeRepository.FirstOrDefault(t => t.EMPLOYEE_NO == model.EMPLOYEE_NO);
             if (curEntity != null)
             {
-                HelperBLL.ThrowEx("101", L("编码已存在！"));
+                HelperBLL.ThrowEx("101", L["编码已存在！"]);
             }
 
             #endregion
@@ -112,7 +112,7 @@ namespace SysMgt.BussnessDomainModule.Employee
             var isSuccessed = employeeRepository.InsertAndGetId(model);
             if (string.IsNullOrEmpty(isSuccessed))
             {
-                //HelperBLL.ThrowEx("101", L("保存失败！"));
+                //HelperBLL.ThrowEx("101", L["保存失败！"]);
                 return "保存失败";
             }
             else
@@ -140,7 +140,7 @@ namespace SysMgt.BussnessDomainModule.Employee
             var curEntity = employeeRepository.FirstOrDefault(t => t.EMPLOYEE_NO == employeeData.Code && t.Id != employeeData.ID);
             if (curEntity != null)
             {
-                HelperBLL.ThrowEx("101", L("编码已存在！"));
+                HelperBLL.ThrowEx("101", L["编码已存在！"]);
             }
 
             #endregion
@@ -192,7 +192,7 @@ namespace SysMgt.BussnessDomainModule.Employee
             var model = employeeRepository.FirstOrDefault(t => t.Id == employeeData.ID);
             if (model == null)
             {
-                HelperBLL.ThrowEx("101", L("未查到对象！"));
+                HelperBLL.ThrowEx("101", L["未查到对象！"]);
             }
 
             return new EmployeeData()

@@ -1,0 +1,15 @@
+<bl-container>
+    <bl-header ref="header">
+        <bl-button icon="el-icon-plus" @blocks-click="addClick" v-permission:add>{{$l('add')}}</bl-button>
+        <bl-button icon="el-icon-edit" @blocks-click="editClick" v-permission:edit>{{$l('edit')}}</bl-button>
+        <bl-button icon="el-icon-edit" @blocks-click="allotClick">分配菜单</bl-button>
+        <bl-button icon="el-icon-plus" @blocks-click="bindingClick">绑定用户</bl-button>
+        <bl-button icon="el-icon-plus" @blocks-click="copyClick" v-permission:copy>权限复制</bl-button>
+        <bl-button icon="el-icon-delete" @blocks-click="deleteClick" v-permission:delete loading>{{$l('delete')}}
+        </bl-button>
+    </bl-header>
+    <bl-main>
+        <bl-grid ref="AgGrid" :grid-style="{height:gridHeight}" :grid-options="gridOptions" unique-key="ID"
+            @gridData="gridData"></bl-grid>
+    </bl-main>
+</bl-container>

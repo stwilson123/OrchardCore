@@ -1,0 +1,35 @@
+<bl-container type="dialog">
+    <bl-main type="dialog">
+        <bl-form :model="ruleForm" :rules="rules" ref="ruleForm">
+            <bl-row>
+                <bl-col>
+                    <bl-form-item label="编码" prop="Code">
+                        <bl-input v-model="ruleForm.Code"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col>
+                    <bl-form-item label="名称" prop="Name">
+                        <bl-input v-model="ruleForm.Name"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col>
+                    <bl-form-item label="描述" prop="Description">
+                        <bl-input v-model="ruleForm.Description"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+            </bl-row>
+        </bl-form>
+        <bl-row>
+            <bl-button type="primary" @blocks-click="addClick">{{$l("add")}}</bl-button>
+            <bl-button plain @blocks-click="delClick">{{$l("delete")}}</bl-button>
+        </bl-row>
+        <bl-row style="margin-top:10px;">
+            <bl-grid ref="TheGrid" grid-style="height:calc(100vh - 535px)" :gridOptions="gridOptions" unique-key="ID"
+                no-load-data="true"></bl-grid>
+        </bl-row>
+    </bl-main>
+    <bl-footer type="dialog">
+        <bl-button @blocks-click="closeDialog">{{$l("close")}}</bl-button>
+        <bl-button @blocks-click="submitForm" type="primary" loading>{{$l("save")}}</bl-button>
+    </bl-footer>
+</bl-container>

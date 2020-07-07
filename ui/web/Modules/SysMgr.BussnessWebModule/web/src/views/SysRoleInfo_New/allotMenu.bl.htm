@@ -1,0 +1,10 @@
+<bl-container type="dialog">
+    <bl-main type="dialog" style="height: auto;">
+        <div style="margin-bottom: 5px;">
+            <bl-button @blocks-click="closeDialog">{{$l("close")}}</bl-button>
+            <bl-button @blocks-click="saveClick" loading>{{$l("save")}}</bl-button>
+        </div>
+        <el-tree ref="tree" :props="props" :data="data" :default-checked-keys="NodeKeys" node-key="id" show-checkbox>
+        </el-tree>
+    </bl-main>
+</bl-container>

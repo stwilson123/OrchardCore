@@ -51,7 +51,8 @@ namespace SysMgt.BussnessDomainModule.Languages
         {
             List<LanguagesDetailData> details = await LanguageTextsRepository.GetLanguagesList(cultureName);
 
-            dictionary.MergeTranslations(details.Select(d => new CultureDictionaryRecord(d.LanguageKey,"", new[] { d.LanguageValue })));
+
+            dictionary.MergeTranslations(details.Select(d => new CultureDictionaryRecord(d.LanguageKey,d.ModuleName, new[] { d.LanguageValue })));
         }
     }
 }

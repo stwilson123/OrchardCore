@@ -7,7 +7,7 @@ using BlocksCore.Domain.Abstractions.Domain;
 using Blocks.BussnessEntityModule;
 using BlocksCore.Data.Abstractions.Paging;
 using BlocksCore.Domain.Abstractions;
-using BlocksCore.Localization.Abtractions;
+using Microsoft.Extensions.Localization;
 using SysMgt.BussnessDTOModule.SysProgram;
 using SysMgt.BussnessRespositoryModule;
 
@@ -22,7 +22,7 @@ namespace SysMgt.BussnessDomainModule.SysProgram
 		public IUserNavigationManager NavigationManager { get; set; }
 		public ISysProgramRepository SysProgramRepository { get; set; }
 		public IMenuRepository MenuRepository { get; set; }
-		public Localizer L { get; set; }
+		public IStringLocalizer L { get; set; }
 
 		public SysProgramDomaim(ISysProgramRepository sysProgramRepository, IMenuRepository menuRepository)
 		{
@@ -35,11 +35,11 @@ namespace SysMgt.BussnessDomainModule.SysProgram
             IEnumerable<NavigationItem> mainMenu;
 			if (bindSysProgramData.Platform == 1)
 			{
-				mainMenu = NavigationManager.GetMenuAsync(Platform.Main.ToString()).Result;
+				mainMenu = NavigationManager.GetFilterMenuAsync(Platform.Main.ToString()).Result;
 			}
 			else
 			{
-				mainMenu = NavigationManager.GetMenuAsync(Platform.Mobile.ToString()).Result;
+				mainMenu = NavigationManager.GetFilterMenuAsync(Platform.Mobile.ToString()).Result;
             }
 			//var mainMenu = NavigationManager.MainMenu;
 			var mainMenuList = mainMenu;
@@ -47,7 +47,7 @@ namespace SysMgt.BussnessDomainModule.SysProgram
 			var menuInfo = MenuRepository.FirstOrDefault(t => t.Id == bindSysProgramData.ID);
 			if (menuInfo == null)
 			{
-				throw new BlocksBussnessException("101", L("Not querying data"), null);
+				throw new BlocksBussnessException("101", L["Not querying data"], null);
 			}
 
 			//SysProgramRepository.Update(t => t.PROGRAMPARENT == bindSysProgramData.ID,
@@ -100,7 +100,7 @@ namespace SysMgt.BussnessDomainModule.SysProgram
 				}
 				foreach (var menu in mainMenuList)
 				{
-					if (menu.GetUniqueId() == item.Code)
+					if (menu.uId == item.Code)
 					{
 						item.Name = menu.DisplayName;
 						break;
@@ -134,11 +134,11 @@ namespace SysMgt.BussnessDomainModule.SysProgram
             IEnumerable<NavigationItem> menus;
 			if (search.Platform == 1)
 			{
-				menus = NavigationManager.GetMenuAsync(Platform.Main.ToString()).Result;
+				menus = NavigationManager.GetFilterMenuAsync(Platform.Main.ToString()).Result;
 			}
 			else
 			{
-				menus = NavigationManager.GetMenuAsync(Platform.Mobile.ToString()).Result;
+				menus = NavigationManager.GetFilterMenuAsync(Platform.Mobile.ToString()).Result;
             }
 			var list = SysProgramRepository.GetPageList(search);
 			PageList<SysProgramPageResult> result = new PageList<SysProgramPageResult>
@@ -151,7 +151,7 @@ namespace SysMgt.BussnessDomainModule.SysProgram
 
             foreach(var n in list.Rows)
 			{
-				var hasL = menus.Where(i => i.GetUniqueId() == n.Code).FirstOrDefault();
+				var hasL = menus.Where(i => i.uId == n.Code).FirstOrDefault();
 				var name = "";
 				if (hasL != null)
 				{
@@ -161,7 +161,7 @@ namespace SysMgt.BussnessDomainModule.SysProgram
 				{
 					if (n.Code != null)
 					{
-						name = L(n.Code);
+						name = L[n.Code];
 					}
 					else
 					{

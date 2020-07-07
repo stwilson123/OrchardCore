@@ -2,7 +2,7 @@ using BlocksCore.Domain.Abstractions.Domain;
 using Blocks.BussnessEntityModule;
 using BlocksCore.Abstractions.UI.Combobox;
 using BlocksCore.Data.Abstractions.Paging;
-using BlocksCore.Localization.Abtractions;
+using Microsoft.Extensions.Localization;
 using SysMgt.BussnessDomainModule.Common;
 using SysMgt.BussnessDTOModule;
 using SysMgt.BussnessDTOModule.Combobox;
@@ -28,7 +28,7 @@ namespace SysMgt.BussnessDomainModule.ConfigFiles
         /// 申明接口
         /// </summary>
         private IConfigFilesRepository configFilesRepository { get; set; }
-        public Localizer L { get; set; }
+        public IStringLocalizer L { get; set; }
 
 
         /// <summary>
@@ -63,11 +63,11 @@ namespace SysMgt.BussnessDomainModule.ConfigFiles
             var returnId = configFilesRepository.InsertAndGetId(newData);
             if (string.IsNullOrEmpty(returnId))
             {
-                throw new BlocksBussnessException("101", L("failed"), null);
+                throw new BlocksBussnessException("101", L["failed"], null);
             }
             else
             {
-                return L("succeed");
+                return L["succeed"];
             }
         }
 
@@ -94,11 +94,11 @@ namespace SysMgt.BussnessDomainModule.ConfigFiles
             }
             if (successCount > 0)
             {
-                return L("succeed");
+                return L["succeed"];
             }
             else
             {
-                throw new BlocksBussnessException("101", L("failed"), null);
+                throw new BlocksBussnessException("101", L["failed"], null);
             }
         }
 
@@ -106,7 +106,7 @@ namespace SysMgt.BussnessDomainModule.ConfigFiles
         {
             if (pInfo == null || pInfo.IDs == null || pInfo.IDs.Count <= 0)
             {
-                throw new BlocksBussnessException("101", L("请至少选择一笔数据进行删除操作"), null);
+                throw new BlocksBussnessException("101", L["请至少选择一笔数据进行删除操作"], null);
             }
             //
             int successCount = configFilesRepository.Update(t => pInfo.IDs.Contains(t.Id), t => new BDTA_CONFIGFILES()
@@ -117,7 +117,7 @@ namespace SysMgt.BussnessDomainModule.ConfigFiles
             //long successCount = configFilesRepository.Delete(t => pInfo.IDs.Contains(t.Id));
             if (successCount < pInfo.IDs.Count)
             {
-                throw new BlocksBussnessException("101", L("删除失败"), null);
+                throw new BlocksBussnessException("101", L["删除失败"], null);
             }
             return "删除成功";
         }
@@ -127,7 +127,7 @@ namespace SysMgt.BussnessDomainModule.ConfigFiles
             var infoData = configFilesRepository.FirstOrDefault(t => t.Id == pInfo.Id);
             if (infoData == null)
             {
-                throw new BlocksBussnessException("101", L("查无数据"), null);
+                throw new BlocksBussnessException("101", L["查无数据"], null);
             }
             return new ConfigFilesInfo()
             {

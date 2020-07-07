@@ -2,7 +2,7 @@ using BlocksCore.Domain.Abstractions.Domain;
 using Blocks.BussnessEntityModule;
 using BlocksCore.Abstractions.UI.Combobox;
 using BlocksCore.Data.Abstractions.Paging;
-using BlocksCore.Localization.Abtractions;
+using Microsoft.Extensions.Localization;
 using SysMgt.BussnessDomainModule.Common;
 using SysMgt.BussnessDTOModule;
 using SysMgt.BussnessDTOModule.Combobox;
@@ -23,7 +23,7 @@ namespace SysMgt.BussnessDomainModule.Department
         /// </summary>
         private IDepartmentRepository departmentRepository { get; set; }
 
-        public Localizer L { get; set; }
+        public IStringLocalizer L { get; set; }
         /// <summary>
         /// 构造函数,实例化对象
         /// </summary>
@@ -58,12 +58,12 @@ namespace SysMgt.BussnessDomainModule.Department
             model.Id = Guid.NewGuid().ToString();
             if (departmentData.Code == "")
             {
-                HelperBLL.ThrowEx("101", L("编码不能为空！"));
+                HelperBLL.ThrowEx("101", L["编码不能为空！"]);
             }
             model.DEPARTMENT_NO = departmentData.Code;
             if (departmentData.Name == "")
             {
-                HelperBLL.ThrowEx("101", L("名称不能为空！"));
+                HelperBLL.ThrowEx("101", L["名称不能为空！"]);
             }
             model.DEPARTMENT_NAME = departmentData.Name;
             model.DEPARTMENT_DESC = departmentData.Desc;
@@ -74,7 +74,7 @@ namespace SysMgt.BussnessDomainModule.Department
             var curEntity = departmentRepository.FirstOrDefault(t => t.DEPARTMENT_NO == model.DEPARTMENT_NO);
             if (curEntity != null)
             {
-                HelperBLL.ThrowEx("101", L("编码已存在！"));
+                HelperBLL.ThrowEx("101", L["编码已存在！"]);
             }
 
             #endregion
@@ -122,7 +122,7 @@ namespace SysMgt.BussnessDomainModule.Department
             var curEntity = departmentRepository.FirstOrDefault(t => t.DEPARTMENT_NO == departmentData.Code && t.Id != departmentData.ID);
             if (curEntity != null)
             {
-                HelperBLL.ThrowEx("101", L("编码已存在！"));
+                HelperBLL.ThrowEx("101", L["编码已存在！"]);
             }
 
             #endregion
@@ -130,11 +130,11 @@ namespace SysMgt.BussnessDomainModule.Department
             #region 编辑
             if (departmentData.Code == "")
             {
-                HelperBLL.ThrowEx("101", L("编码不能为空！"));
+                HelperBLL.ThrowEx("101", L["编码不能为空！"]);
             }
             if (departmentData.Name == "")
             {
-                HelperBLL.ThrowEx("101", L("名称不能为空！"));
+                HelperBLL.ThrowEx("101", L["名称不能为空！"]);
             }
             int successCount = departmentRepository.Update(t => t.Id == departmentData.ID, t => new BDTA_DEPARTMENT()
             {
@@ -180,7 +180,7 @@ namespace SysMgt.BussnessDomainModule.Department
             var model = departmentRepository.FirstOrDefault(t => t.Id == departmentData.ID);
             if (model == null)
             {
-                HelperBLL.ThrowEx("101", L("未查到对象！"));
+                HelperBLL.ThrowEx("101", L["未查到对象！"]);
             }
 
             return new DepartmentData()

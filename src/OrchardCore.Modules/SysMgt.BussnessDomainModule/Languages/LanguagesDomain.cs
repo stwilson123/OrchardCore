@@ -3,7 +3,7 @@ using Blocks.BussnessEntityModule;
 using BlocksCore.Abstractions.UI.Combobox;
 using BlocksCore.Data.Abstractions.Paging;
 using BlocksCore.Domain.Abstractions;
-using BlocksCore.Localization.Abtractions;
+using Microsoft.Extensions.Localization;
 using SysMgt.BussnessDomainModule.LanguageTexts;
 using SysMgt.BussnessDTOModule.Ids;
 using SysMgt.BussnessDTOModule.Languages;
@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BlocksCore.Localization.Abtractions;
 
 namespace SysMgt.BussnessDomainModule.Languages
 {
@@ -23,7 +24,7 @@ namespace SysMgt.BussnessDomainModule.Languages
         //public IExtensionsWrapper ExtensionsWrapper { get; set; }
         public ILanguageManager LanguagesManager { get; set; }
 
-        public Localizer L { get; set; }
+        public IStringLocalizer L { get; set; }
 
         public LanguagesDomain(ILanguagesRepository languagesRepository, ILanguageTextsRepository languageTextsRepository, /*IExtensionsWrapper extensionsWrapper,*/ ILanguageManager languagesManager)
         {
@@ -38,12 +39,12 @@ namespace SysMgt.BussnessDomainModule.Languages
             var Languages = LanguagesRepository.FirstOrDefault(t => t.LANGUAGE_CODE == languagesData.LanguageCode);
             if (Languages != null)
             {
-                throw new BlocksBussnessException("101", L("多语言编码：["+ languagesData.LanguageCode + "]已存在！"), null);
+                throw new BlocksBussnessException("101", L["多语言编码：["+ languagesData.LanguageCode + "]已存在！"], null);
                
             }
             if (languagesData.LanguageTextsDatas.Count == 0)
             {
-                throw new BlocksBussnessException("101", L("请添加语言翻译编码！"), null);
+                throw new BlocksBussnessException("101", L["请添加语言翻译编码！"], null);
 
             }
             for (var i = 0; i < languagesData.LanguageTextsDatas.Count; i++)
@@ -53,12 +54,12 @@ namespace SysMgt.BussnessDomainModule.Languages
                 var Lkey = languagesData.LanguageTextsDatas[i].LanguageKey.TrimEnd().TrimStart();
                 if (string.IsNullOrEmpty(Lkey))
                 {
-                    throw new BlocksBussnessException("101", L("第"+ idx + "行的翻译编码不可以为空"), null);
+                    throw new BlocksBussnessException("101", L["第"+ idx + "行的翻译编码不可以为空"], null);
                 }
                 var vue= languagesData.LanguageTextsDatas[i].LanguageValue.TrimEnd().TrimStart();
                 if (string.IsNullOrEmpty(vue))
                 {
-                    throw new BlocksBussnessException("101", L("第" + idx + "行的翻译内容不可以为空"), null);
+                    throw new BlocksBussnessException("101", L["第" + idx + "行的翻译内容不可以为空"], null);
                 }
             }
             var key = languagesData.LanguageTextsDatas.GroupBy(x => x.LanguageKey).Where(x => x.Count() > 1).ToList();
@@ -70,7 +71,7 @@ namespace SysMgt.BussnessDomainModule.Languages
             }
             if (!string.IsNullOrEmpty(keystirng))
             {
-                throw new BlocksBussnessException("101", L("翻译编码：【"+keystirng + "】重复了"), null);
+                throw new BlocksBussnessException("101", L["翻译编码：【"+keystirng + "】重复了"], null);
             }
 
             var value = languagesData.LanguageTextsDatas.GroupBy(x => x.LanguageValue).Where(x => x.Count() > 1).ToList();
@@ -82,7 +83,7 @@ namespace SysMgt.BussnessDomainModule.Languages
             }
             //if (!string.IsNullOrEmpty(valuestring))
             //{
-            //    throw new BlocksBussnessException("101", L("翻译内容：【" + valuestring + "】重复了"), null);
+            //    throw new BlocksBussnessException("101", L["翻译内容：【" + valuestring + "】重复了"], null);
             //}
 
             BDTA_LANGUAGES bdtaLanguages = new BDTA_LANGUAGES();
@@ -106,13 +107,13 @@ namespace SysMgt.BussnessDomainModule.Languages
             var isSuccessed = LanguagesRepository.InsertAndGetId(bdtaLanguages);
             if (string.IsNullOrEmpty(isSuccessed))
             {
-                throw new BlocksBussnessException("101", L("多语言主数据保存失败！"), null);
+                throw new BlocksBussnessException("101", L["多语言主数据保存失败！"], null);
             }
             var returnDatas = LanguageTextsRepository.Insert(details);
             ///TODO:批量增加返回值的处理
             if (returnDatas.Count != details.Count)
             {
-                throw new BlocksBussnessException("101", L("多语言明细保存失败！"), null);
+                throw new BlocksBussnessException("101", L["多语言明细保存失败！"], null);
             }
             return "新增成功";
         }
@@ -122,22 +123,22 @@ namespace SysMgt.BussnessDomainModule.Languages
             var ltype = LanguagesRepository.FirstOrDefault(t => t.Id == languagesData.Id);
             if (ltype == null)
             {
-                throw new BlocksBussnessException("101", L("请刷新界面,多语言类型可能已经被删除！"), null);
+                throw new BlocksBussnessException("101", L["请刷新界面,多语言类型可能已经被删除！"], null);
             }
             /*if (string.IsNullOrEmpty(languagesData.LanguageCode) || string.IsNullOrEmpty(languagesData.LanguageName))
             {
-                throw new BlocksBussnessException("101", L("多语言编码/名称不能为空"), null);
+                throw new BlocksBussnessException("101", L["多语言编码/名称不能为空"], null);
             }
             var checkData = LanguagesRepository.FirstOrDefault(t => t.LANGUAGE_CODE == languagesData.LanguageCode);
 
             if (checkData != null && languagesData.Id != checkData.Id)
             {
-                throw new BlocksBussnessException("101", L("多语言编码已存在"), null);
+                throw new BlocksBussnessException("101", L["多语言编码已存在"], null);
             }*/
 
             if (languagesData.LanguageTextsDatas.Count == 0)
             {
-                throw new BlocksBussnessException("101", L("请添加语言翻译编码！"), null);
+                throw new BlocksBussnessException("101", L["请添加语言翻译编码！"], null);
 
             }
             for (var i = 0; i < languagesData.LanguageTextsDatas.Count; i++)
@@ -147,12 +148,12 @@ namespace SysMgt.BussnessDomainModule.Languages
                 var Lkey = languagesData.LanguageTextsDatas[i].LanguageKey.TrimEnd().TrimStart();
                 if (string.IsNullOrEmpty(Lkey))
                 {
-                    throw new BlocksBussnessException("101", L("第" + idx + "行的翻译编码不可以为空"), null);
+                    throw new BlocksBussnessException("101", L["第" + idx + "行的翻译编码不可以为空"], null);
                 }
                 var vue = languagesData.LanguageTextsDatas[i].LanguageValue.TrimEnd().TrimStart();
                 if (string.IsNullOrEmpty(vue))
                 {
-                    throw new BlocksBussnessException("101", L("第" + idx + "行的翻译内容不可以为空"), null);
+                    throw new BlocksBussnessException("101", L["第" + idx + "行的翻译内容不可以为空"], null);
                 }
             }
             //判断KEY值是否有重复
@@ -167,7 +168,7 @@ namespace SysMgt.BussnessDomainModule.Languages
             }
             if (!string.IsNullOrEmpty(keystirng))
             {
-                throw new BlocksBussnessException("101", L("翻译编码：【" + keystirng + "】重复了"), null);
+                throw new BlocksBussnessException("101", L["翻译编码：【" + keystirng + "】重复了"], null);
             }
 
             var value = languagesData.LanguageTextsDatas.GroupBy(x => x.LanguageValue).Where(x => x.Count() > 1).ToList();
@@ -179,7 +180,7 @@ namespace SysMgt.BussnessDomainModule.Languages
             }
             //if (!string.IsNullOrEmpty(valuestring))
             //{
-            //    throw new BlocksBussnessException("101", L("翻译内容：【" + valuestring + "】重复了"), null);
+            //    throw new BlocksBussnessException("101", L["翻译内容：【" + valuestring + "】重复了"], null);
             //}
             /*  int successCount = LanguagesRepository.Update(t => t.Id == languagesData.Id, t => new BDTA_LANGUAGES()
               {
@@ -189,7 +190,7 @@ namespace SysMgt.BussnessDomainModule.Languages
               });
               if (successCount == 0)
               {
-                  throw new BlocksBussnessException("101", L("更新失败"), null);
+                  throw new BlocksBussnessException("101", L["更新失败"], null);
               }*/
 
 
@@ -211,7 +212,7 @@ namespace SysMgt.BussnessDomainModule.Languages
             ///TODO:批量增加返回值的处理
             if (returnDatas.Count != details.Count)
             {
-                throw new BlocksBussnessException("101", L("多语言明细保存失败！"), null);
+                throw new BlocksBussnessException("101", L["多语言明细保存失败！"], null);
             }
 
             return "更新成功";
@@ -231,7 +232,7 @@ namespace SysMgt.BussnessDomainModule.Languages
             var languagesManage = LanguagesRepository.FirstOrDefault(t => t.Id == languagesData.Id);
             if (languagesManage == null)
             {
-                throw new BlocksBussnessException("101", L("未查到此语言相关数据"), null);
+                throw new BlocksBussnessException("101", L["未查到此语言相关数据"], null);
             }
             var languageTexts = LanguageTextsRepository.GetAllList(t => t.LANGUAGE_ID == languagesData.Id);
             LanguagesData returnData = new LanguagesData();
@@ -322,7 +323,7 @@ namespace SysMgt.BussnessDomainModule.Languages
             var repeatData = detailGroupBy.FindAll(t => t.count > 1);
             if (repeatData.Count > 0)
             {
-                throw new BlocksBussnessException("101", L("多语言Key值重复"), null);
+                throw new BlocksBussnessException("101", L["多语言Key值重复"], null);
             }
             return "0";
         }

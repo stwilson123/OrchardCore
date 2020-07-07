@@ -8,7 +8,7 @@
 //using BlocksCore.Abstractions.UI.Combobox;
 //using BlocksCore.Data.Abstractions.Paging;
 //using BlocksCore.Domain.Abstractions;
-//using BlocksCore.Localization.Abtractions;
+//using Microsoft.Extensions.Localization;
 //using SysMgt.BussnessDTOModule.Combobox;
 //using SysMgt.BussnessDTOModule.PrintService;
 //using BarTender;
@@ -122,7 +122,7 @@
 //            }
 //            catch (Exception ex)
 //            {
-//                //throw new BlocksBussnessException("101", L("无法找到打印模板或打印机"), null);
+//                //throw new BlocksBussnessException("101", L["无法找到打印模板或打印机"], null);
 //                //return "无法找到打印模板或打印机！";
 //                log.Logger(new LogModel()
 //                {
@@ -159,7 +159,7 @@
 //                    );
 //                    if (updateQty <= 0)
 //                    {
-//                        throw new BlocksBussnessException("101", L("更新打印数据标记失败"), null);
+//                        throw new BlocksBussnessException("101", L["更新打印数据标记失败"], null);
 //                    }
 //                    continue;
 //                }
@@ -182,7 +182,7 @@
 //                    );
 //                    if (updateQty <= 0)
 //                    {
-//                        throw new BlocksBussnessException("101", L("更新打印数据标记失败"), null);
+//                        throw new BlocksBussnessException("101", L["更新打印数据标记失败"], null);
 //                    }
 //                    continue;
 //                }
@@ -203,7 +203,7 @@
 //                );
 //                if (updateQty <= 0)
 //                {
-//                    throw new BlocksBussnessException("101", L("更新打印数据标记失败"), null);
+//                    throw new BlocksBussnessException("101", L["更新打印数据标记失败"], null);
 //                }
 //            }
 //                return returnList;

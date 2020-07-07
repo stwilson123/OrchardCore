@@ -3,7 +3,7 @@ using BlocksCore.Abstractions.UI.Combobox;
 using BlocksCore.Data.Abstractions.Paging;
 using BlocksCore.Domain.Abstractions.Domain;
 using BlocksCore.Domain.Abstractions;
-using BlocksCore.Localization.Abtractions; 
+using Microsoft.Extensions.Localization; 
 using SysMgt.BussnessDTOModule.Common;
 using SysMgt.BussnessDTOModule.ThirdSystemType;
 using SysMgt.BussnessRespositoryModule.ThirdSystemType;
@@ -20,7 +20,7 @@ namespace SysMgt.BussnessDomainModule.ThirdSystemType
         /// </summary>
         private IThirdSystemTypeRepository ThirdSystemTypeRepository { get; set; }        
        // private IUserContext UserContext;
-       public Localizer L { get; set; }
+       public IStringLocalizer L { get; set; }
         /// <summary>
         /// 构造函数,实例化对象
         /// </summary> 
@@ -50,7 +50,7 @@ namespace SysMgt.BussnessDomainModule.ThirdSystemType
             var infoData = ThirdSystemTypeRepository.FirstOrDefault(t => t.Id == pInfo.ID);
             if (infoData == null)
             {
-                throw new BlocksBussnessException("101", L("查无数据"), null);
+                throw new BlocksBussnessException("101", L["查无数据"], null);
             }
             return new ThirdSystemTypeInfo()
             {
@@ -69,17 +69,17 @@ namespace SysMgt.BussnessDomainModule.ThirdSystemType
         {
             if (string.IsNullOrEmpty(pInfo.SystemNo))
             {
-                throw new BlocksBussnessException("101", L("请填写系统编号"), null);
+                throw new BlocksBussnessException("101", L["请填写系统编号"], null);
             }
             if (string.IsNullOrEmpty(pInfo.SystemName))
             {
-                throw new BlocksBussnessException("101", L("请填写系统名称"), null);
+                throw new BlocksBussnessException("101", L["请填写系统名称"], null);
             }
             //判断是否存在相同系统类型编号
             var infoData = ThirdSystemTypeRepository.FirstOrDefault(t => t.SYSTEM_NO == pInfo.SystemNo);
             if (infoData != null)
             {
-                throw new BlocksBussnessException("101", L("系统编号已存在"), null); 
+                throw new BlocksBussnessException("101", L["系统编号已存在"], null); 
             }
 
             SYS_THIRD_SYSTEM_TYPE newData = new SYS_THIRD_SYSTEM_TYPE();
@@ -93,7 +93,7 @@ namespace SysMgt.BussnessDomainModule.ThirdSystemType
             var returnId = ThirdSystemTypeRepository.InsertAndGetId(newData);
             if (string.IsNullOrEmpty(returnId))
             {
-                throw new BlocksBussnessException("101", L("新增失败"), null);
+                throw new BlocksBussnessException("101", L["新增失败"], null);
             }
             
              return "新增成功";             
@@ -108,17 +108,17 @@ namespace SysMgt.BussnessDomainModule.ThirdSystemType
         {
             if (string.IsNullOrEmpty(pInfo.SystemNo))
             {
-                throw new BlocksBussnessException("101", L("请填写系统编号"), null);
+                throw new BlocksBussnessException("101", L["请填写系统编号"], null);
             }
             if (string.IsNullOrEmpty(pInfo.SystemName))
             {
-                throw new BlocksBussnessException("101", L("请填写系统名称"), null);
+                throw new BlocksBussnessException("101", L["请填写系统名称"], null);
             }
             //判断是否存在相同系统类型编号
             var infoData = ThirdSystemTypeRepository.FirstOrDefault(t => t.SYSTEM_NO == pInfo.SystemNo && t.Id != pInfo.ID);
             if (infoData != null)
             {
-                throw new BlocksBussnessException("101", L("系统编号已存在"), null);
+                throw new BlocksBussnessException("101", L["系统编号已存在"], null);
             }
             int successCount = ThirdSystemTypeRepository.Update(t => t.Id == pInfo.ID, t => new SYS_THIRD_SYSTEM_TYPE()
             {
@@ -128,7 +128,7 @@ namespace SysMgt.BussnessDomainModule.ThirdSystemType
             });
             if (successCount <= 0)
             {
-                throw new BlocksBussnessException("101", L("更新失败"), null);
+                throw new BlocksBussnessException("101", L["更新失败"], null);
             }
             return "更新成功";
         }
@@ -142,13 +142,13 @@ namespace SysMgt.BussnessDomainModule.ThirdSystemType
         {
             if (pInfo == null || pInfo.IDs == null || pInfo.IDs.Count <= 0)
             {
-                throw new BlocksBussnessException("101", L("请至少选择一笔数据进行删除操作"), null);
+                throw new BlocksBussnessException("101", L["请至少选择一笔数据进行删除操作"], null);
             } 
 
             long successCount = ThirdSystemTypeRepository.Delete(t => pInfo.IDs.Contains(t.Id));
             if (successCount < pInfo.IDs.Count)
             {
-                throw new BlocksBussnessException("101", L("删除失败"), null);
+                throw new BlocksBussnessException("101", L["删除失败"], null);
             }
             return "删除成功";
         }

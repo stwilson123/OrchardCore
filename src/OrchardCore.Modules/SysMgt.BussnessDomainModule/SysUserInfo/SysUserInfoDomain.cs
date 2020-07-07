@@ -9,7 +9,7 @@ using Blocks.BussnessEntityModule;
 using BlocksCore.Abstractions.UI.Combobox;
 using BlocksCore.Data.Abstractions.Paging;
 using BlocksCore.Domain.Abstractions;
-using BlocksCore.Localization.Abtractions;
+using Microsoft.Extensions.Localization;
 using SysMgt.BussnessDomainModule.Common;
 using SysMgt.BussnessDomainModule.ProductElementType;
 using SysMgt.BussnessDTOModule;
@@ -32,17 +32,18 @@ namespace SysMgt.BussnessDomainModule.SysUserInfo
         public ISysRoleUserRepository SysRoleUserRepository { get; set; }
         public ISysRoleInfoRepository SysRoleInfoRepository { get; set; }
         private IUserContext UserContext;
-        public Localizer L { get; set; }
+        public IStringLocalizer L { get; set; }
         
 
         /// <summary>
         /// 构造函数,实例化对象
         /// </summary>
         /// <param name="sysUserInfoRepository"></param>
-        public SysUserInfoDomain(ISysUserInfoRepository sysUserInfoRepository, ISysRoleUserRepository sysRoleUserRepository, IUserContext userContext)
+        public SysUserInfoDomain(ISysUserInfoRepository sysUserInfoRepository, ISysRoleUserRepository sysRoleUserRepository, ISysRoleInfoRepository sysRoleInfoRepository,IUserContext userContext)
         {
             this.SysUserInfoRepository = sysUserInfoRepository;
             this.SysRoleUserRepository = sysRoleUserRepository;
+            this.SysRoleInfoRepository = sysRoleInfoRepository;
             this.UserContext = userContext;
         }
 
@@ -52,7 +53,7 @@ namespace SysMgt.BussnessDomainModule.SysUserInfo
             var sysUserInfo = SysUserInfoRepository.FirstOrDefault(t => t.Id == sysUserInfoData.ID);
             if (sysUserInfo == null)
             {
-                throw new BlocksBussnessException("101", L("未查到对象"), null);
+                throw new BlocksBussnessException("101", L["未查到对象"], null);
             }
             return new SysUserInfoData()
             {
@@ -118,7 +119,7 @@ namespace SysMgt.BussnessDomainModule.SysUserInfo
             var userinfo = SysUserInfoRepository.FirstOrDefault(t => t.Id == sysUserInfo.ID);
             if (oldpwd != userinfo.PASSWORD)
             {
-                HelperBLL.ThrowEx("101", L("原始密码不正确！"));
+                HelperBLL.ThrowEx("101", L["原始密码不正确！"]);
             }
             return "OK";
         }
@@ -129,7 +130,7 @@ namespace SysMgt.BussnessDomainModule.SysUserInfo
             var sysUserInfo = SysUserInfoRepository.FirstOrDefault(t => t.USERCODE == sysUserInfoEventData.UserCode);
             if (sysUserInfo != null)
             {
-                HelperBLL.ThrowEx("101", L("账号已存在，请重新输入一个新账号！"));
+                HelperBLL.ThrowEx("101", L["账号已存在，请重新输入一个新账号！"]);
             }
 
             SYS_USERINFO sysUserinfo = new SYS_USERINFO();          
@@ -161,7 +162,7 @@ namespace SysMgt.BussnessDomainModule.SysUserInfo
             var sysUserInfo = SysUserInfoRepository.FirstOrDefault(t => t.USERCODE == sysUserInfoEventData.UserCode && t.Id != sysUserInfoEventData.ID);
             if (sysUserInfo != null)
             {
-                HelperBLL.ThrowEx("101", L("账号已存在，请重新输入一个新账号！"));
+                HelperBLL.ThrowEx("101", L["账号已存在，请重新输入一个新账号！"]);
             }
             int successCount = SysUserInfoRepository.Update(t => t.Id == sysUserInfoEventData.ID, t => new SYS_USERINFO()
             {
@@ -186,28 +187,28 @@ namespace SysMgt.BussnessDomainModule.SysUserInfo
         {
             //sysUserInfoEventData.ID = System.Web.HttpContext.Current.Session["uid"].ToString();
             if (string.IsNullOrEmpty(sysUserInfoEventData.ID)) {
-                HelperBLL.ThrowEx("101", L("登录session失效了，请重新登录！"));
+                HelperBLL.ThrowEx("101", L["登录session失效了，请重新登录！"]);
             }
             #region 验证
             if (string.IsNullOrEmpty(sysUserInfoEventData.OldPassword)) {
-                HelperBLL.ThrowEx("101", L("请输入原始密码！"));
+                HelperBLL.ThrowEx("101", L["请输入原始密码！"]);
             }
             if (string.IsNullOrEmpty(sysUserInfoEventData.NewPassword))
             {
-                HelperBLL.ThrowEx("101", L("请输入新密码！"));
+                HelperBLL.ThrowEx("101", L["请输入新密码！"]);
             }
             if (string.IsNullOrEmpty(sysUserInfoEventData.ConfirmPassword))
             {
-                HelperBLL.ThrowEx("101", L("请输入确认密码！"));
+                HelperBLL.ThrowEx("101", L["请输入确认密码！"]);
             }
             string oldpwd = MD5Encrypt32(sysUserInfoEventData.OldPassword);
             var userinfo = SysUserInfoRepository.FirstOrDefault(t => t.Id == sysUserInfoEventData.ID);
             if (oldpwd != userinfo.PASSWORD)
             {
-                HelperBLL.ThrowEx("101", L("原始密码不正确！"));
+                HelperBLL.ThrowEx("101", L["原始密码不正确！"]);
             }
             if (sysUserInfoEventData.NewPassword != sysUserInfoEventData.ConfirmPassword) {
-                HelperBLL.ThrowEx("101", L("两次密码输入不一致！"));
+                HelperBLL.ThrowEx("101", L["两次密码输入不一致！"]);
             }
             #endregion
             string newpwd= MD5Encrypt32(sysUserInfoEventData.NewPassword);
@@ -257,11 +258,11 @@ namespace SysMgt.BussnessDomainModule.SysUserInfo
             var exsitData = SysUserInfoRepository.FirstOrDefault(t => t.Id == sysUserInfoData.ID);
             if (exsitData == null)
             {
-                HelperBLL.ThrowEx("101", L("未查到对应数据"));
+                HelperBLL.ThrowEx("101", L["未查到对应数据"]);
             }
             if (exsitData.STATE != 0)
             {
-                HelperBLL.ThrowEx("101", L("非启用状态的用户不能停用"));
+                HelperBLL.ThrowEx("101", L["非启用状态的用户不能停用"]);
             }
 
             int successCount = SysUserInfoRepository.Update(t => t.Id == sysUserInfoData.ID, t => new SYS_USERINFO()
@@ -283,11 +284,11 @@ namespace SysMgt.BussnessDomainModule.SysUserInfo
             var exsitData = SysUserInfoRepository.FirstOrDefault(t => t.Id == sysUserInfoData.ID);
             if (exsitData == null)
             {
-                HelperBLL.ThrowEx("101", L("未查到对应数据"));
+                HelperBLL.ThrowEx("101", L["未查到对应数据"]);
             }
             if (exsitData.STATE != 2)
             {
-                HelperBLL.ThrowEx("101", L("非停用状态的用户不能启用"));
+                HelperBLL.ThrowEx("101", L["非停用状态的用户不能启用"]);
             }
 
             int successCount = SysUserInfoRepository.Update(t => t.Id == sysUserInfoData.ID, t => new SYS_USERINFO()
@@ -312,7 +313,7 @@ namespace SysMgt.BussnessDomainModule.SysUserInfo
             var exsitData = SysUserInfoRepository.FirstOrDefault(t => t.Id == sysUserInfoData.ID);
             if (exsitData == null)
             {
-                HelperBLL.ThrowEx("101", L("请刷新界面再试下,数据可能已经被删除！！！"));
+                HelperBLL.ThrowEx("101", L["请刷新界面再试下,数据可能已经被删除！！！"]);
             }
             string pwd = MD5Encrypt32("123456");  //后期初始密码配置数据字典
             int successCount = SysUserInfoRepository.Update(t => t.Id == sysUserInfoData.ID, t => new SYS_USERINFO()
@@ -356,7 +357,7 @@ namespace SysMgt.BussnessDomainModule.SysUserInfo
             var userInfo = SysUserInfoRepository.FirstOrDefault(t => t.USERCODE == sysLoginData.Account && t.PASSWORD == sysLoginData.Pwd);
             if (userInfo == null)
             {
-                HelperBLL.ThrowEx("101", L("账号或密码不正确！"));
+                HelperBLL.ThrowEx("101", L["账号或密码不正确！"]);
 
             }
             #region 2019年11月15日  记录用户到seesion
@@ -386,7 +387,7 @@ namespace SysMgt.BussnessDomainModule.SysUserInfo
         {
             if (sysUserInfoData == null || string.IsNullOrEmpty(sysUserInfoData.ID))
             {
-                throw new BlocksBussnessException("101", L("未传入用户信息!"), null);
+                throw new BlocksBussnessException("101", L["未传入用户信息!"], null);
             }
             SysRoleUserInfo rtnData = new SysRoleUserInfo();
             var list = SysRoleUserRepository.GetAllList(x => x.SYS_USERINFOID == sysUserInfoData.ID).ToList();
@@ -408,7 +409,7 @@ namespace SysMgt.BussnessDomainModule.SysUserInfo
                 var exsitData = SysRoleUserRepository.FirstOrDefault(t => t.SYS_USERINFOID == id);
                 if (exsitData == null)
                 {
-                    throw new BlocksBussnessException("101", L("未查到对象"), null);
+                    throw new BlocksBussnessException("101", L["未查到对象"], null);
                 }
 
                 SysRoleUserRepository.Delete(t => t.SYS_USERINFOID == id);

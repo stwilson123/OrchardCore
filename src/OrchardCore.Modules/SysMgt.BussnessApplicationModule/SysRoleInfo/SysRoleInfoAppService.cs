@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BlocksCore.Localization.Abtractions;
+using Microsoft.Extensions.Localization;
 using System.Threading.Tasks;
 using BlocksCore.Application.Abstratctions;
 using BlocksCore.Abstractions.UI.Combobox;
@@ -15,7 +15,7 @@ using SysMgt.BussnessDTOModule.Common;
 using SysMgt.BussnessDTOModule.SysProgram;
 using SysMgt.BussnessDTOModule.SysRoleInfo;
 using SysMgt.BussnessDTOModule.SysUserInfo;
-
+using BlocksCore.Localization.Abtractions;
 
 namespace SysMgt.BussnessApplicationModule
 {

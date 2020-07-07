@@ -1,4 +1,4 @@
-﻿using BlocksCore.Application.Abstratctions.Datatransfer;
+using BlocksCore.Abstractions.Datatransfer;
 using System;
 
 namespace SysMgt.BussnessDTOModule.SysLog

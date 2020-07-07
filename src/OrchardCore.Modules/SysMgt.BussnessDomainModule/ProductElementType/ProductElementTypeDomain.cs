@@ -8,7 +8,7 @@ using Blocks.BussnessEntityModule;
 using BlocksCore.Abstractions.UI.Combobox;
 using BlocksCore.Data.Abstractions.Paging;
 using BlocksCore.Domain.Abstractions;
-using BlocksCore.Localization.Abtractions;
+using Microsoft.Extensions.Localization;
 using SysMgt.BussnessDTOModule.ProductElement;
 using SysMgt.BussnessDTOModule.ProductElementType;
 using SysMgt.BussnessRespositoryModule;
@@ -19,7 +19,7 @@ namespace SysMgt.BussnessDomainModule.ProductElementType
     {
         public IProductElementTypeRepository ProductElementTypeRepository { get; set; }
 
-        public Localizer L { get; set; }
+        public IStringLocalizer L { get; set; }
         public ProductElementTypeDomain(IProductElementTypeRepository productElementTypeRepository)
         {
             this.ProductElementTypeRepository = productElementTypeRepository;
@@ -30,29 +30,29 @@ namespace SysMgt.BussnessDomainModule.ProductElementType
             var productElementType=ProductElementTypeRepository.FirstOrDefault(t=>t.CODE==productElementTypeData.Code);
             if (productElementType != null)
             {
-                throw new BlocksBussnessException("101", L("编码已存在!"), null);               
+                throw new BlocksBussnessException("101", L["编码已存在!"], null);               
             }
             BDTA_PRODUCTELEMENT_TYPE bdtaProductelementType=new BDTA_PRODUCTELEMENT_TYPE();
             bdtaProductelementType.Id = Guid.NewGuid().ToString();
             if (productElementTypeData.Code == "")
             {
-                throw new BlocksBussnessException("101", L("编码不能为空!"), null);
+                throw new BlocksBussnessException("101", L["编码不能为空!"], null);
             }
             bdtaProductelementType.CODE = productElementTypeData.Code;
             if (productElementTypeData.Name == "")
             {
-                throw new BlocksBussnessException("101", L("名称不能为空!"), null);
+                throw new BlocksBussnessException("101", L["名称不能为空!"], null);
             }
             bdtaProductelementType.NAME = productElementTypeData.Name;
             //if (bdtaProductelementType.ISVARIABLE == null)
             //{
-            //    throw new BlocksBussnessException("101", L("是否为变量必选!"), null);
+            //    throw new BlocksBussnessException("101", L["是否为变量必选!"], null);
             //}
             bdtaProductelementType.ISVARIABLE = productElementTypeData.IsVariable;
             var returnId = ProductElementTypeRepository.InsertAndGetId(bdtaProductelementType);
             if (string.IsNullOrEmpty(returnId))
             {
-                //throw new BlocksBussnessException("101", L("保存失败!"), null);
+                //throw new BlocksBussnessException("101", L["保存失败!"], null);
                 return "保存失败";
             }
             else
@@ -78,7 +78,7 @@ namespace SysMgt.BussnessDomainModule.ProductElementType
             if (productElementType != null&& productElementTypeData.ID!= productElementType.Id)
             {
 
-                throw new BlocksBussnessException("101", L("编码已存在"), null);
+                throw new BlocksBussnessException("101", L["编码已存在"], null);
                 
             }
             int successCount= ProductElementTypeRepository.Update(t => t.Id == productElementTypeData.ID,t=>new BDTA_PRODUCTELEMENT_TYPE()
@@ -93,7 +93,7 @@ namespace SysMgt.BussnessDomainModule.ProductElementType
             }
             else
             {
-                throw new BlocksBussnessException("101", L("编辑失败 ！"), null);
+                throw new BlocksBussnessException("101", L["编辑失败 ！"], null);
                
             }
         }
@@ -103,7 +103,7 @@ namespace SysMgt.BussnessDomainModule.ProductElementType
             var productElementType= ProductElementTypeRepository.FirstOrDefault(t=>t.Id==productElementTypeData.ID);
             if (productElementType == null)
             {
-                throw new BlocksBussnessException("101", L("未查到对象"), null);
+                throw new BlocksBussnessException("101", L["未查到对象"], null);
             }
             return new ProductElementTypeData()
             {

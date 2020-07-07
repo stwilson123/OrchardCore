@@ -1,0 +1,59 @@
+<bl-container type="dialog">
+    <bl-main type="dialog">
+        <bl-form :model="ruleForm" :rules="rules" ref="ruleForm">
+            <bl-row>
+                <bl-col>
+                    <bl-form-item label="编码" prop="Code">
+                        <bl-input v-model="ruleForm.Code"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+            </bl-row>
+            <bl-row>
+                <bl-col>
+                    <bl-form-item label="名称" prop="Name">
+                        <bl-input v-model="ruleForm.Name"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+            </bl-row>
+            <bl-row>
+                <bl-col>
+                    <bl-form-item label="所属部门" prop="combobox">
+                        <bl-select v-model="ruleForm.combobox" clearable :optionsData="selectcombobox"></bl-select>
+                    </bl-form-item>
+                </bl-col>
+            </bl-row>
+            <bl-row>
+                <bl-col>
+                    <bl-form-item label="类型" prop="EmpType">
+                        <bl-select v-model="ruleForm.EmpType" clearable :optionsData="selectType"></bl-select>
+                    </bl-form-item>
+                </bl-col>
+            </bl-row>
+            <bl-row>
+                <bl-col>
+                    <bl-form-item label="Email" prop="Email">
+                        <bl-input v-model="ruleForm.Email"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+            </bl-row>
+            <bl-row>
+                <bl-col>
+                    <bl-form-item label="电话" prop="Phone">
+                        <bl-input v-model="ruleForm.Phone"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+            </bl-row>
+            <bl-row>
+                <bl-col>
+                    <bl-form-item label="描述" prop="Desc">
+                        <bl-input v-model="ruleForm.Desc"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+            </bl-row>
+        </bl-form>
+    </bl-main>
+    <bl-footer type="dialog">
+        <bl-button @blocks-click="cancelClick">{{$l("close")}}</bl-button>
+        <bl-button @blocks-click="submitForm" type="primary" loading>{{$l("save")}}</bl-button>
+    </bl-footer>
+</bl-container>

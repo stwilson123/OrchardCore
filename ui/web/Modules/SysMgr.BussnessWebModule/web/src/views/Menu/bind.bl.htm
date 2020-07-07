@@ -1,0 +1,24 @@
+<bl-container type="dialog">
+    <bl-main type="dialog" style="padding:6px 20px;">
+        <bl-row style="height: 100%;">
+            <bl-col style="width: 48%; padding: 0px 0px;height: 100%;">
+                <bl-grid ref="LeftGrid" grid-style="height:100%;" :grid-options="gridOptionsLeft" unique-key="ID"
+                    @gridData="gridDataLeft"></bl-grid>
+            </bl-col>
+            <bl-col style="width: 4%; padding: 0px 0px;height: 100%;position: relative;">
+                <div class="operateButton">
+                    <bl-button type="primary" icon="el-icon-arrow-right" @blocks-click="rightClick"></bl-button>
+                    <bl-button type="primary" icon="el-icon-arrow-left" @blocks-click="deleteClick"></bl-button>
+                </div>
+            </bl-col>
+            <bl-col style="width: 48%; padding: 0px 0px;height: 100%;">
+                <bl-grid ref="RightGrid" grid-style="height:100%;" :grid-options="gridOptionsRight" unique-key="ID"
+                    @gridData="gridDataRight"></bl-grid>
+            </bl-col>
+        </bl-row>
+    </bl-main>
+    <bl-footer type="dialog">
+        <bl-button @blocks-click="closeClick">{{$l("close")}}</bl-button>
+        <bl-button @blocks-click="saveClick" type="primary" loading>{{$l("save")}}</bl-button>
+    </bl-footer>
+</bl-container>

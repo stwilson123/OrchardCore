@@ -1,7 +1,7 @@
 //using Blocks.BussnessEntityModule;
 
 //using Blocks.Framework.Event;
-//using BlocksCore.Localization.Abtractions;
+//using Microsoft.Extensions.Localization;
 //using Microsoft.Extensions.Logging;
 //using Blocks.Framework.Navigation;
 //using Blocks.Framework.Navigation.Event;

@@ -14,13 +14,13 @@ using System.Dynamic;
 using System.Collections.ObjectModel;
 using SysMgt.BussnessDTOModule.InterfaceAudit;
 using BlocksCore.Data.Abstractions.UnitOfWork;
-using BlocksCore.Localization.Abtractions;
+using Microsoft.Extensions.Localization;
 
 namespace SysMgt.BussnessRespositoryModule.InterfaceAudit
 {
 	public class InterfaceAuditRepository : DBSqlRepositoryBase<BLOCKS_AUDITLOGS>, IInterfaceAuditRepository
 	{
-		public Localizer L { get; set; }
+		public IStringLocalizer L { get; set; }
 
 		public InterfaceAuditRepository(IUnitOfWorkManager unitOfwork) : base(unitOfwork)
 		{
@@ -36,7 +36,7 @@ namespace SysMgt.BussnessRespositoryModule.InterfaceAudit
 				MethodName = t.MethodName,
 				Creater = t.CREATER,
 				Parameters = GetLJsonString(t.PARAMETERSDESCRIPTION),
-				MethodDescription = L(t.METHODDESCRIPTION),
+				MethodDescription = L[t.METHODDESCRIPTION],
 				OutParameters = GetLJsonString(t.OUTPARAMETERSDESCRIPTION),
 				UserAccount = t.USERACCOUNT
 			}, search.page);
@@ -75,28 +75,28 @@ namespace SysMgt.BussnessRespositoryModule.InterfaceAudit
 								newList.Add(GetVal(n.ToString()));
 							}
 						});
-						jobj.Add(L(name), JToken.FromObject(newList));
+						jobj.Add(L[name], JToken.FromObject(newList));
 					}
 					else if (type.ToString() == "String")
 					{
-						jobj.Add(L(name), value.ToString());
+						jobj.Add(L[name], value.ToString());
 					}
 					else
 					{
 						if (item.Last.HasValues)
 						{
-							jobj.Add(L(name), GetVal(value.ToString()));
+							jobj.Add(L[name], GetVal(value.ToString()));
 						}
 						else
 						{
-							jobj.Add(L(name), value.ToString());
+							jobj.Add(L[name], value.ToString());
 						}
 					}
 				}
 			}
 			catch 
 			{
-				jobj.Add(L("String"), json);
+				jobj.Add(L["String"], json);
 			}
 			return jobj;
 		}

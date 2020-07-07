@@ -1,0 +1,10 @@
+<bl-container type="dialog">
+    <bl-main type="dialog">
+        <bl-grid ref="DetailGrid" grid-style="height:calc(100vh - 212px); width:100%" :gridOptions="gridDetailOptions"
+            unique-key="ID" @gridData="gridData"></bl-grid>
+    </bl-main>
+    <bl-footer type="dialog">
+        <bl-button @blocks-click="closeDialog">{{$l("close")}}</bl-button>
+        <bl-button @blocks-click="submitForm" type="primary" loading>{{$l("save")}}</bl-button>
+    </bl-footer>
+</bl-container>

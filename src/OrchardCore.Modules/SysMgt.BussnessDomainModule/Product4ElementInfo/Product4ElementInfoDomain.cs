@@ -1,6 +1,6 @@
 using BlocksCore.Domain.Abstractions.Domain;
 using BlocksCore.Domain.Abstractions;
-using BlocksCore.Localization.Abtractions;
+using Microsoft.Extensions.Localization;
 using SysMgt.BussnessDTOModule;
 using SysMgt.BussnessDTOModule.Product4ElementInfo;
 using SysMgt.BussnessRespositoryModule;
@@ -21,7 +21,7 @@ namespace SysMgt.BussnessDomainModule.Product4ElementInfo
 
         public IProductFormatDetailRepository ProductFormatDetailRepository { get; set; }
 
-        public Localizer L { get; set; }
+        public IStringLocalizer L { get; set; }
 
         public Product4ElementInfoDomain(IProduct4VarElementRepository product4VarElementRepository,
             IProduct4ElementRuleRepository product4ElementRuleRepository,
@@ -37,12 +37,12 @@ namespace SysMgt.BussnessDomainModule.Product4ElementInfo
         {
             if (pro4VarElementInfo == null)
             {
-                throw new BlocksBussnessException("101", L("传入参数有误!"), null);
+                throw new BlocksBussnessException("101", L["传入参数有误!"], null);
             }
             var varElementTypeIds = pro4VarElementInfo.ProductElementTypeIDs;
             //if (varElementTypeIds==null || varElementTypeIds.Count <= 0)
             //{
-            //    throw new BlocksBussnessException("101", L("没有要保存的数据!"), null);
+            //    throw new BlocksBussnessException("101", L["没有要保存的数据!"], null);
             //}
             List<BDTA_PRODUCT_VARELEMENT_REL> newRels = new List<BDTA_PRODUCT_VARELEMENT_REL>();
             foreach (var typeId in varElementTypeIds)
@@ -59,7 +59,7 @@ namespace SysMgt.BussnessDomainModule.Product4ElementInfo
                 var result = Product4VarElementRepository.Insert(newRels);
                 if (result.Count() <= 0)
                 {
-                    throw new BlocksBussnessException("101", L("保存失败!"), null);
+                    throw new BlocksBussnessException("101", L["保存失败!"], null);
                 }
             }
             return "保存成功";
@@ -69,7 +69,7 @@ namespace SysMgt.BussnessDomainModule.Product4ElementInfo
         {
             if (pro4VarElementInfo == null || string.IsNullOrEmpty(pro4VarElementInfo.ProductFuncID))
             {
-                throw new BlocksBussnessException("101", L("传入参数有误!"), null);
+                throw new BlocksBussnessException("101", L["传入参数有误!"], null);
             }
             ProductVarElementInfo rtnData = new ProductVarElementInfo();
             rtnData.ProductFuncID = pro4VarElementInfo.ProductFuncID;
@@ -88,16 +88,16 @@ namespace SysMgt.BussnessDomainModule.Product4ElementInfo
         {
             if (pro4ElementRuleInfo == null)
             {
-                throw new BlocksBussnessException("101", L("传入参数有误!"), null);
+                throw new BlocksBussnessException("101", L["传入参数有误!"], null);
             }
             var elementRuleIds = pro4ElementRuleInfo.ProductElementRuleIDs;
             //if (elementRuleIds == null || elementRuleIds.Count <= 0)
             //{
-            //    throw new BlocksBussnessException("101", L("没有要保存的编码规则数据!"), null);
+            //    throw new BlocksBussnessException("101", L["没有要保存的编码规则数据!"], null);
             //}
             if (elementRuleIds.Count > 1)
             {
-                throw new BlocksBussnessException("101", L("只能选择一条编码规则数据保存!"), null);
+                throw new BlocksBussnessException("101", L["只能选择一条编码规则数据保存!"], null);
             }
 
             //获得此业务功能支持的外部元素集合
@@ -118,7 +118,7 @@ namespace SysMgt.BussnessDomainModule.Product4ElementInfo
                 var ruleList = ProductFormatDetailRepository.GetListByFormatId(ruleId);
                 if (ruleList == null || ruleList.Count == 0)
                 {
-                    throw new BlocksBussnessException("101", L("所选择的编码规则没有找到规则明细数据!"), null);
+                    throw new BlocksBussnessException("101", L["所选择的编码规则没有找到规则明细数据!"], null);
                 }
                 //编码规则的外部元素类型集合
                 var elementTypeIDList = ruleList.Where(x => x.ProductElementTypeIsVariable == "0");
@@ -127,7 +127,7 @@ namespace SysMgt.BussnessDomainModule.Product4ElementInfo
                     var elementType = proVarElementList.Select(x => x.PRODUCT_ELEMENT_TYPE_ID).Contains(item.ProductElementTypeID);
                     if (!elementType)
                     {
-                        throw new BlocksBussnessException("101", L("该业务功能不支持编码规则中元素名称为【{0}】所对应的编码类型!", item.Name), null);
+                        throw new BlocksBussnessException("101", L["该业务功能不支持编码规则中元素名称为【{0}】所对应的编码类型!", item.Name], null);
                     }
                 }
                 #endregion
@@ -139,7 +139,7 @@ namespace SysMgt.BussnessDomainModule.Product4ElementInfo
                 var result = Product4ElementRuleRepository.InsertAndGetId(rel);
                 if (string.IsNullOrEmpty(result))
                 {
-                    throw new BlocksBussnessException("101", L("保存失败!"), null);
+                    throw new BlocksBussnessException("101", L["保存失败!"], null);
                 }
             }
             return "保存成功";
@@ -149,7 +149,7 @@ namespace SysMgt.BussnessDomainModule.Product4ElementInfo
         {
             if (pro4ElementRuleInfo == null || string.IsNullOrEmpty(pro4ElementRuleInfo.ProductFuncID))
             {
-                throw new BlocksBussnessException("101", L("传入参数有误!"), null);
+                throw new BlocksBussnessException("101", L["传入参数有误!"], null);
             }
             ProductElementRuleInfo rtnData = new ProductElementRuleInfo();
             rtnData.ProductFuncID = pro4ElementRuleInfo.ProductFuncID;

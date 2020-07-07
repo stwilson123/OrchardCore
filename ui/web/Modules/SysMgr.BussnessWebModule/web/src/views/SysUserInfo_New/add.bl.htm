@@ -1,0 +1,37 @@
+<bl-container type="dialog">
+    <bl-main type="dialog">
+        <bl-form :model="ruleForm" :rules="rules" ref="ruleForm">
+            <bl-row>
+                <bl-col :sm="12">
+                    <bl-form-item label="账号" prop="UserCode">
+                        <bl-input v-model="ruleForm.UserCode"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col :sm="12">
+                    <bl-form-item label="姓名" prop="CName">
+                        <bl-input v-model="ruleForm.CName"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col :sm="12">
+                    <bl-form-item label="密码" prop="Password">
+                        <bl-input v-model="ruleForm.Password"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col :sm="12">
+                    <bl-form-item label="状态">
+                        <bl-select v-model="ruleForm.State" clearable :optionsData="selectData"></bl-select>
+                    </bl-form-item>
+                </bl-col>
+                <bl-col :sm="12">
+                    <bl-form-item label="备注">
+                        <bl-input v-model="ruleForm.Memo" type="textarea"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+            </bl-row>
+        </bl-form>
+    </bl-main>
+    <bl-footer type="dialog">
+        <bl-button @blocks-click="closeDialog">{{$l("close")}}</bl-button>
+        <bl-button @blocks-click="submitForm" type="primary" loading>{{$l("save")}}</bl-button>
+    </bl-footer>
+</bl-container>

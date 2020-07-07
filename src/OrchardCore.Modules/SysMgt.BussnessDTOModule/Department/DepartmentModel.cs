@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using BlocksCore.Abstractions.UI.Paging;
-using BlocksCore.Application.Abstratctions.Datatransfer;
+using BlocksCore.Abstractions.Datatransfer;
 
 namespace SysMgt.BussnessDTOModule
 {

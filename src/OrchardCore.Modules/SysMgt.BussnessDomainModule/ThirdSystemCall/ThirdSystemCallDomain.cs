@@ -2,11 +2,12 @@ using Blocks.BussnessEntityModule;
 using BlocksCore.Data.Abstractions.Paging;
 using BlocksCore.Domain.Abstractions.Domain;
 using BlocksCore.Domain.Abstractions;
-using BlocksCore.Localization.Abtractions;
+using Microsoft.Extensions.Localization;
 using SysMgt.BussnessDTOModule.Common;
 using SysMgt.BussnessDTOModule.ThirdSystemCall;
 using SysMgt.BussnessRespositoryModule.ThirdSystemCall;
 using System;
+
 
 namespace SysMgt.BussnessDomainModule.ThirdSystemCall
 {  
@@ -18,7 +19,7 @@ namespace SysMgt.BussnessDomainModule.ThirdSystemCall
         private IThirdSystemCallRepository ThirdSystemCallRepository { get; set; }
         private IThirdSystemCallLogRepository ThirdSystemCallLogRepository { get; set; }
 
-        public Localizer L { get; set; }
+        public IStringLocalizer L { get; set; }
        // private long MaxRequestTimes = 3;//每个接口最多请求调用次数
 
         /// <summary>
@@ -50,7 +51,7 @@ namespace SysMgt.BussnessDomainModule.ThirdSystemCall
             var infoData = ThirdSystemCallRepository.FirstOrDefault(t => t.Id == pInfo.ID);
             if (infoData == null)
             {
-                throw new BlocksBussnessException("101", L("查无数据"), null);
+                throw new BlocksBussnessException("101", L["查无数据"], null);
             }
             return new ThirdSystemCallInfo()
             {
@@ -81,15 +82,15 @@ namespace SysMgt.BussnessDomainModule.ThirdSystemCall
             var infoData = ThirdSystemCallRepository.FirstOrDefault(t => t.Id == pInfo.ID);
             if (infoData == null)
             {
-                throw new BlocksBussnessException("101", L("查无数据"), null);
+                throw new BlocksBussnessException("101", L["查无数据"], null);
             }
             if (infoData.PROCESS_RESULT == 2) //0-新建；1-请求中；2-成功；3-失败（调用成功单结果失败和调用失败）
             {
-                throw new BlocksBussnessException("101", L("接口已成功调用了，不允许更改传入参数"), null);
+                throw new BlocksBussnessException("101", L["接口已成功调用了，不允许更改传入参数"], null);
             }
             if (infoData.PROCESS_RESULT == 1)
             {
-                throw new BlocksBussnessException("101", L("接口调用尚在请求中，不允许更改传入参数"), null);
+                throw new BlocksBussnessException("101", L["接口调用尚在请求中，不允许更改传入参数"], null);
             }
             //if (infoData.REQUEST_TIMES >= MaxRequestTimes)
             //{
@@ -102,7 +103,7 @@ namespace SysMgt.BussnessDomainModule.ThirdSystemCall
             });
             if (successCount <= 0)
             {
-                throw new BlocksBussnessException("101", L("更新失败（数据不存在或处理结果不是失败状态）"), null);
+                throw new BlocksBussnessException("101", L["更新失败（数据不存在或处理结果不是失败状态）"], null);
             }
             return "更新成功";
         }
@@ -117,23 +118,23 @@ namespace SysMgt.BussnessDomainModule.ThirdSystemCall
             
             if (pInfo == null || pInfo.IDs == null || pInfo.IDs.Count <= 0)
             {
-                throw new BlocksBussnessException("101", L("请选择一笔数据进行重传操作"), null);
+                throw new BlocksBussnessException("101", L["请选择一笔数据进行重传操作"], null);
             }
 
             var infoData = ThirdSystemCallRepository.GetAllList(t => pInfo.IDs.Contains(t.Id));
             if (infoData == null || infoData.Count <= 0)
             {
-                throw new BlocksBussnessException("101", L("查无数据"), null);
+                throw new BlocksBussnessException("101", L["查无数据"], null);
             }
             foreach (var item in infoData)
             {
                 if (item.PROCESS_RESULT == 2)//0-新建；1-请求中；2-成功；3-失败（调用成功单结果失败和调用失败）
                 {
-                    throw new BlocksBussnessException("101", L("接口已成功调用了,不允许重传"), null);
+                    throw new BlocksBussnessException("101", L["接口已成功调用了,不允许重传"], null);
                 }
                 if (item.PROCESS_RESULT == 1)
                 {
-                    throw new BlocksBussnessException("101", L("接口调用尚在请求中，请耐心等待"), null);
+                    throw new BlocksBussnessException("101", L["接口调用尚在请求中，请耐心等待"], null);
                 }
                 int successCount = ThirdSystemCallRepository.Update(t => t.Id == item.Id && t.PROCESS_RESULT == 3, t => new SYS_CALL_THIRD_SYSTEM_INFO()
                 {
@@ -146,7 +147,7 @@ namespace SysMgt.BussnessDomainModule.ThirdSystemCall
                 });
                 if (successCount <= 0)
                 {
-                    throw new BlocksBussnessException("101", L("重传申请失败（数据不存在或处理结果不是失败状态）"), null);
+                    throw new BlocksBussnessException("101", L["重传申请失败（数据不存在或处理结果不是失败状态）"], null);
                 }
             }
             return "重传申请成功";

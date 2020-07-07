@@ -1,5 +1,5 @@
-﻿using BlocksCore.Abstractions.UI.Paging;
-using BlocksCore.Application.Abstratctions.Datatransfer;
+using BlocksCore.Abstractions.UI.Paging;
+using BlocksCore.Abstractions.Datatransfer;
 using SysMgt.BussnessDTOModule.SysGlobal;
 using System;
 using System.Collections.Generic;

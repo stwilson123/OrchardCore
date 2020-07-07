@@ -9,7 +9,7 @@ using Blocks.BussnessEntityModule;
 using BlocksCore.Abstractions.UI.Combobox;
 using BlocksCore.Data.Abstractions.Paging;
 using BlocksCore.Domain.Abstractions;
-using BlocksCore.Localization.Abtractions;
+using Microsoft.Extensions.Localization;
 using SysMgt.BussnessDomainModule.SysProgram;
 using SysMgt.BussnessDTOModule.Combobox;
 using SysMgt.BussnessDTOModule.SysRoleInfo;
@@ -40,7 +40,7 @@ namespace SysMgt.BussnessDomainModule.SysRoleInfo
         public IEventBus EventBus { get; set; }
 
         private IUserContext userContext;
-        public Localizer L { get; set; }
+        public IStringLocalizer L { get; set; }
 
         public List<SysProgramTreeData> listpProgramTreeDatas;
 
@@ -60,11 +60,11 @@ namespace SysMgt.BussnessDomainModule.SysRoleInfo
             var sysRoleInfo = SysRoleInfoRepository.FirstOrDefault(t => t.CNAME == sysRoleInfoData.Name);
             if (sysRoleInfo != null)
             {
-                throw new BlocksBussnessException("101", L("名称重复"), null);
+                throw new BlocksBussnessException("101", L["名称重复"], null);
             }
             if (string.IsNullOrEmpty(sysRoleInfoData.Name.Trim()))
             {
-                throw new BlocksBussnessException("101", L("名称不能为空!"), null);
+                throw new BlocksBussnessException("101", L["名称不能为空!"], null);
             }
             SYS_ROLEINFO sysRoleinfo = new SYS_ROLEINFO();
             sysRoleinfo.Id = Guid.NewGuid().ToString();
@@ -100,11 +100,11 @@ namespace SysMgt.BussnessDomainModule.SysRoleInfo
             var sysRoleInfo = SysRoleInfoRepository.FirstOrDefault(t => t.CNAME == sysRoleInfoData.Name && t.Id != sysRoleInfoData.ID);
             if (sysRoleInfo != null)
             {
-                throw new BlocksBussnessException("101", L("名称重复"), null);
+                throw new BlocksBussnessException("101", L["名称重复"], null);
             }
             if (sysRoleInfoData.Name == "")
             {
-                throw new BlocksBussnessException("101", L("名称不能为空!"), null);
+                throw new BlocksBussnessException("101", L["名称不能为空!"], null);
             }
             int successCount = SysRoleInfoRepository.Update(t => t.Id == sysRoleInfoData.ID, t => new SYS_ROLEINFO()
             {
@@ -168,12 +168,12 @@ namespace SysMgt.BussnessDomainModule.SysRoleInfo
                 string name = SysRoleInfoRepository.FirstOrDefault(t => t.Id == sysRoleInfoData.IDS[i]).CNAME;
                 if (alluser.Count != 0)
                 {
-                    throw new BlocksBussnessException("101", L(name + "下面有绑定用户，无法删除"), null);
+                    throw new BlocksBussnessException("101", L[name + "下面有绑定用户，无法删除"], null);
                 }
                 var successCount = SysRoleInfoRepository.Delete(t => t.Id == sysRoleInfoData.IDS[i]);
                 if (successCount <= 0)
                 {
-                    throw new BlocksBussnessException("101", L("Delete Failed"), null);
+                    throw new BlocksBussnessException("101", L["Delete Failed"], null);
                 }
             }
             return "删除成功";
@@ -185,7 +185,7 @@ namespace SysMgt.BussnessDomainModule.SysRoleInfo
             var sysRoleInfo = SysRoleInfoRepository.FirstOrDefault(t => t.Id == sysRoleInfoData.ID);
             if (sysRoleInfo == null)
             {
-                throw new BlocksBussnessException("101", L("Not querying data"), null);
+                throw new BlocksBussnessException("101", L["Not querying data"], null);
             }
 
             sysRoleInfoData.Name = sysRoleInfo.CNAME;
@@ -234,7 +234,7 @@ namespace SysMgt.BussnessDomainModule.SysRoleInfo
             //var mainMenu = UserNavigationManager.GetMenuAsync("MainMenu", UserContext.GetCurrentUser());
             //var mainMenuList = mainMenu.Result.Items;
             // var mainMenu = NavigationManager.MainMenu;
-            var mainMenu = NavigationManager.GetMenuAsync(Platform.Main.ToString()).Result;
+            var mainMenu = NavigationManager.GetFilterMenuAsync(Platform.Main.ToString()).Result;
 
             var mainMenuList = mainMenu;
 
@@ -258,7 +258,7 @@ namespace SysMgt.BussnessDomainModule.SysRoleInfo
                     {
                         id = menuItem.Id,
                         pId = menuItem.PID,
-                        name = L(menuItem.CODE),
+                        name = L[menuItem.CODE],
                         @checked = isCheck,
                         url = "",
                         type = "0"
@@ -272,7 +272,7 @@ namespace SysMgt.BussnessDomainModule.SysRoleInfo
                     {
                         foreach (var menu in mainMenuList)
                         {
-                            if (menu.GetUniqueId() == syspitem.PROGRAMCODE)
+                            if (menu.uId == syspitem.PROGRAMCODE)
                             {
                                 menuItem.NAME = menu.DisplayName;
                                 break;
@@ -358,7 +358,7 @@ namespace SysMgt.BussnessDomainModule.SysRoleInfo
             listpProgramTreeDatas = new List<SysProgramTreeData>();
             //var mainMenu = UserNavigationManager.GetMenuAsync("MainMenu", UserContext.GetCurrentUser());
             //var mainMenuList = mainMenu.Result.Items;
-            var mainMenu = NavigationManager.GetMenuAsync(Platform.Main.ToString()).Result;
+            var mainMenu = NavigationManager.GetFilterMenuAsync(Platform.Main.ToString()).Result;
             var mainMenuList = mainMenu;
 
 
@@ -484,7 +484,7 @@ namespace SysMgt.BussnessDomainModule.SysRoleInfo
                     {
                         id = menuItem.Id,
                         pId = menuItem.PID,
-                        name = L(menuItem.CODE),
+                        name = L[menuItem.CODE],
                         @checked = isCheck,
                         url = "",
                         type = "0"
@@ -498,7 +498,7 @@ namespace SysMgt.BussnessDomainModule.SysRoleInfo
                     {
                         foreach (var menu in mainMenuList)
                         {
-                            if (menu.GetUniqueId() == syspitem.PROGRAMCODE)
+                            if (menu.uId == syspitem.PROGRAMCODE)
                             {
                                 menuItem.NAME = menu.DisplayName;
                                 break;
@@ -531,12 +531,12 @@ namespace SysMgt.BussnessDomainModule.SysRoleInfo
 
         public void GetBtnInfos(SYS_PROGRAM item,List<SYS_ROLEAUTHORIZE> sysUserAction,List<SYS_PROGRAM> sysPrograms)
         {
-            var menuList = NavigationManager.GetMenuAsync(Platform.Main.ToString()).Result;
-            var nav = menuList.Where(t => t.GetUniqueId() == item.PROGRAMCODE).FirstOrDefault();
+            var menuList = NavigationManager.GetFilterMenuAsync(Platform.Main.ToString()).Result;
+            var nav = menuList.Where(t => t.uId == item.PROGRAMCODE).FirstOrDefault();
             
-            if (nav != null && nav.Permission != null)
+            if (nav != null && nav.Permissions != null)
             {
-                Permission[] permissions = nav.Permission;
+                Permission[] permissions = nav.Permissions;
 
                 foreach (var actionItem in permissions)
                 {
@@ -569,7 +569,7 @@ namespace SysMgt.BussnessDomainModule.SysRoleInfo
         {
             if (sysRoleInfoData == null || string.IsNullOrEmpty(sysRoleInfoData.ID))
             {
-                throw new BlocksBussnessException("101", L("未传入角色信息!"), null);
+                throw new BlocksBussnessException("101", L["未传入角色信息!"], null);
             }
             SysRoleAndUserInfo rtnData = new SysRoleAndUserInfo();
             var list = SysRoleUserRepository.GetAllList(x => x.SYS_ROLEINFOID == sysRoleInfoData.ID);
@@ -657,7 +657,7 @@ namespace SysMgt.BussnessDomainModule.SysRoleInfo
                 var exsitData = SysRoleUserRepository.FirstOrDefault(t => t.SYS_ROLEINFOID == id);
                 if (exsitData == null)
                 {
-                    throw new BlocksBussnessException("101", L("未查到对象"), null);
+                    throw new BlocksBussnessException("101", L["未查到对象"], null);
                 }
 
                 SysRoleUserRepository.Delete(t => t.SYS_ROLEINFOID == id);

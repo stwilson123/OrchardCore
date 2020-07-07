@@ -4,7 +4,7 @@ using System.Text;
 using BlocksCore.Abstractions;
 using BlocksCore.Navigation.Abstractions;
 
-namespace Blocks.UserModule.Config.Navigation
+namespace SysMgr.BussnessWebModule.Config.Navigation
 {
     public class NavigationFileProvider : INavigationFileProvider
     {

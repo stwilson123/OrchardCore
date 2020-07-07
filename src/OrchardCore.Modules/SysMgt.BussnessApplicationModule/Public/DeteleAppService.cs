@@ -5,7 +5,7 @@
 //using System.Threading.Tasks;
 //using BlocksCore.Application.Abstratctions;
 //using BlocksCore.Data.Abstractions.Paging;
-//using BlocksCore.Localization.Abtractions;
+//using Microsoft.Extensions.Localization;
 //using SysMgt.BussnessDomainModule.Public;
 //using SysMgt.BussnessDTOModule.Public;
 

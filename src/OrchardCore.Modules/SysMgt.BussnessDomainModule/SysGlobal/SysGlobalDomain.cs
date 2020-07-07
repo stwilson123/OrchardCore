@@ -2,7 +2,7 @@
 //using BlocksCore.Data.Abstractions.Paging;
 //using BlocksCore.Domain.Abstractions.Domain;
 //using BlocksCore.Domain.Abstractions;
-//using BlocksCore.Localization.Abtractions;
+//using Microsoft.Extensions.Localization;
 //using BlocksCore.Abstractions.Security;
 //using SysMgt.BussnessDomainModule.Common;
 //using SysMgt.BussnessDTOModule.Common;
@@ -48,23 +48,23 @@
 //            //根节点
 //            if (!string.Equals(root.Name.ToString(), "customerTemplate"))
 //            {
-//                throw new BlocksBussnessException(L("未读取到配置文件中的<customerTemplate>节点"));
+//                throw new BlocksBussnessException(L["未读取到配置文件中的<customerTemplate>节点"]);
 //            }
 //            //主表节点 获取表名
 //            XElement customerTable = root.Element("customerTable");
 //            if (customerTable == null)
 //            {
-//                throw new BlocksBussnessException(L("未读取到配置文件中的<customerTable>节点"));
+//                throw new BlocksBussnessException(L["未读取到配置文件中的<customerTable>节点"]);
 //            }
 //            if (customerTable.Attribute("tableName") == null || string.IsNullOrEmpty(customerTable.Attribute("tableName").Value)) //属性中配置表名
 //            {
-//                throw new BlocksBussnessException(L("配置文件中<customerTable>节点属性tableName缺失或值为空"));
+//                throw new BlocksBussnessException(L["配置文件中<customerTable>节点属性tableName缺失或值为空"]);
 //            }
 //            tableName = customerTable.Attribute("tableName").Value;
 //            //解析表中的列
 //            if (customerTable.Elements("column").Count() == 0)
 //            {
-//                throw new BlocksBussnessException(L("配置文件中<customerTable>节点下未配置<column>节点信息"));
+//                throw new BlocksBussnessException(L["配置文件中<customerTable>节点下未配置<column>节点信息"]);
 //            }
 //            foreach (XElement col in customerTable.Elements())
 //            {
@@ -92,15 +92,15 @@
 //                if (!string.Equals(col.Name.ToString(), "column")) { continue; }
 //                if (col.Attribute("colName") == null || string.IsNullOrEmpty(col.Attribute("colName").Value))
 //                {
-//                    throw new BlocksBussnessException(L("配置文件<customerTable>节点下子节点<column>节点中缺失colName属性或值为空"));
+//                    throw new BlocksBussnessException(L["配置文件<customerTable>节点下子节点<column>节点中缺失colName属性或值为空"]);
 //                }
 //                if (col.Attribute("dataType") == null || string.IsNullOrEmpty(col.Attribute("dataType").Value))
 //                {
-//                    throw new BlocksBussnessException(L("配置文件<customerTable>节点下子节点<column>节点中缺失dataType属性或值为空"));
+//                    throw new BlocksBussnessException(L["配置文件<customerTable>节点下子节点<column>节点中缺失dataType属性或值为空"]);
 //                }
 //                if (col.Attribute("label") == null || string.IsNullOrEmpty(col.Attribute("label").Value))
 //                {
-//                    throw new BlocksBussnessException(L("配置文件<customerTable>节点下子节点<column>节点中缺失label属性或值为空"));
+//                    throw new BlocksBussnessException(L["配置文件<customerTable>节点下子节点<column>节点中缺失label属性或值为空"]);
 //                }
 //                codeName = col.Attribute("colName").Value;
 //                dataType = col.Attribute("dataType").Value;
@@ -114,11 +114,11 @@
 //                XElement colDisplay = col.Element("display");
 //                if (colDisplay == null)
 //                {
-//                    throw new BlocksBussnessException(L("未读取到配置文件中的<display>节点"));
+//                    throw new BlocksBussnessException(L["未读取到配置文件中的<display>节点"]);
 //                }
 //                if (colDisplay.Attribute("type") == null || string.IsNullOrEmpty(colDisplay.Attribute("type").Value))
 //                {
-//                    throw new BlocksBussnessException(L("配置文件<column>节点下子节点<display>节点中缺失type属性或值为空"));
+//                    throw new BlocksBussnessException(L["配置文件<column>节点下子节点<display>节点中缺失type属性或值为空"]);
 //                }
 //                displayType = colDisplay.Attribute("type").Value;
 //                if (colDisplay.Attribute("size") == null || string.IsNullOrEmpty(colDisplay.Attribute("size").Value))
@@ -153,7 +153,7 @@
 //                        XElement colInput = colDisplay.Element("input");
 //                        if (colInput == null)
 //                        {
-//                            throw new BlocksBussnessException(L("未读取到配置文件中的<input>节点"));
+//                            throw new BlocksBussnessException(L["未读取到配置文件中的<input>节点"]);
 //                        }
 //                        if (colInput.Attribute("type") == null || string.IsNullOrEmpty(colInput.Attribute("type").Value))
 //                        {
@@ -175,7 +175,7 @@
 //                        {
 //                            if (inputType == "radio" || inputType == "checkbox")
 //                            {
-//                                throw new BlocksBussnessException(L("配置文件<display>节点下子节点<input>节点中缺失value属性或值为空"));
+//                                throw new BlocksBussnessException(L["配置文件<display>节点下子节点<input>节点中缺失value属性或值为空"]);
 //                            }
 //                            displayValue = "";
 //                        }
@@ -192,7 +192,7 @@
 //                            dateformat = colInput.Attribute("dateformat").Value;
 //                            if (dataType != "datetime" || inputType != "text")
 //                            {
-//                                throw new BlocksBussnessException(L("配置文件<display>节点下子节点<input>节点中dateformat属性配置与其数据类型、控件类型不相符"));
+//                                throw new BlocksBussnessException(L["配置文件<display>节点下子节点<input>节点中dateformat属性配置与其数据类型、控件类型不相符"]);
 //                            }
 //                            KeyValue DateValue = new KeyValue();
 //                            DateValue.Key = codeName;
@@ -204,11 +204,11 @@
 //                        XElement colSelect = colDisplay.Element("select");
 //                        if (colSelect == null)
 //                        {
-//                            throw new BlocksBussnessException(L("未读取到配置文件中的<select>节点"));
+//                            throw new BlocksBussnessException(L["未读取到配置文件中的<select>节点"]);
 //                        }
 //                        if (dataType == "datetime")
 //                        {
-//                            throw new BlocksBussnessException(L("配置文件<display>节点中type属性配置与其数据类型不相符"));
+//                            throw new BlocksBussnessException(L["配置文件<display>节点中type属性配置与其数据类型不相符"]);
 //                        }
 //                        //
 //                        if (colSelect.Attribute("dataType") == null || string.IsNullOrEmpty(colSelect.Attribute("dataType").Value))
@@ -246,18 +246,18 @@
 //                                    //拿到下面li标签
 //                                    if (colSelect.Elements("li").Count() == 0)
 //                                    {
-//                                        throw new BlocksBussnessException(L("配置文件中<select>节点下未配置<li>节点信息"));
+//                                        throw new BlocksBussnessException(L["配置文件中<select>节点下未配置<li>节点信息"]);
 //                                    }
 //                                    foreach (XElement select in colSelect.Elements())
 //                                    {
 //                                        if (!string.Equals(select.Name.ToString(), "li")) { continue; }
 //                                        if (select.Attribute("key") == null || string.IsNullOrEmpty(select.Attribute("key").Value))
 //                                        {
-//                                            throw new BlocksBussnessException(L("配置文件<select>节点下子节点<li>节点中缺失key属性或值为空"));
+//                                            throw new BlocksBussnessException(L["配置文件<select>节点下子节点<li>节点中缺失key属性或值为空"]);
 //                                        }
 //                                        if (select.Value == null || string.IsNullOrEmpty(select.Value))
 //                                        {
-//                                            throw new BlocksBussnessException(L("配置文件<select>节点下子节点<li>节点中缺失值或值为空"));
+//                                            throw new BlocksBussnessException(L["配置文件<select>节点下子节点<li>节点中缺失值或值为空"]);
 //                                        }
 //                                        KeyValue selectData = new KeyValue();
 //                                        selectData.Key = select.Attribute("key").Value;
@@ -269,7 +269,7 @@
 //                                case "api":
 //                                    if (colSelect.Attribute("url") == null || string.IsNullOrEmpty(colSelect.Attribute("url").Value))
 //                                    {
-//                                        throw new BlocksBussnessException(L("配置文件<select>节点中url属性配置有误"));
+//                                        throw new BlocksBussnessException(L["配置文件<select>节点中url属性配置有误"]);
 //                                    }
 //                                    else
 //                                    {
@@ -278,20 +278,20 @@
 //                                    }
 //                                    break;
 //                                default:
-//                                    throw new BlocksBussnessException(L("配置文件<display>节点中type属性配置错误"));
+//                                    throw new BlocksBussnessException(L["配置文件<display>节点中type属性配置错误"]);
 //                            }
 //                            DDLList.Add(SelectValue);
 //                        }
 //                        break;
 //                    default:
-//                        throw new BlocksBussnessException(L("配置文件<column>节点下子节点<display>节点中type属性配置错误！"));
+//                        throw new BlocksBussnessException(L["配置文件<column>节点下子节点<display>节点中type属性配置错误！"]);
 //                }
 
 //                //解析列中验证部分标签
 //                XElement colCheck = col.Element("check");
 //                if (colCheck == null)
 //                {
-//                    throw new BlocksBussnessException(L("未读取到配置文件中的<check>节点"));
+//                    throw new BlocksBussnessException(L["未读取到配置文件中的<check>节点"]);
 //                }
 //                if (colCheck.Attribute("min") == null || string.IsNullOrEmpty(colCheck.Attribute("min").Value))
 //                {
@@ -304,7 +304,7 @@
 //                    bool isnumber = int.TryParse(displayMin,out min);
 //                    if (!isnumber)
 //                    {
-//                        throw new BlocksBussnessException(L("配置文件<column>节点下子节点<display>节点中min属性未正确填写正整数！"));
+//                        throw new BlocksBussnessException(L["配置文件<column>节点下子节点<display>节点中min属性未正确填写正整数！"]);
 //                    }
 //                }
 //                if (colCheck.Attribute("max") == null || string.IsNullOrEmpty(colCheck.Attribute("max").Value))
@@ -318,7 +318,7 @@
 //                    bool isnumber = int.TryParse(displayMax, out max);
 //                    if (!isnumber)
 //                    {
-//                        throw new BlocksBussnessException(L("配置文件<column>节点下子节点<display>节点中max属性未正确填写正整数！"));
+//                        throw new BlocksBussnessException(L["配置文件<column>节点下子节点<display>节点中max属性未正确填写正整数！"]);
 //                    }
 //                }
 //                if (colCheck.Attribute("required") == null || string.IsNullOrEmpty(colCheck.Attribute("required").Value))
@@ -460,23 +460,23 @@
 //            //根节点
 //            if (!string.Equals(root.Name.ToString(), "customerTemplate"))
 //            {
-//                throw new BlocksBussnessException(L("未读取到配置文件中的<customerTemplate>节点"));
+//                throw new BlocksBussnessException(L["未读取到配置文件中的<customerTemplate>节点"]);
 //            }
 //            //主表节点 获取表名
 //            XElement customerTable = root.Element("customerTable");
 //            if (customerTable == null)
 //            {
-//                throw new BlocksBussnessException(L("未读取到配置文件中的<customerTable>节点"));
+//                throw new BlocksBussnessException(L["未读取到配置文件中的<customerTable>节点"]);
 //            }
 //            if (customerTable.Attribute("tableName") == null || string.IsNullOrEmpty(customerTable.Attribute("tableName").Value)) //属性中配置表名
 //            {
-//                throw new BlocksBussnessException(L("配置文件中<customerTable>节点属性tableName缺失或值为空"));
+//                throw new BlocksBussnessException(L["配置文件中<customerTable>节点属性tableName缺失或值为空"]);
 //            }
 //            tableName = customerTable.Attribute("tableName").Value;
 //            //解析表中的列
 //            if (customerTable.Elements("column").Count() == 0)
 //            {
-//                throw new BlocksBussnessException(L("配置文件中<customerTable>节点下未配置<column>节点信息"));
+//                throw new BlocksBussnessException(L["配置文件中<customerTable>节点下未配置<column>节点信息"]);
 //            }
 //            foreach (XElement col in customerTable.Elements())
 //            {
@@ -488,11 +488,11 @@
 //                if (!string.Equals(col.Name.ToString(), "column")) { continue; }
 //                if (col.Attribute("colName") == null || string.IsNullOrEmpty(col.Attribute("colName").Value))
 //                {
-//                    throw new BlocksBussnessException(L("配置文件<customerTable>节点下子节点<column>节点中缺失colName属性或值为空"));
+//                    throw new BlocksBussnessException(L["配置文件<customerTable>节点下子节点<column>节点中缺失colName属性或值为空"]);
 //                }
 //                if (col.Attribute("dataType") == null || string.IsNullOrEmpty(col.Attribute("dataType").Value))
 //                {
-//                    throw new BlocksBussnessException(L("配置文件<customerTable>节点下子节点<column>节点中缺失dataType属性或值为空"));
+//                    throw new BlocksBussnessException(L["配置文件<customerTable>节点下子节点<column>节点中缺失dataType属性或值为空"]);
 //                }
 //                codeName = col.Attribute("colName").Value;
 //                dataType = col.Attribute("dataType").Value;
@@ -589,7 +589,7 @@
 //            int successCount = freeSql.Ado.ExecuteNonQuery(strSQL);
 //            if (successCount <= 0)
 //            {
-//                throw new BlocksBussnessException("101", L("导入失败"), null);
+//                throw new BlocksBussnessException("101", L["导入失败"], null);
 //            }
 //            return "";
 //        }

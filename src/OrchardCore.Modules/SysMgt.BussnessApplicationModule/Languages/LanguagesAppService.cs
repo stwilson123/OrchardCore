@@ -2,7 +2,7 @@ using BlocksCore.Application.Abstratctions;
 using BlocksCore.AutoMapper.Abstractions;
 using BlocksCore.Abstractions.UI.Combobox;
 using BlocksCore.Data.Abstractions.Paging;
-using BlocksCore.Localization.Abtractions;
+using Microsoft.Extensions.Localization;
 using SysMgt.BussnessDomainModule.Languages;
 using SysMgt.BussnessDomainModule.LanguageTexts;
 using SysMgt.BussnessDTOModule.Ids;

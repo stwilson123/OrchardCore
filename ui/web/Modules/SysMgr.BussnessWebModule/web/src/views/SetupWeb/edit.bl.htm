@@ -1,0 +1,37 @@
+<bl-container type="dialog">
+    <bl-main type="dialog">
+        <bl-row>
+            <bl-form :model="ruleForm" :rules="rules" ref="ruleForm">
+                <bl-row>
+                    <bl-col>
+                        <bl-form-item label="类型编码" prop="SetupTypeNo">
+                            <bl-input v-model="ruleForm.SetupTypeNo"></bl-input>
+                        </bl-form-item>
+                    </bl-col>
+                    <bl-col>
+                        <bl-form-item label="类型名称" prop="SetupTypeName">
+                            <bl-input v-model="ruleForm.SetupTypeName"></bl-input>
+                        </bl-form-item>
+                    </bl-col>
+                    <bl-col>
+                        <bl-form-item label="类型值" prop="SetupTypeValue">
+                            <bl-input v-model="ruleForm.SetupTypeValue"></bl-input>
+                        </bl-form-item>
+                    </bl-col>
+                </bl-row>
+            </bl-form>
+        </bl-row>
+        <bl-row>
+            <bl-button type="primary" @blocks-click="addClick">添加</bl-button>
+            <bl-button plain @blocks-click="delClick">删除</bl-button>
+        </bl-row>
+        <bl-row>
+            <bl-grid ref="editGrid" grid-style="height:calc(100vh - 450px); width:100%" :gridOptions="gridOptions"
+                unique-key="ID" @gridData="gridData"></bl-grid>
+        </bl-row>
+    </bl-main>
+    <bl-footer type="dialog">
+        <bl-button @blocks-click="cancelClick">{{$l("close")}}</bl-button>
+        <bl-button @blocks-click="submitForm" type="primary" loading>{{$l("save")}}</bl-button>
+    </bl-footer>
+</bl-container>

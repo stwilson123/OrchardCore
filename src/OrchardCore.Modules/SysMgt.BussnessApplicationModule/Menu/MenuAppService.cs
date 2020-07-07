@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using BlocksCore.Application.Abstratctions;
 using BlocksCore.AutoMapper.Abstractions;
 using BlocksCore.Data.Abstractions.Paging;
-using BlocksCore.Localization.Abtractions;
+using Microsoft.Extensions.Localization;
 using BlocksCore.Abstractions.Security;
 using SysMgt.BussnessDomainModule.Menu;
 using SysMgt.BussnessDTOModule.Menu;
 using BlocksCore.Navigation.Abstractions;
 using BlocksCore.Abstractions;
+using BlocksCore.Localization.Abtractions;
 
 namespace SysMgt.BussnessApplicationModule.Menu
 {
@@ -19,7 +20,7 @@ namespace SysMgt.BussnessApplicationModule.Menu
 	{
 		public MenuDomain menuDomain { get; set; }
 		private IUserContext userContext { get; set; }
-		public Localizer L { get; set; }
+		public IStringLocalizer L { get; set; }
 		private readonly IUserNavigationManager _navigationManager;
 
 		public MenuAppService(MenuDomain menuDomain, IUserContext userContext, IUserNavigationManager navigationManager)
@@ -101,16 +102,16 @@ namespace SysMgt.BussnessApplicationModule.Menu
             IEnumerable<NavigationItem> menus;
 			if (menuTypeSearchModel.platform == 1)
 			{
-				menus = _navigationManager.GetMenuAsync(Platform.Main.ToString()).Result;
+				menus = _navigationManager.GetFilterMenuAsync(Platform.Main.ToString()).Result;
 			}
 			else
 			{
-				menus = _navigationManager.GetMenuAsync(Platform.Mobile.ToString()).Result;
+				menus = _navigationManager.GetFilterMenuAsync(Platform.Mobile.ToString()).Result;
             }
 			List<MenuTypeTreeInfo> menuInfos = new List<MenuTypeTreeInfo>();
 			foreach (var item in list)
 			{
-				var hasL = menus.Where(n => n.GetUniqueId() == item.Code).FirstOrDefault();
+				var hasL = menus.Where(n => n.uId == item.Code).FirstOrDefault();
 				if (hasL != null)
 				{
 					if (hasL.IsVisible)
@@ -119,7 +120,7 @@ namespace SysMgt.BussnessApplicationModule.Menu
 						{
 							id = item.ID,
 							pId = item.pId,
-							name = hasL.DisplayName.AutoMapTo<string>()
+							name = hasL.DisplayName
 						});
 					}
 				}
@@ -129,7 +130,7 @@ namespace SysMgt.BussnessApplicationModule.Menu
 					{
 						id = item.ID,
 						pId = item.pId,
-						name = L(item.Code).AutoMapTo<string>()
+						name = L[item.Code]
 					});
 				}
 			}

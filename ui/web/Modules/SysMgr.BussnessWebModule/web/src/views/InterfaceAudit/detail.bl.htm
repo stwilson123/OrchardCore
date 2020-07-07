@@ -1,0 +1,47 @@
+<bl-container type="dialog">
+    <bl-main type="dialog">
+        <bl-form>
+            <bl-row>
+                <bl-col>
+                    <bl-form-item label="方法描述：">
+                        {{formData.MethodDescription}}
+                    </bl-form-item>
+                </bl-col>
+                <bl-col>
+                    <bl-form-item label="创建人：">
+                        {{formData.UserAccount}}
+                    </bl-form-item>
+                </bl-col>
+            </bl-row>
+            <bl-row>
+                <bl-col>
+                    <bl-form-item label="执行时间：">
+                        {{newExecutionTime}}
+                    </bl-form-item>
+                </bl-col>
+                <bl-col>
+                    <bl-form-item label="异常信息：">
+                        {{formData.SysException}}
+                    </bl-form-item>
+                </bl-col>
+            </bl-row>
+            <bl-row>
+                <bl-col>
+                    <bl-form-item label="请求参数：">
+                        <span v-html="newParameters"></span>
+                    </bl-form-item>
+                </bl-col>
+            </bl-row>
+            <bl-row>
+                <bl-col>
+                    <bl-form-item label="返回值：">
+                        <span v-html="newOutParameters"></span>
+                    </bl-form-item>
+                </bl-col>
+            </bl-row>
+        </bl-form>
+    </bl-main>
+    <bl-footer type="dialog">
+        <bl-button @blocks-click="cancelClick">{{$l("close")}}</bl-button>
+    </bl-footer>
+</bl-container>

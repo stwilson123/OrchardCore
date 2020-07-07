@@ -1,7 +1,7 @@
 //using Blocks.BussnessEntityModule;
 //using BlocksCore.Domain.Abstractions.Domain;
 //using BlocksCore.Domain.Abstractions;
-//using BlocksCore.Localization.Abtractions;
+//using Microsoft.Extensions.Localization;
 //using BlocksCore.Abstractions.Security; 
 //using NPOI.HSSF.UserModel;
 //using NPOI.SS.UserModel;
@@ -74,7 +74,7 @@
 //    //        #region 入参校验
 //    //        if (pInfo == null || string.IsNullOrEmpty(pInfo.ID))
 //    //        {
-//    //            throw new BlocksBussnessException("101", L("传入参数为空，无法指定导入模板"), null);
+//    //            throw new BlocksBussnessException("101", L["传入参数为空，无法指定导入模板"], null);
 //    //        }
 //    //        string pFileName = pInfo.ID;
 //    //        #endregion
@@ -82,7 +82,7 @@
 //    //        var excelTemplateInfo = ConfigFilesRepository.FirstOrDefault(t => t.FILE_TYPE == "dic1" && (t.FILE_NAME == pFileName + @".xls" || t.FILE_NAME == pFileName + @".xlsx"));
 //    //        if (excelTemplateInfo == null)
 //    //        {
-//    //            throw new BlocksException(L("请先到配置管理中上传EXCEL模板文件"));
+//    //            throw new BlocksException(L["请先到配置管理中上传EXCEL模板文件"]);
 //    //        }
 //    //        //TODO：根据文件名称（约定的唯一KEY），查找文件管理中的文件路径（这里是EXCEL+按钮唯一KEY）            
 //    //        string excelPath = ImportFileExcelPath + excelTemplateInfo.FILE_NAME;
@@ -106,13 +106,13 @@
 //    //            #region 入参校验
 //    //            if (pInfo == null || string.IsNullOrEmpty(pInfo.ID))
 //    //            {
-//    //                throw new BlocksBussnessException("101", L("传入参数缺失，无法指定配置文件"), null);
+//    //                throw new BlocksBussnessException("101", L["传入参数缺失，无法指定配置文件"], null);
 //    //            }
 //    //            string pFileName = pInfo.ID;
 
 //    //            if (string.IsNullOrEmpty(pInfo.STR))
 //    //            {
-//    //                throw new BlocksBussnessException("101", L("传入参数缺失，无法查找上传的EXCEL数据文件"), null);
+//    //                throw new BlocksBussnessException("101", L["传入参数缺失，无法查找上传的EXCEL数据文件"], null);
 //    //            }
 //    //            #endregion
 
@@ -121,7 +121,7 @@
 //    //            var xmlInfo = ConfigFilesRepository.FirstOrDefault(t => t.FILE_TYPE == "dic1" && (t.FILE_NAME == pFileName + @".xml"));
 //    //            if (xmlInfo == null)
 //    //            {
-//    //                throw new BlocksException(L("请先到配置管理中上传XML文件"));
+//    //                throw new BlocksException(L["请先到配置管理中上传XML文件"]);
 //    //            }
 //    //            //string ImportFileXMLPath = System.Web.HttpContext.Current.Server.MapPath("/") + @"ConfigManager/ImportConfig/";
 //    //            string xmlPath = ImportFileXMLPath + pFileName + @".xml";
@@ -134,7 +134,7 @@
 //    //            DataTable dtData = ExcelToDataTable(excelPath, true);//true第一行默认是标题，名称与XML配置的一样
 //    //            if (dtData == null || dtData.Rows.Count <= 0)
 //    //            {
-//    //                throw new BlocksException(L("未读取到EXCEL中有效的数据信息"));
+//    //                throw new BlocksException(L["未读取到EXCEL中有效的数据信息"]);
 //    //            }
 //    //            #endregion
 
@@ -142,7 +142,7 @@
 //    //            Dictionary<string, List<ColumnAttribute>> matchColumnsDictionray = GetMatchColumns(tableInfo, dtData);
 //    //            if (matchColumnsDictionray == null || matchColumnsDictionray.Count == 0)
 //    //            {
-//    //                throw new BlocksException(L("XML配置文件中的设置在EXCEL中找不到匹配列"));
+//    //                throw new BlocksException(L["XML配置文件中的设置在EXCEL中找不到匹配列"]);
 //    //            }
 //    //            #endregion
 
@@ -192,7 +192,7 @@
 //    //            XElement elementTable = root.Element("primaryTable");
 //    //            if (elementTable == null)
 //    //            {
-//    //                throw new BlocksException(L("未读取到配置文件中的primaryTable节点"));
+//    //                throw new BlocksException(L["未读取到配置文件中的primaryTable节点"]);
 //    //            }
 //    //            tableInfo = ExplainXMLTable(root, "primaryTable");
 //    //            foreach (var col in tableInfo.Columns)
@@ -620,7 +620,7 @@
 //    //        Dictionary<string, List<ColumnAttribute>> matchColumnsDictionary = new Dictionary<string, List<ColumnAttribute>>();
 //    //        DataColumnCollection pDataColumnCollection = dt.Columns;
 //    //        List<ColumnAttribute> matchColumns = new List<ColumnAttribute>(); //全部有效的列存在这  
-//    //        if (pTableInfo.Columns == null || pTableInfo.Columns.Count == 0) throw new BlocksException(L("primaryTable节点下columns节点不存在"));
+//    //        if (pTableInfo.Columns == null || pTableInfo.Columns.Count == 0) throw new BlocksException(L["primaryTable节点下columns节点不存在"]);
 
 //    //        #region  primaryTable节点列信息
 //    //        foreach (var col in pTableInfo.Columns)
@@ -899,7 +899,7 @@
 //    //                        primaryID = dtPrimary.Rows[m]["ID"].ToString();
 //    //                        if (string.IsNullOrEmpty(primaryID))
 //    //                        {
-//    //                            throw new BlocksBussnessException("101", L("主表唯一键不能为空"), null);
+//    //                            throw new BlocksBussnessException("101", L["主表唯一键不能为空"], null);
 //    //                        }
 //    //                        foreach (var tab in tableInfo.TableRelationColNames)
 //    //                        {
@@ -919,7 +919,7 @@
 //    //                }
 //    //                if (colValueMatchCount < dtPrimary.Columns.Count - 1)
 //    //                {
-//    //                    throw new BlocksBussnessException("101", L("插入明细表数据时，没找到主表数据."), null);
+//    //                    throw new BlocksBussnessException("101", L["插入明细表数据时，没找到主表数据."], null);
 //    //                }
 //    //            }
 
@@ -936,7 +936,7 @@
 //    //                int successCount = freeSql.Ado.ExecuteNonQuery(sb.ToString());
 //    //                if (successCount < tmpCount)
 //    //                {
-//    //                    throw new BlocksBussnessException("101", L("执行导入失败，数据与配置中列要求不符合"), null);
+//    //                    throw new BlocksBussnessException("101", L["执行导入失败，数据与配置中列要求不符合"], null);
 //    //                }
 //    //                //重新赋值
 //    //                sb = new StringBuilder();
@@ -1089,7 +1089,7 @@
 //    //                int successCount = freeSql.Ado.ExecuteNonQuery(sb.ToString());
 //    //                if (successCount < tmpCount)
 //    //                {
-//    //                    throw new BlocksBussnessException("101", L("执行导入失败，数据与配置中列要求不符合"), null);
+//    //                    throw new BlocksBussnessException("101", L["执行导入失败，数据与配置中列要求不符合"], null);
 //    //                }
 //    //                //重新赋值
 //    //                sb = new StringBuilder();

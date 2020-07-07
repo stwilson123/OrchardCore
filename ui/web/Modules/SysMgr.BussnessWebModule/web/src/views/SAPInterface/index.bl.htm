@@ -1,0 +1,10 @@
+<bl-container>
+    <bl-header ref="header">
+        <bl-button icon="el-icon-plus" @blocks-click="resetClick">重调</bl-button>
+        <bl-button icon="el-icon-edit" @blocks-click="editClick">{{$l('edit')}}</bl-button>
+    </bl-header>
+    <bl-main>
+        <bl-grid :grid-options="gridOptions" :grid-style="{height:gridHeight}" ref="AgGrid" unique-key="id"
+            @gridData="gridData"></bl-grid>
+    </bl-main>
+</bl-container>

@@ -1,0 +1,10 @@
+<bl-container type="dialog">
+    <bl-main :style="{height:mainHeight+'px'}" ref="theMain" type="dialog">
+        <bl-form :model="ruleForm" :rules="rules" ref="ruleForm">
+        </bl-form>
+    </bl-main>
+    <bl-footer ref="footer" type="dialog">
+        <bl-button @blocks-click="closeDialog">{{$l("close")}}</bl-button>
+        <bl-button @blocks-click="submitForm" loading type="primary">{{$l("save")}}</bl-button>
+    </bl-footer>
+</bl-container>

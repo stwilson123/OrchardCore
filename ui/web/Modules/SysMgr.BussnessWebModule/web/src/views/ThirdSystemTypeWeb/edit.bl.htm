@@ -1,0 +1,24 @@
+<bl-container type="dialog">
+    <bl-main type="dialog">
+        <bl-form :model="ruleForm" :rules="rules" ref="ruleForm">
+            <bl-row>
+                <bl-col>
+                    <bl-form-item label="系统编号" prop="SystemNo">
+                        <bl-input v-model="ruleForm.SystemNo"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+            </bl-row>
+            <bl-row>
+                <bl-col>
+                    <bl-form-item label="系统名称" prop="SystemName">
+                        <bl-input v-model="ruleForm.SystemName"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+            </bl-row>
+        </bl-form>
+    </bl-main>
+    <bl-footer type="dialog">
+        <bl-button @blocks-click="cancelClick">{{$l("close")}}</bl-button>
+        <bl-button @blocks-click="submitForm" type="primary" loading>{{$l("save")}}</bl-button>
+    </bl-footer>
+</bl-container>

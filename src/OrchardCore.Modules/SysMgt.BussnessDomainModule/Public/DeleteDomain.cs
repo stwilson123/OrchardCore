@@ -1,7 +1,7 @@
 
 //using BlocksCore.Domain.Abstractions.Domain;
 //using BlocksCore.Domain.Abstractions;
-//using BlocksCore.Localization.Abtractions;
+//using Microsoft.Extensions.Localization;
 
 //using System.Collections.Generic;
 //using System.Linq;
@@ -17,7 +17,7 @@
 //{
 //    public class DeleteDomain : IDomainService
 //    {
-//        public Localizer L { get; set; }
+//        public IStringLocalizer L { get; set; }
 
 //        public IDeleteRepository DeleteRepository { get; set; }
 
@@ -41,19 +41,19 @@
 
 //            if (string.IsNullOrEmpty(id) && (ids == null || ids.Count == 0))
 //            {
-//                throw new BlocksBussnessException("101", L("请选择需要删除的数据!"), null);
+//                throw new BlocksBussnessException("101", L["请选择需要删除的数据!"], null);
 //            }
 
 //            if (string.IsNullOrEmpty(xmlName))
 //            {
-//                throw new BlocksBussnessException("101", L("没有获取到配置文件!"), null);
+//                throw new BlocksBussnessException("101", L["没有获取到配置文件!"], null);
 //            }
 
 //            string xmlPath = HttpContext.Current.Server.MapPath("~/xml/" + xmlName + ".xml");//这边需要改造，怎么能跨机器拿到这个xml文件呢？
 
 //            if (!File.Exists(xmlPath))
 //            {
-//                throw new BlocksBussnessException("101", L("配置文件不存在!"), null);
+//                throw new BlocksBussnessException("101", L["配置文件不存在!"], null);
 //            }
 
 //            #endregion
@@ -67,7 +67,7 @@
 //            DeleteList(deleteInfo.IDS, xmlPath);
 
 
-//            return L("succeed");
+//            return L["succeed"];
 
 //        }
 

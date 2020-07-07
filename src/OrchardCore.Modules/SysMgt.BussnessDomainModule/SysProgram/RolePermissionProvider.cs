@@ -22,7 +22,6 @@ namespace SysMgt.BussnessDomainModule.SysProgram
         {
             var result = roleId == "*" ? _sysRoleAuthorizeRespository.GetRoleAuthorizes() :
                      _sysRoleAuthorizeRespository.GetRoleAuthorize(roleId);
-
             return transferDic(result);
         }
 
@@ -37,7 +36,7 @@ namespace SysMgt.BussnessDomainModule.SysProgram
             var permissionStereotype = new PermissionStereotype()
             {
                 Name = name,
-                Permissions = _sysRoleAuthorizeRespository.GetRoleAuthorize(name).Select(t => new Permission(t.RESOURCE_KEY))
+                Permissions = _sysRoleAuthorizeRespository.GetRoleAuthorize(name).Select(t => new Permission(t.RESOURCE_KEY,t.RESOURCE_KEY))
             };
             return Task.FromResult(permissionStereotype);
         }

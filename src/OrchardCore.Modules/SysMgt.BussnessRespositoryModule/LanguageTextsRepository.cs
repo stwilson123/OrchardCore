@@ -43,6 +43,7 @@ namespace SysMgt.BussnessRespositoryModule
                          {
                              LanguageKey = t.LANGUAGE_KEY,
                              LanguageValue = t.LANGUAGE_VALUE,
+                             ModuleName = t.LANGUAGE_MODULE
                          });
         }
     }

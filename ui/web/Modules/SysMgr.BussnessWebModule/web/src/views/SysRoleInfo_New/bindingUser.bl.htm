@@ -1,0 +1,27 @@
+<bl-container type="dialog">
+    <bl-main type="dialog" style="width: 100%;height: 100%;">
+        <el-row :gutter="20" style="height: 100%;">
+            <el-col :span="12" style="height: 100%;">
+                <el-row style="padding-bottom: 5px;text-align: end;">
+                    <bl-button icon="el-icon-d-arrow-right" style="margin: 0 !important;" @blocks-click="rightClick">
+                        右移
+                    </bl-button>
+                </el-row>
+                <bl-grid ref="AgGrid1" grid-style="height:95%;" :grid-options="gridOptions1" unique-key="ID"
+                    @gridData="gridData1" @rowDoubleClicked="rowDoubleClicked"></bl-grid>
+            </el-col>
+            <el-col :span="12" style="height: 100%;">
+                <el-row style="padding-bottom: 5px;">
+                    <bl-button icon="el-icon-delete" @blocks-click="deleteClick">
+                        {{$l("delete")}}
+                    </bl-button>
+                    <bl-button icon="el-icon-check" @blocks-click="saveClick">
+                        {{$l("save")}}
+                    </bl-button>
+                </el-row>
+                <bl-grid ref="AgGrid2" grid-style="height:95%;" :grid-options="gridOptions2" unique-key="ID"
+                    @gridData="gridData2"></bl-grid>
+            </el-col>
+        </el-row>
+    </bl-main>
+</bl-container>

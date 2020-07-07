@@ -1,0 +1,37 @@
+<bl-container type="dialog">
+    <bl-main type="dialog">
+        <bl-form :model="ruleForm" :rules="rules" ref="ruleForm">
+            <bl-row>
+                <bl-col :xs="12" :sm="12">
+                    <bl-form-item label="功能描述" prop="FileFunction">
+                        <bl-input v-model="ruleForm.FileFunction"></bl-input>
+                    </bl-form-item>
+                </bl-col>
+            </bl-row>
+            <bl-row>
+                <bl-col :xs="12" :sm="12">
+                    <bl-form-item label="类型" prop="FileType">
+                        <bl-select v-model="ruleForm.FileType" clearable :optionsData="selectFileType" placeholder="请选择"
+                            @blocks-change="selectTypeChange"></bl-select>
+                    </bl-form-item>
+                </bl-col>
+            </bl-row>
+            <bl-row>
+                <bl-col :xs="12" :sm="12">
+                    <el-upload class="upload-demo" ref="upload" :before-upload="beforeUpload" :on-error="handleError"
+                        :on-success="handleSuccess" :on-progress="onProgress"
+                        action="/api/services/SysMgrBussenssModule/ConfigFiles/UploadFile" :data="addData"
+                        :auto-upload="false">
+                        <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+                        <el-button style="margin-left: 10px;" size="small" type="success" v-on:click="uploadClick">
+                            上传到服务器</el-button>
+                    </el-upload>
+                </bl-col>
+            </bl-row>
+        </bl-form>
+    </bl-main>
+    <bl-footer type="dialog">
+        <bl-button @blocks-click="cancelClick">{{$l("close")}}</bl-button>
+        <bl-button @blocks-click="submitForm" type="primary" loading>{{$l("save")}}</bl-button>
+    </bl-footer>
+</bl-container>

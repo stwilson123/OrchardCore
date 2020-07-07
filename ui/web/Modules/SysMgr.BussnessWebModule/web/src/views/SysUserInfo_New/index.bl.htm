@@ -1,0 +1,14 @@
+<bl-container>
+    <bl-header ref="header">
+        <bl-button icon="el-icon-plus" @blocks-click="addClick" v-permission:add>{{$l('add')}}</bl-button>
+        <bl-button icon="el-icon-edit" @blocks-click="editClick" v-permission:edit>{{$l('edit')}}</bl-button>
+        <bl-button icon="el-icon-close" @blocks-click="disableClick">停用</bl-button>
+        <bl-button icon="el-icon-check" @blocks-click="enableClick">启用</bl-button>
+        <bl-button icon="el-icon-plus" @blocks-click="allotClick">分配角色</bl-button>
+        <bl-button icon="el-icon-edit" @blocks-click="PasswordModificationClick">密码修改</bl-button>
+    </bl-header>
+    <bl-main>
+        <bl-grid ref="AgGrid" :grid-style="{height:gridHeight}" :grid-options="gridOptions" unique-key="ID"
+            @gridData="gridData"></bl-grid>
+    </bl-main>
+</bl-container>

@@ -8,7 +8,7 @@ using Blocks.BussnessEntityModule;
 using BlocksCore.Abstractions.UI.Combobox;
 using BlocksCore.Data.Abstractions.Paging;
 using BlocksCore.Domain.Abstractions;
-using BlocksCore.Localization.Abtractions;
+using Microsoft.Extensions.Localization;
 using SysMgt.BussnessDTOModule.Combobox;
 using SysMgt.BussnessDTOModule.ProductElement;
 using SysMgt.BussnessDTOModule.ProductElementType;
@@ -21,7 +21,7 @@ namespace SysMgt.BussnessDomainModule.ProductElement
         public IProductElementRepository ProductElementRepository { get; set; }
         public IProductFormatDetailRepository ProductFormatDetailRepository { get; set; }
 
-        public Localizer L { get; set; }
+        public IStringLocalizer L { get; set; }
         public ProductElementDomain(IProductElementRepository productElementRepository, IProductFormatDetailRepository productFormatDetailRepository)
         {
             this.ProductElementRepository = productElementRepository;
@@ -34,25 +34,25 @@ namespace SysMgt.BussnessDomainModule.ProductElement
                 ProductElementRepository.FirstOrDefault(t => t.PRODUCTELEMENT_CODE == productElementData.Code);
             if (productElement != null)
             {
-                throw new BlocksBussnessException("101", L("编码已存在!"), null);
+                throw new BlocksBussnessException("101", L["编码已存在!"], null);
             }
 
             BDTA_PRODUCTELEMENT bdBdtaProductelement = new BDTA_PRODUCTELEMENT();
             bdBdtaProductelement.Id = Guid.NewGuid().ToString();
             if (productElementData.Code == "")
             {
-                throw new BlocksBussnessException("101", L("编码不能为空!"), null);
+                throw new BlocksBussnessException("101", L["编码不能为空!"], null);
             }
             bdBdtaProductelement.PRODUCTELEMENT_CODE = productElementData.Code;
             if (productElementData.Name == "")
             {
-                throw new BlocksBussnessException("101", L("名称不能为空!"), null);
+                throw new BlocksBussnessException("101", L["名称不能为空!"], null);
             }
             bdBdtaProductelement.PRODUCTELEMENT_NAME = productElementData.Name;
             bdBdtaProductelement.BDTA_PRODUCTELEMENT_TYPE_ID = productElementData.ElementTypeId;
             if (productElementData.ElementTypeId == "")
             {
-                throw new BlocksBussnessException("101", L("请选择类型!"), null);
+                throw new BlocksBussnessException("101", L["请选择类型!"], null);
             }
             bdBdtaProductelement.PRODUCTELEMENT_LENGTH = productElementData.Length;
             bdBdtaProductelement.RESET_DATE = productElementData.ResetDate;//流水码规则
@@ -66,7 +66,7 @@ namespace SysMgt.BussnessDomainModule.ProductElement
             }
             if (productElementData.Length == "")
             {
-                throw new BlocksBussnessException("101", L("位数不能为空!"), null);
+                throw new BlocksBussnessException("101", L["位数不能为空!"], null);
             }
             bdBdtaProductelement.PRODUCTELEMENT_DESCRIPTION = productElementData.Description;
             bdBdtaProductelement.PRODUCTELEMENT_DEFAULT = productElementData.Default;
@@ -89,7 +89,7 @@ namespace SysMgt.BussnessDomainModule.ProductElement
                 if (edate.Count != 0)
                 {
                     string name = ProductElementRepository.FirstOrDefault(t => t.Id == productElementData.IDS[I]).PRODUCTELEMENT_NAME;
-                    throw new BlocksBussnessException("101", L(name+"已在编码规则中使用，不能删除!"), null);
+                    throw new BlocksBussnessException("101", L[name+"已在编码规则中使用，不能删除!"], null);
                 }
                 ProductElementRepository.Delete(t => t.Id == productElementData.IDS[I]);
             }
@@ -140,7 +140,7 @@ namespace SysMgt.BussnessDomainModule.ProductElement
             var productElement = ProductElementRepository.FirstOrDefault(t => t.Id == productElementData.ID);
             if (productElement == null)
             {
-                throw new BlocksBussnessException("101", L("未查到对象"), null);
+                throw new BlocksBussnessException("101", L["未查到对象"], null);
             }
 
             return new ProductElementData()

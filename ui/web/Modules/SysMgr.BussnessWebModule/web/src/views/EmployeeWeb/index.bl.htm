@@ -1,0 +1,18 @@
+<bl-container>
+    <bl-header>
+        <bl-row>
+            <bl-col :xs="4" :sm="4" style="text-align: left;">
+                雇员信息
+            </bl-col>
+            <bl-col :xs="20" :sm="20" style="text-align:right;padding-left: 0px;padding-right: 0px;">
+                <bl-button icon="el-icon-plus" @blocks-click="addClick">{{$l("add")}}</bl-button>
+                <bl-button icon="el-icon-edit" @blocks-click="editClick">{{$l("edit")}}</bl-button>
+                <bl-button icon="el-icon-close" @blocks-click="deleteClick" loading>{{$l("delete")}}</bl-button>
+            </bl-col>
+        </bl-row>
+    </bl-header>
+    <bl-main>
+        <bl-grid ref="AgGrid" grid-style="height:calc(100vh - 209px);" :grid-options="gridOptions" unique-key="ID"
+            @gridData="gridData" @cellEditingStopped="cellEditingStopped"></bl-grid>
+    </bl-main>
+</bl-container>

@@ -13,7 +13,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using BlocksCore.Localization.Abtractions;
+using Microsoft.Extensions.Localization;
 
 
 namespace SysMgt.BussnessApplicationModule.ConfigFiles
