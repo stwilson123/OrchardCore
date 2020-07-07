@@ -32,6 +32,7 @@ namespace BlocksCore.Navigation.Core
                     builder.Add(T[item.Name], itemBuilder =>
                     {
                         var menuItem = itemBuilder.Action(item.Action, item.ControllerName, item.AreaName)
+                        .Id(item.Name)
                              .LocalNav();
                         //menuItem = menuItem.Permission(new Permission(item.Url));
                         foreach (var permission in item.Permission)
@@ -43,7 +44,7 @@ namespace BlocksCore.Navigation.Core
 
                 }
             }
-           
+
         }
     }
 }

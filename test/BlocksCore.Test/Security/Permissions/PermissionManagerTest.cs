@@ -16,7 +16,7 @@ namespace BlocksCore.Test.Security.Permissions
         IMemoryCache _memoryCache;
 
         static IEnumerable<Permission> emptyPermission = Enumerable.Empty<Permission>();
-        static IEnumerable<Permission> singlePermission = new List<Permission>() { new Permission("add"), new Permission("index") } ;
+        static IEnumerable<Permission> singlePermission = new List<Permission>() { new Permission("add","add"), new Permission("index","index") } ;
 
         public PermissionManagerTest()
         {

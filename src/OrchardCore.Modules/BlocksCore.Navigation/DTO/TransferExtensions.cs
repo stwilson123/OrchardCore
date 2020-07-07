@@ -2,19 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using BlocksCore.Navigation.Abstractions;
 
 namespace BlocksCore.Navigation.DTO
 {
     public static class TransferExtensions
     {
-        public static MenuItem ToMenuItemDTO([DisallowNull]this OrchardCore.Navigation.MenuItem menuItem)
+        public static MenuItem ToMenuItemDTO([DisallowNull]this NavigationItem menuItem)
         {
             return new MenuItem()
             {
-                Name = menuItem.Text.Name,
-                DisplayName = menuItem.Text.ToString(),
-                Order = menuItem.Priority,
-                uId = menuItem.GetUniqueId()
+                Name = menuItem.Name,
+                DisplayName = menuItem.DisplayName,
+                Order = menuItem.Order,
+                uId = menuItem.uId
             };
         }
 

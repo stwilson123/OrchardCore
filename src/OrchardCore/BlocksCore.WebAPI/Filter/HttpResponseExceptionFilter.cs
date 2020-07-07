@@ -15,7 +15,7 @@ namespace BlocksCore.WebAPI.Filter
 
         public HttpResponseExceptionFilter()
         {
-             
+
         }
 
 
@@ -24,9 +24,13 @@ namespace BlocksCore.WebAPI.Filter
             var serviceProvider = context.HttpContext.RequestServices;
             var actionFilters = serviceProvider.GetServices<BlocksCore.Web.Abstractions.Filters.IActionFilter>();
             var orderedActionFilters = actionFilters.OrderBy(f => f is BlocksCore.Web.Abstractions.Filters.IOrderedFilter order ? order.Order : 100);
+            var controllerType = FilterHelper.GetControllActionDescriptor(context)?.ControllerTypeInfo;
             foreach (var actionFilter in orderedActionFilters)
             {
-                actionFilter.OnActionExecuting(new BlocksCore.Web.Abstractions.Filters.ActionExecutingContext(context.ActionArguments));
+                actionFilter.OnActionExecuting(new BlocksCore.Web.Abstractions.Filters.ActionExecutingContext(context.ActionArguments, serviceProvider, controllerType)
+                {
+                    HttpContext = context.HttpContext
+                });
             }
         }
 
@@ -36,11 +40,16 @@ namespace BlocksCore.WebAPI.Filter
 
             var actionFilters = serviceProvider.GetServices<BlocksCore.Web.Abstractions.Filters.IActionFilter>();
             var orderedActionFilters = actionFilters.OrderBy(f => f is BlocksCore.Web.Abstractions.Filters.IOrderedFilter order ? order.Order : 100);
+            var controllerType = FilterHelper.GetControllActionDescriptor(context)?.ControllerTypeInfo;
             foreach (var actionFilter in orderedActionFilters)
             {
                 if (context.Result is ObjectResult objectResult)
                 {
-                    var actionContext = new BlocksCore.Web.Abstractions.Filters.ActionExecutedContext(context.Controller, serviceProvider) { Result = objectResult.Value };
+                    var actionContext = new BlocksCore.Web.Abstractions.Filters.ActionExecutedContext(serviceProvider, controllerType, context.Controller)
+                    {
+                        HttpContext = context.HttpContext,
+                        Result = objectResult.Value
+                    };
                     actionFilter.OnActionExecuted(actionContext);
 
                     objectResult.Value = actionContext.Result;

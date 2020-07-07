@@ -11,16 +11,23 @@ namespace BlocksCore.Navigation.Abstractions
         public string Name { get; set; }
         public LocalizedString DisplayName { get; set; }
 
-        public string Action { get; set; }
-        public string ControllerName { get; set; }
-        public string AreaName { get; set; }
+        //public string Action { get; set; }
+        //public string ControllerName { get; set; }
+        //public string AreaName { get; set; }
+
+        public IDictionary<string, object> RouteValues { get; set; }
         public int? NavigationType { get; set; }
-        public Permission[] Permission { get; set; }
+        public Permission[] Permissions { get; set; }
 
         public bool IsVisible { get; set; }
-        public string GetUniqueId()
+
+        public string uId { get => GetUniqueId(this); }
+
+        public long Order { get; set; } 
+
+        static string GetUniqueId(NavigationItem navigationItem)
         {
-            return Name + "_" + AreaName;
+            return navigationItem.Name + "_" + navigationItem.RouteValues?["area"];
         }
     }
 }

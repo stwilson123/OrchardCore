@@ -14,9 +14,8 @@ namespace BlocksCore.Data.EF.Test.FunctionTest.TestModel
 
         public override string ConnectionString { get; protected set; }
 
-        public SqlserverModelContextFix(string connectionString) : base()
+        public SqlserverModelContextFix(string connectionString) : base(connectionString)
         {
-            ConnectionString = connectionString;
            
         }
 
