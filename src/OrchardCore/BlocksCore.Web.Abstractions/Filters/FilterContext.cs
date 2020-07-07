@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace BlocksCore.Web.Abstractions.Filters
 {
@@ -16,5 +17,7 @@ namespace BlocksCore.Web.Abstractions.Filters
         public IServiceProvider ServiceProvider { get; }
 
         public TypeInfo ControllerType { get; }
+
+        public HttpContext HttpContext { get; set; }
     }
 }

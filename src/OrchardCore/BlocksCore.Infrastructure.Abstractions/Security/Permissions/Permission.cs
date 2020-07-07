@@ -18,9 +18,10 @@ namespace BlocksCore.Infrastructure.Abstractions.Security.Permissions
 
         public LocalizedString DisplayName { get; set; }
 
-        public Permission(string name)
+        public Permission(string name,string resourceKey)
         {
             Name = name;
+            ResourceKey = resourceKey;
         }
 
     }

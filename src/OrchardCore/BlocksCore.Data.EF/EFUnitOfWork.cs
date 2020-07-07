@@ -18,25 +18,33 @@ namespace BlocksCore.Data.EF
         private readonly IDbConnectionAccessor _dbConnectionAccessor;
         private readonly ITypeFeatureExtensionsProvider _typeFeatureExtensionsProvider;
         private IDbTransaction _dbTransaction;
-        public DbConnection DbConnection { get; private set; }
+        public DbConnection DbConnection
+        {
+            get
+            {
+                if (_dbConnection == null)
+                    _dbConnection = _dbConnectionAccessor.CreateConnection();
+                return _dbConnection;
+            }
+        }
+        private DbConnection _dbConnection;
 
         public EFUnitOfWork(IServiceProvider serviceProvider, IDbConnectionAccessor dbConnectionAccessor, ITypeFeatureExtensionsProvider typeFeatureExtensionsProvider)
         {
             _serviceProvider = serviceProvider;
             _dbConnectionAccessor = dbConnectionAccessor;
             this._typeFeatureExtensionsProvider = typeFeatureExtensionsProvider;
-          
+
         }
 
         public IDataContext GetOrCreateDataContext<TEntity>() where TEntity : IEntity
         {
             var lists = _typeFeatureExtensionsProvider.GetFeatureExportedTypesDenepencies(typeof(TEntity));
-            return _serviceProvider.GetService<BlocksDbContext>(new NamedParam("entityTypes",lists));
+            return _serviceProvider.GetService<BlocksDbContext>(new NamedParam("entityTypes", lists));
         }
 
         public void Begin(UnitOfWorkOptions options)
         {
-            DbConnection = _dbConnectionAccessor.CreateConnection();
             _dbTransaction = DbConnection.BeginTransaction(options.IsolationLevel ?? IsolationLevel.ReadCommitted);
         }
 

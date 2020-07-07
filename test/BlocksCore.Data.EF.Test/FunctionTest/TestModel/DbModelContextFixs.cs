@@ -44,7 +44,6 @@ namespace BlocksCore.Data.EF.Test.FunctionTest.TestModel
 
             foreach (var modelContext in testModelContexts)
             {
-                modelContext.Init();
                 using (var dbContext = modelContext.ServiceProvider.GetService<MigrateDbContext>(new NamedParam("entityTypes", TestModelContext.registerTypes)))
                 {
                     // dbContext.ExecuteSqlCommand("SELECT 1;");

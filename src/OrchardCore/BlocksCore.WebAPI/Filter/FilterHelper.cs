@@ -32,6 +32,12 @@ namespace BlocksCore.WebAPI.Filter
 
             return new ObjectHandleResult { IsObjectResult = isObjectResult, Result = resultObj };
         }
+
+        public static ControllerActionDescriptor GetControllActionDescriptor(ActionContext actionContext)
+        {
+            var actionDescriptor = (ControllerActionDescriptor)actionContext.ActionDescriptor;
+            return actionDescriptor;
+        }
     }
 
     class ObjectHandleResult

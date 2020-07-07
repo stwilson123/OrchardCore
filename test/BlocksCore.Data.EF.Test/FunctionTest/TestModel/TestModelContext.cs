@@ -40,28 +40,32 @@ namespace BlocksCore.Data.EF.Test.FunctionTest.TestModel
         //ShellSettings shellSettings = new ShellSettings();
         public virtual string ProviderName { get; }
 
-        public virtual string ConnectionString { get; }
+        public virtual string ConnectionString { get; protected set; }
 
-        public TestModelContext()
+        public TestModelContext(string connectionString)
         {
+            ConnectionString = connectionString;
+
             var builder = new OrchardCoreBuilder(Services);
-            builder.AddDataAccess()
+            builder.AddEFDataAccess()
             .ConfigureServices(s =>
             {
                 s.AddSingleton<ITypeFeatureExtensionsProvider, DefaultTypeFeatureExtensionsProvider>();
             })
             .RegisterStartup<BlocksCore.Data.EF.Sqlserver.Startup>();
 
-            Init(Services);
+            Init();
             var mockUserContext = new Mock<IUserContext>();
             mockUserContext.Setup(f => f.GetCurrentUser()).Returns(new DefaultUserIdentifier("t1","1","admin",null));
             IUserContext userContext = mockUserContext.Object;
 
-           
 
-            var mockRegisterFeature = new Mock<IFeatureInfo>();
-            mockRegisterFeature.SetupGet(f => f.Id).Returns("TestModelContext");
-            registerFeature = mockRegisterFeature.Object;
+
+            //var mockRegisterFeature = new Mock<IFeatureInfo>();
+            //mockRegisterFeature.SetupGet(f => f.Id).Returns("TestModelContext");
+            //mockRegisterFeature.SetupGet(f => f).Returns("TestModelContext");
+
+            registerFeature = new FeatureInfo("TestModelContext", "TestModelContext",0,null,null,null,null,false);
 
             Services.AddSingleton<IClock, Clock>();
             Services.AddLogging(loggingBuilder =>
@@ -73,6 +77,7 @@ namespace BlocksCore.Data.EF.Test.FunctionTest.TestModel
             var mockTypeFeatureProvider = new Mock<ITypeFeatureProvider>();
             mockTypeFeatureProvider.Setup(p => p.GetFeatureForDependency(It.Is<Type>((type) => registerTypes.Contains(type))))
                 .Returns(registerFeature);
+
 
             var mockFeatureEntry = new CompiledFeatureEntry(registerFeature, registerTypes);
            
@@ -113,7 +118,7 @@ namespace BlocksCore.Data.EF.Test.FunctionTest.TestModel
             ServiceProvider = SerivceProviderFactory.CreateServiceProvider(null,Services, Services.Where(s => s.ServiceType == typeof(IHost)));
         }
 
-        public virtual void Init(IServiceCollection services)
+        public virtual void Init()
         {
 
         }

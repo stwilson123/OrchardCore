@@ -7,6 +7,6 @@ namespace BlocksCore.Navigation.Abstractions
 {
     public interface IUserNavigationManager
     {
-        Task<IEnumerable<NavigationItem>> GetMenuAsync(string name);
+        Task<IEnumerable<NavigationItem>> GetFilterMenuAsync(string name);
     }
 }

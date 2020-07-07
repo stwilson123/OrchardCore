@@ -66,8 +66,8 @@ namespace BlocksCore.Test.Navigation
 
 
 
-            var factoryWeb = mainMenus.SingleOrDefault(i => i.Text.Name == "FactoryWeb");
-            var workcenterWeb = mainMenus.SingleOrDefault(i => i.Text.Name == "WorkcenterWeb");
+            var factoryWeb = mainMenus.SingleOrDefault(i => i.Name == "FactoryWeb");
+            var workcenterWeb = mainMenus.SingleOrDefault(i => i.Name == "WorkcenterWeb");
 
             Assert.NotNull(factoryWeb);
             Assert.NotNull(workcenterWeb);
