@@ -11,6 +11,7 @@
     <ProjectReference Include="..\..\OrchardCore\BlocksCore.Users.Abstractions\BlocksCore.Users.Abstractions.csproj" />
     <ProjectReference Include="..\..\OrchardCore\BlocksCore.Web.Abstractions\BlocksCore.Web.Abstractions.csproj" />
     <ProjectReference Include="..\..\OrchardCore\OrchardCore.Module.Targets\OrchardCore.Module.Targets.csproj" />
+    <ProjectReference Include="..\..\OrchardCore\OrchardCore.Users.Abstractions\OrchardCore.Users.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

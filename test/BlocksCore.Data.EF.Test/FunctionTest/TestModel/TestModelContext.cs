@@ -28,7 +28,7 @@ namespace BlocksCore.Data.EF.Test.FunctionTest.TestModel
     public class TestModelContext : IDisposable
     {
         public IServiceCollection Services { get; } = new ServiceCollection();
-        public IServiceProvider ServiceProvider { get; private set; }
+        public IServiceProvider ServiceProvider { get; }
 
         public static IList<Type> registerTypes = new List<Type>() {
                 typeof(TESTENTITY), typeof(TESTENTITY2), typeof(TESTENTITY3),
@@ -40,19 +40,19 @@ namespace BlocksCore.Data.EF.Test.FunctionTest.TestModel
         //ShellSettings shellSettings = new ShellSettings();
         public virtual string ProviderName { get; }
 
-        public virtual string ConnectionString { get; protected set; }
+        public virtual string ConnectionString { get; }
 
         public TestModelContext()
         {
             var builder = new OrchardCoreBuilder(Services);
-            builder.AddEFDataAccess()
+            builder.AddDataAccess()
             .ConfigureServices(s =>
             {
                 s.AddSingleton<ITypeFeatureExtensionsProvider, DefaultTypeFeatureExtensionsProvider>();
             })
             .RegisterStartup<BlocksCore.Data.EF.Sqlserver.Startup>();
 
-          
+            Init(Services);
             var mockUserContext = new Mock<IUserContext>();
             mockUserContext.Setup(f => f.GetCurrentUser()).Returns(new DefaultUserIdentifier("t1","1","admin",null));
             IUserContext userContext = mockUserContext.Object;
@@ -110,11 +110,12 @@ namespace BlocksCore.Data.EF.Test.FunctionTest.TestModel
             //{
             //    startup.Configure(null, null, serviceProvider);
             //}
+            ServiceProvider = SerivceProviderFactory.CreateServiceProvider(null,Services, Services.Where(s => s.ServiceType == typeof(IHost)));
         }
 
-        public virtual void Init()
+        public virtual void Init(IServiceCollection services)
         {
-            ServiceProvider = SerivceProviderFactory.CreateServiceProvider(null, Services, Services.Where(s => s.ServiceType == typeof(IHost)));
+
         }
 
         public void Dispose()

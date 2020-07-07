@@ -27,6 +27,7 @@ namespace BlocksCore.Navigation.Core
         }
     }
 
+
     class MenuItemEqualityComparer : IEqualityComparer<MenuItem>
     {
         public bool Equals([AllowNull] MenuItem x, [AllowNull] MenuItem y)
