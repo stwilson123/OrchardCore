@@ -26,8 +26,8 @@ var newMessages = {};
 var lang = Cookies.get('language') || 'en';
 ajaxRequest({
   //url: '/LayoutModule/layout/getLanguage',
-  url: '/api/services/localization/Language/get',
-  type: 'post',
+  url: '/api/services/localization/localization/get',
+  type: 'get',
   success: function (res) {
     var res = res.content;
     store.dispatch('setLanguage', res.currentLang);

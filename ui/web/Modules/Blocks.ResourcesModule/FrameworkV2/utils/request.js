@@ -11,12 +11,15 @@ const service = axios.create({
 //var ajaxHead =[];
 //ajaxHead[security.antiForgery.tokenHeaderName] = security.antiForgery.getToken();
 // request interceptor
-
+var token = "";
 var antiForgery = blocks.security.antiForgery;
 service.interceptors.request.use(
   config => {
-    config.headers[antiForgery.tokenHeaderName] = antiForgery.getToken()
-    return config
+    config.headers[antiForgery.tokenHeaderName] = antiForgery.getToken();
+    token = token ? token : localStorage.getItem("token")
+    if (token)
+      config.headers["Authorization"] =   "Bearer " + token;
+    return config;
   },
   error => {
     Promise.reject(new httpException(error))
@@ -28,7 +31,12 @@ service.interceptors.response.use(
   response => {
 
     if (response.data.code !== "200")
-      return Promise.reject(new httpException(response))
+      return Promise.reject(new httpException(response));
+
+    if (response.data.content && response.data.content.token) {
+      localStorage.setItem("token", response.data.content.token.access_token);
+      token = "";
+    }
     return response;
   },
   /**

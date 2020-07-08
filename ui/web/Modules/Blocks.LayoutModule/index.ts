@@ -18,8 +18,8 @@ Bootstrapper.PlugInSources.push(tsContext);
 // ]);
 var dashboardUrl = {};
 ajaxRequest({
-  url: '/api/services/LayoutModule/DashboardRoute/get',
-  type: 'post',
+  url: '/api/services/settings/settings/get?groudId=DashboardRoute',
+  type: 'get',
   success: function (res) {
     var res = res.content;
     dashboardUrl = res;

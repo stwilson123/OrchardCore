@@ -56,12 +56,13 @@ const user = {
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
         loginByUsername(username, userInfo.password).then(response => {
+          debugger
           const data = response.data;
-          if (data.content && data.content.success) {
+          if (data.content) {
             localStorage.setItem("bilinUserID", username);
-            commit('SET_TOKEN', data.content.data.token)
-            setToken(data.content.data.token);
-            resolve(data.content.data)
+            commit('SET_TOKEN', data.content.token.access_token)
+            setToken(data.content.token.access_token);
+            resolve(data.content)
           }
           else {
             reject(data.msg)
@@ -84,8 +85,9 @@ const user = {
           if (!response.data) {
             reject('Verification failed, please login again.')
           }
-          const data = response.data
+          const data = response.data;
           if (data.content.success) {
+
             commit('SET_ROLES', ['admin']);
             commit('SET_NAME', data.content.data.trueName)
             commit('SET_AVATAR', '')

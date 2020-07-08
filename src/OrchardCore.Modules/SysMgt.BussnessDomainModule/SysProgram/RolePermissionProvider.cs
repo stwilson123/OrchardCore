@@ -36,7 +36,7 @@ namespace SysMgt.BussnessDomainModule.SysProgram
             var permissionStereotype = new PermissionStereotype()
             {
                 Name = name,
-                Permissions = _sysRoleAuthorizeRespository.GetRoleAuthorize(name).Select(t => new Permission(t.RESOURCE_KEY,t.RESOURCE_KEY))
+                Permissions = _sysRoleAuthorizeRespository.GetRoleAuthorize(name).Select(t => new Permission(t.RESOURCE_KEY?.ToLower(),t.RESOURCE_KEY?.ToLower()))
             };
             return Task.FromResult(permissionStereotype);
         }

@@ -617,18 +617,25 @@ export default {
       return arr;
     }
   },
-  created() {
-    let userMenu = [];
-    ajaxRequest({
-      url: "/api/services/LayoutModule/SideBarNavigation/get",
-      type: "post",
-      success: function(res) {
-        userMenu = res.content.Items;
-      }
+  async created() {
+    //let userMenu = [];
+    // ajaxRequest({
+    //   url: "/api/services/LayoutModule/SideBarNavigation/get",
+    //   type: "post",
+    //   success: function(res) {
+    //     userMenu = res.content.Items;
+    //   }
+    // });
+    let menusData = await this.$http({
+      method: "get",
+      url:
+        "/api/services/navigation/navigation/GetCurrentUserNavigation?name=Main"
     });
+    let userMenu = menusData.data.content;
     this.$store.dispatch("setMenus", userMenu);
     let userRouter = this.getUserSingleRouter(userMenu);
     this.list = userRouter;
+    this.showList = userRouter;
   },
   mounted() {
     this.showList = Object.assign([], this.showList, this.list);

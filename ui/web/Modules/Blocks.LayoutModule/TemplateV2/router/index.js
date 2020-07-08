@@ -39,7 +39,7 @@ const whiteList = ['/authentionmodule/login', '/layout/BussnessWebModule/MasterD
 //const whiteList = ['/login']
 const dashurl = store.getters.dashboardRoute.url.toLowerCase();
 whiteList.push(dashurl);
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   var toPath = to.path.toLowerCase();
   if (toPath === "/") {
     next(dashurl)
@@ -53,7 +53,7 @@ router.beforeEach((to, from, next) => {
       next();
       return;
     }
-    var permission = [];
+    
     var js = 0;
     let uniqueKey = to.meta.uniqueKey;
     let user_menus = store.getters.user_menus;
@@ -71,23 +71,38 @@ router.beforeEach((to, from, next) => {
       user_menus = store.getters.user_menus;
     }
     let hasMenu = user_menus[uniqueKey];
-    ajaxRequest({
-      url: "/LayoutModule/layout/getPermission",
-      type: "get",
-      success: function (res) {
-        permission = res;
-        store.dispatch('SetThisRouter', to.path);
-        store.dispatch('SetThisModule', to.path.substring(1, to.path.substring(1).indexOf('/')));
-        store.dispatch('SetUserPermission', res);
-      }
-    });
-    for (var i = 0; i < permission.length; i++) {
-      if (("/" + permission[i].resourceKey) == (hasMenu == undefined ? "" : hasMenu.url.toLowerCase() + "/index") || ("/" + permission[i].resourceKey) == (toPath.toLowerCase() + "/index")) {
-        js++;
-        break;
-      }
-    }
-    if (js > 0) {
+
+    let permissionRes = await Vue.prototype.$http({
+      url:"/api/services/users/permission/get",
+      method: "get",
+    })
+    let permission = permissionRes.data.content;
+    let permissionHashSet = new Set(permission);
+    store.dispatch('SetThisRouter', to.path);
+    store.dispatch('SetThisModule', to.path.substring(1, to.path.substring(1).indexOf('/')));
+    store.dispatch('SetUserPermission', permissionHashSet);
+    let isHasPermission = false;
+
+    let resourceKey = hasMenu.url.startsWith("/") ? hasMenu.url.substring(1) :  hasMenu.url;
+    if(permissionHashSet.has(resourceKey + "/index"))
+      isHasPermission = true;
+    // ajaxRequest({
+    //   url: "/api/layout/getPermission",
+    //   type: "get",
+    //   success: function (res) {
+    //     permission = res;
+    //     store.dispatch('SetThisRouter', to.path);
+    //     store.dispatch('SetThisModule', to.path.substring(1, to.path.substring(1).indexOf('/')));
+    //     store.dispatch('SetUserPermission', res);
+    //   }
+    // });
+    // for (var i = 0; i < permission.length; i++) {
+    //   if (("/" + permission[i].resourceKey) == (hasMenu == undefined ? "" : hasMenu.url.toLowerCase() + "/index") || ("/" + permission[i].resourceKey) == (toPath.toLowerCase() + "/index")) {
+    //     js++;
+    //     break;
+    //   }
+    // }
+    if (isHasPermission) {
       next()
     }
     else {

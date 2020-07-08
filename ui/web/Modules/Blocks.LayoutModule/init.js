@@ -104,7 +104,7 @@ let checkPermission = (el, binding, vnode, ) => {
   contextPath = contextPath.url;
   contextPath = contextPath.startsWith("/") ? contextPath.substr(1) : contextPath;
   let resourceKey = contextPath.toLowerCase() + "/" + action.toLowerCase();
-  return userPermission.some(p => p.resourceKey === resourceKey);
+  return userPermission.has(resourceKey);
 
 }
 Vue.directive("permission", {

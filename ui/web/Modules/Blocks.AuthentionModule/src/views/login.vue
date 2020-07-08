@@ -146,6 +146,7 @@ export default {
       setTimeout(() => {
         this.loading = false;
       }, 2000);
+      
       let res = await this.$store.dispatch("LoginByUsername", this.loginForm);
       if (this.loginForm.remember) {
         localStorage.setItem("blr2ewmsuid", this.loginForm.username);
@@ -159,6 +160,7 @@ export default {
         }
       }
       await this.$store.dispatch("GetUserInfo");
+      
       if (this.redirect) {
         this.$router.push({ path: this.redirect || "/" });
       } else {
@@ -181,7 +183,7 @@ export default {
   async created() {
     let res = await this.$http({
       method: "post",
-      url: "/api/services/LayoutModule/DashboardRoute/getfactory"
+      url: "/api/services/settings/settings/get?groudId=getfactory"
     });
     if (res.data.content) {
       let data = res.data.content;

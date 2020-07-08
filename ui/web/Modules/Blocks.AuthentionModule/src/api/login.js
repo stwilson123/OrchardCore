@@ -7,7 +7,7 @@ export function loginByUsername(username, password) {
     password
   }
   return request({
-    url:'/api/services/authentionModule/account/get',
+    url:'/api/services/users/account/login',
     method: 'post',
     data
   })
@@ -15,15 +15,15 @@ export function loginByUsername(username, password) {
 
 export function getUserInfo(token) {
   return request({
-    url: '/api/services/authentionModule/account/getdetail',
-    method: 'post',
+    url: '/api/services/users/account/getdetail',
+    method: 'get',
     data: { token }
   })
 }
 
 export function LogOut() {
   return request({
-    url: '/api/services/authentionModule/account/logout',
+    url: '/api/services/users/account/logoff',
     method: 'post'
   })
 }
