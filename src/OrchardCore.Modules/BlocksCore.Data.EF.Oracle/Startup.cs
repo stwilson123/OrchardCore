@@ -15,7 +15,7 @@ namespace BlocksCore.Data.EF.Oracle
         {
             services.TryAddDataProvider(new DatabaseProvider()
             {
-                Name = "Sql Server",
+                Name = "Oracle",
                 Value = "SqlConnection",
                 HasConnectionString = true,
                 SampleConnectionString = "Server=localhost;Database=Orchard;User Id=username;Password=password",
@@ -23,7 +23,7 @@ namespace BlocksCore.Data.EF.Oracle
                 IsDefault = false,
                 configBuilder = (optionBuilder, connection) =>
                 {
-                    optionBuilder.UseOracle(connection);
+                    optionBuilder.UseOracle(connection,o => o.UseOracleSQLCompatibility("11"));
                 },
                 dbConnectionBuilder = (connectionString) => new OracleConnection(connectionString)
             });

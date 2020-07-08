@@ -16,6 +16,11 @@ namespace BlocksCore.Navigation.DTO
         public string Name { get; set; }
 
         public string DisplayName { get; set;}
+
+
+        public string Url { get; set; }
+
+        public IEnumerable<MenuItem> Items { get; set; }
     }
 
 }

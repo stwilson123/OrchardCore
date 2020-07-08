@@ -8,6 +8,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BlocksCore.Abstractions\BlocksCore.Abstractions.csproj" />
+    <ProjectReference Include="..\BlocksCore.Autofac.Extensions.DependencyInjection\BlocksCore.Autofac.Extensions.DependencyInjection.csproj" />
     <ProjectReference Include="..\OrchardCore.Abstractions\OrchardCore.Abstractions.csproj" />
   </ItemGroup>
 

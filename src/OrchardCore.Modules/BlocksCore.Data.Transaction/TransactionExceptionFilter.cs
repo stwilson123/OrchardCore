@@ -13,7 +13,7 @@ namespace BlocksCore.Data.Transaction
     {
         public void OnException(ExceptionContext context)
         {
-            if (context.ControllerType.GetCustomAttribute<TransactionAttribute>()?.IsTransaction == false)
+            if (!TransactionHelper.IsUseTransaction(context))
                 return;
             var unitOfWorkManager = context.ServiceProvider.GetService<IUnitOfWorkManager>();
 

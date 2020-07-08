@@ -8,7 +8,10 @@ namespace BlocksCore.Navigation.Abstractions
 {
     public class NavigationItem
     {
-        public string Name { get; set; }
+        public string Name { get;  }
+
+   
+
         public LocalizedString DisplayName { get; set; }
 
         //public string Action { get; set; }
@@ -23,11 +26,21 @@ namespace BlocksCore.Navigation.Abstractions
 
         public string uId { get => GetUniqueId(this); }
 
-        public long Order { get; set; } 
+        public long Order { get; set; }
 
+        public string Icon { get; set; }
+
+        public IList<NavigationItem> Items { get; set; }
+        public NavigationItem(string name)
+        {
+            Name = name;
+            Items = new List<NavigationItem>();
+        }
         static string GetUniqueId(NavigationItem navigationItem)
         {
             return navigationItem.Name + "_" + navigationItem.RouteValues?["area"];
         }
+
+
     }
 }

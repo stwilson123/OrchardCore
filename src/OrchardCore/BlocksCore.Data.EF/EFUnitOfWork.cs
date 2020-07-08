@@ -45,6 +45,8 @@ namespace BlocksCore.Data.EF
 
         public void Begin(UnitOfWorkOptions options)
         {
+            if (DbConnection.State == ConnectionState.Closed)
+                DbConnection.Open();
             _dbTransaction = DbConnection.BeginTransaction(options.IsolationLevel ?? IsolationLevel.ReadCommitted);
         }
 

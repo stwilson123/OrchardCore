@@ -11,5 +11,10 @@ namespace Blocks.UserModule.AppServices
     public interface IAccountAppService: IAppService,IAuthenticationService
     {
         Task<LoginDTO> Login(LoginDTO model);
+
+
+        Task LogOff();
+
+        Task<object> Getdetail();
     }
 }

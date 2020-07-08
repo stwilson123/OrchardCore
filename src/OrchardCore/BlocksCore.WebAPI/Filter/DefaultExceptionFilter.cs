@@ -7,15 +7,21 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace BlocksCore.WebAPI.Filter
 {
     public class DefaultExceptionFilter : Microsoft.AspNetCore.Mvc.Filters.IExceptionFilter
     {
+
+        public DefaultExceptionFilter()
+        {
+        }
+
         public void OnException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext context)
         {
             var serviceProvider = context.HttpContext.RequestServices;
-
+           
             var actionFilters = serviceProvider.GetServices<BlocksCore.Web.Abstractions.Filters.IExceptionFilter>();
             var orderedActionFilters = actionFilters.OrderBy(f => f is BlocksCore.Web.Abstractions.Filters.IOrderedFilter order ? order.Order : 0);
             var objectHandleResult = FilterHelper.IsObjectResult(context.Result, context.ActionDescriptor);

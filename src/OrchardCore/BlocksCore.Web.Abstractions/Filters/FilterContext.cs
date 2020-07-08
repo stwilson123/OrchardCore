@@ -18,6 +18,9 @@ namespace BlocksCore.Web.Abstractions.Filters
 
         public TypeInfo ControllerType { get; }
 
+        public MethodInfo MethodInfo { get; set; }
+
         public HttpContext HttpContext { get; set; }
+
     }
 }

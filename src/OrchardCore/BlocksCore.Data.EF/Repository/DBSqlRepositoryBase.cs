@@ -73,7 +73,7 @@ namespace BlocksCore.Data.EF.Repository
 
         public IQueryable<TEntity> GetAll()
         {
-            throw new NotSupportedException("This Method is not supported");
+            return this.Table;
         }
 
 
