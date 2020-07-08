@@ -26,9 +26,8 @@ namespace BlocksCore.Navigation.Core
             var menus = await navigation.BuildMenuAsync(name, context);
 
 
-            return menus.Distinct(new MenuItemEqualityComparer()).Select(m => new NavigationItem()
+            return menus.Distinct(new MenuItemEqualityComparer()).Select(m => new NavigationItem(m.Id)
             {
-                Name = m.Id,
                 DisplayName = m.Text,
                 Order = m.Priority,
                 RouteValues = m.RouteValues,

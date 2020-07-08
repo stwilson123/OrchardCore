@@ -9,6 +9,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\BlocksCore.Abstractions\BlocksCore.Abstractions.csproj" />
       <ProjectReference Include="..\BlocksCore.SyntacticAbstractions\BlocksCore.SyntacticAbstractions.csproj" />
     </ItemGroup>
 

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -13,6 +13,7 @@
     <ProjectReference Include="..\..\OrchardCore.Modules\BlocksCore.Data.Transaction\BlocksCore.Data.Transaction.csproj" />
     <ProjectReference Include="..\..\OrchardCore.Modules\BlocksCore.JWTAuthentication\BlocksCore.JWTAuthentication.csproj" />
     <ProjectReference Include="..\..\OrchardCore.Modules\BlocksCore.Localization\BlocksCore.Localization.csproj" />
+    <ProjectReference Include="..\..\OrchardCore.Modules\BlocksCore.Navigation\BlocksCore.Navigation.csproj" />
     <ProjectReference Include="..\..\OrchardCore.Modules\BlocksCore.Settings\BlocksCore.Settings.csproj" />
     <ProjectReference Include="..\BlocksCore.Data.EF\BlocksCore.Data.EF.csproj" />
     <ProjectReference Include="..\BlocksCore.Domain.Core\BlocksCore.Domain.Core.csproj" />

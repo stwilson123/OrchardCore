@@ -31,7 +31,7 @@ namespace BlocksCore.Infrastructure.Security.Permissions
                 {
                     permissionStereotype.Add(provider.GetStereotype(permissionStereotypeName).Result);
                 }
-                return permissionStereotype.Where(permissions => permissions != null).SelectMany(permissions => permissions?.Permissions?.ToList()).ToDictionary(p => p.Name, p => p);
+                return permissionStereotype.Where(permissions => permissions != null).SelectMany(permissionStereotype => permissionStereotype?.Permissions?.Where(p => p.Name != null)).ToDictionary(p => p.Name.ToLower(), p => p);
             }, LazyThreadSafetyMode.ExecutionAndPublication));
             return cachedDictionary;
         }

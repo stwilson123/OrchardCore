@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 using BlocksCore.Abstractions.Exception;
 using BlocksCore.Abstractions.Security;
@@ -17,10 +18,9 @@ namespace BlocksCore.JWTAuthentication
         public void OnActionExecuted(ActionExecutedContext context)
         {
             //throw new NotImplementedException();
-            if(context.Controller is IAuthenticationService)
-            {
-                var tokenService = context.ServiceProvider.GetService<TokenService>();
-
+            var isReturnToken = context.MethodInfo?.GetCustomAttribute<TokenAttribute>() != null;
+            if (isReturnToken)
+            {   var tokenService = context.ServiceProvider.GetService<TokenService>();
                 var sourceResult = context.Result;
                 if (!(sourceResult is IUser))
                     throw new BlocksException("101","Implement AuthenticationService return null IUser paramters");

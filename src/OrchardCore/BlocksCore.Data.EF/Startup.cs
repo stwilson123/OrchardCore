@@ -45,6 +45,7 @@ namespace BlocksCore.Data.EF
         public override void ConfigureServices(IServiceCollection services)
         {
 
+
             System.Diagnostics.DiagnosticListener.AllListeners.Subscribe(new CommandListener());
 
             services.AddDataCore();

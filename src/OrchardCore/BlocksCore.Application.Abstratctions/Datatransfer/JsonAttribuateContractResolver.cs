@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using BlocksCore.Abstractions.Datatransfer;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 

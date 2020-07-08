@@ -10,8 +10,9 @@ using BlocksCore.Users.Entity;
 
 namespace BlocksCore.Users.Identity.Store
 {
-    public class UserStore : IUserClaimStore<IUser>,
-        IUserRoleStore<IUser>,
+    public class UserStore :
+        //IUserClaimStore<IUser>,
+       // IUserRoleStore<IUser>,
         IUserPasswordStore<IUser>,
         IUserEmailStore<IUser>,
         IUserSecurityStampStore<IUser>,
@@ -67,7 +68,7 @@ namespace BlocksCore.Users.Identity.Store
 
         public Task<IUser> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
         {
-            return Task.FromResult<IUser>(new User() { UserName = "Test", Id = "" });
+            return Task.FromResult<IUser>(new User() { UserName = "admin", Id = "dac0c8cd-26a0-4c3c-bc6e-5770ef5d8e87" });
         }
 
         public Task<IList<Claim>> GetClaimsAsync(IUser user, CancellationToken cancellationToken)
@@ -112,7 +113,8 @@ namespace BlocksCore.Users.Identity.Store
 
         public Task<string> GetSecurityStampAsync(IUser user, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            return Task.FromResult("123");
         }
 
         public Task<string> GetUserIdAsync(IUser user, CancellationToken cancellationToken)

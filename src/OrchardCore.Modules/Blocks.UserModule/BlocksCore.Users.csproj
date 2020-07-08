@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -7,6 +7,8 @@
  
   <ItemGroup>
     <ProjectReference Include="..\..\OrchardCore\BlocksCore.Application.Abstratctions\BlocksCore.Application.Abstratctions.csproj" />
+    <ProjectReference Include="..\..\OrchardCore\BlocksCore.Domain.Abstractions\BlocksCore.Domain.Abstractions.csproj" />
+    <ProjectReference Include="..\..\OrchardCore\BlocksCore.Infrastructure\BlocksCore.Infrastructure.csproj" />
     <ProjectReference Include="..\..\OrchardCore\BlocksCore.Navigation.Abstractions\BlocksCore.Navigation.Abstractions.csproj" />
     <ProjectReference Include="..\..\OrchardCore\BlocksCore.Users.Abstractions\BlocksCore.Users.Abstractions.csproj" />
     <ProjectReference Include="..\..\OrchardCore\BlocksCore.Web.Abstractions\BlocksCore.Web.Abstractions.csproj" />

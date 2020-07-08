@@ -26,14 +26,22 @@ namespace BlocksCore.WebAPI.Filter
             var serviceProvider = context.HttpContext.RequestServices;
             var actionFilters = serviceProvider.GetServices<BlocksCore.Web.Abstractions.Filters.IActionFilter>();
             var orderedActionFilters = actionFilters.OrderBy(f => f is BlocksCore.Web.Abstractions.Filters.IOrderedFilter order ? order.Order : 0);
+            var controllAction = FilterHelper.GetControllActionDescriptor(context);
             foreach (var actionFilter in orderedActionFilters)
             {
-                actionFilter.OnActionExecuting(new BlocksCore.Web.Abstractions.Filters.ActionExecutingContext(context.ActionArguments, serviceProvider, ((ControllerActionDescriptor)context.ActionDescriptor)?.ControllerTypeInfo));
+                actionFilter.OnActionExecuting(new BlocksCore.Web.Abstractions.Filters.ActionExecutingContext(context.ActionArguments, serviceProvider, controllAction?.ControllerTypeInfo)
+                {
+                    HttpContext = context.HttpContext
+                });
             }
         }
 
         public void OnActionExecuted(Microsoft.AspNetCore.Mvc.Filters.ActionExecutedContext context)
         {
+            if(context.Exception != null)
+            {
+                return;
+            }
             var serviceProvider = context.HttpContext.RequestServices;
 
             var actionFilters = serviceProvider.GetServices<BlocksCore.Web.Abstractions.Filters.IActionFilter>();
@@ -45,9 +53,15 @@ namespace BlocksCore.WebAPI.Filter
 
         private static object resultHandle(Microsoft.AspNetCore.Mvc.Filters.ActionExecutedContext context, IServiceProvider serviceProvider, IOrderedEnumerable<Web.Abstractions.Filters.IActionFilter> orderedActionFilters, object resultObj)
         {
+            var controllAction = FilterHelper.GetControllActionDescriptor(context);
             foreach (var actionFilter in orderedActionFilters)
             {
-                var actionContext = new BlocksCore.Web.Abstractions.Filters.ActionExecutedContext(serviceProvider, ((ControllerActionDescriptor)context.ActionDescriptor)?.ControllerTypeInfo, context.Controller) { Result = resultObj };
+                var actionContext = new BlocksCore.Web.Abstractions.Filters.ActionExecutedContext(serviceProvider, controllAction?.ControllerTypeInfo, context.Controller)
+                {
+                    HttpContext = context.HttpContext,
+                    MethodInfo = controllAction?.MethodInfo,
+                    Result = resultObj
+                };
                 actionFilter.OnActionExecuted(actionContext);
                 resultObj = actionContext.Result;
             }

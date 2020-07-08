@@ -22,5 +22,11 @@ namespace BlocksCore.Autofac.Extensions.DependencyInjection
             });
             return container.Resolve<T>(paramter);
         }
+
+
+        public static bool IsRegistered<T>(this IServiceProvider serviceProvider)
+        {
+            return serviceProvider.GetAutofacRoot().IsRegistered<T>();
+        }
     }
 }

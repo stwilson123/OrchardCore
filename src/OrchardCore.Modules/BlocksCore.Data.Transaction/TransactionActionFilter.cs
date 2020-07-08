@@ -15,7 +15,7 @@ namespace BlocksCore.Data.Transaction
     {
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            if (context.ControllerType.GetCustomAttribute<TransactionAttribute>()?.IsTransaction == false)
+            if (!TransactionHelper.IsUseTransaction(context))
                 return;
              var unitOfWorkManager = context.ServiceProvider.GetService<IUnitOfWorkManager>();
 
@@ -25,7 +25,7 @@ namespace BlocksCore.Data.Transaction
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            if (context.ControllerType.GetCustomAttribute<TransactionAttribute>()?.IsTransaction == false)
+            if (!TransactionHelper.IsUseTransaction(context))
                 return;
             var unitOfWorkManager = context.ServiceProvider.GetService<IUnitOfWorkManager>();
             unitOfWorkManager.Begin();

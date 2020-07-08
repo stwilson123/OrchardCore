@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlocksCore.Abstractions.Security;
+using BlocksCore.Navigation.Abstractions;
 using BlocksCore.Navigation.Core;
 using BlocksCore.Navigation.DTO;
 using Microsoft.AspNetCore.Authorization;
@@ -16,21 +17,25 @@ namespace BlocksCore.Navigation.AppServices
 {
     public class NavigationAppService : INavigationAppService
     {
-        private readonly INavigationManager navigationManager;
-        private readonly IActionContextAccessor actionContext;
         private readonly IUserContext userContext;
+        private readonly IUserNavigationManager navigationManager;
+        private readonly IEnumerable<INavigationFilter> navigationFilters;
 
-        public NavigationAppService(INavigationManager navigationManager, IActionContextAccessor actionContext,IUserContext userContext)
+        public NavigationAppService(IUserNavigationManager navigationManager, IUserContext userContext, IEnumerable<INavigationFilter> navigationFilters)
         {
             this.navigationManager = navigationManager;
-            this.actionContext = actionContext;
             this.userContext = userContext;
+            this.navigationFilters = navigationFilters;
         }
         [Authorize]
         public async Task<IEnumerable<DTO.MenuItem>> GetCurrentUserNavigation(string name)
         {
-            var currentUser = userContext.GetCurrentUser();
-           var menus = await this.navigationManager.GetFilterMenuAsync(name, this.actionContext.ActionContext);
+            var menus = await this.navigationManager.GetFilterMenuAsync(name);
+
+            foreach (var navigationFilter in navigationFilters)
+            {
+                menus = navigationFilter.OnFilterExecuting(menus);
+            }
 
             return menus.Select(m => m.ToMenuItemDTO());
         }

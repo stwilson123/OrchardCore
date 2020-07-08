@@ -61,7 +61,16 @@ namespace BlocksCore.Navigation.Core
                             navItem.AreaName = string.IsNullOrEmpty(navItem.AreaName) ? feature.Name : navItem.AreaName;
                         }
                     }
-                    _navigationConfigs.Add(navigationFile.Key, navgationConfig);
+
+                    if(_navigationConfigs.TryGetValue(navigationFile.Key,out NavigationConfig navigationConfigExist))
+                    {
+                        navigationConfigExist.Merge(navgationConfig);
+                    }
+                    else
+                    {
+                        _navigationConfigs.Add(navigationFile.Key, navgationConfig);
+
+                    }
                 }
 
             }

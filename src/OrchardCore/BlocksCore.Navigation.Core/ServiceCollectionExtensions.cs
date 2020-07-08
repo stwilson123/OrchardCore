@@ -16,8 +16,9 @@ namespace BlocksCore.Navigation
         public static IServiceCollection AddNavigationCore(this IServiceCollection services)
         {
             services.TryAddScoped<INavigationManager, NavigationManager>();
-            services.AddSingleton<INavigationFileManager, NavigationFileManager>();
-            services.AddSingleton<INavigationProvider, AutoRegisterNavigationProvider>();
+            services.TryAddSingleton<INavigationFileManager, NavigationFileManager>();
+            services.TryAddSingleton<INavigationProvider, AutoRegisterNavigationProvider>();
+            services.TryAddScoped<IUserNavigationManager, DefaultUserNavigationManager>();
 
             return services;
         }
