@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
 using BlocksCore.SyntacticAbstractions.Types;
 
-namespace BlocksCore.Data.EF.Linq.Extends
+namespace BlocksCore.Data.Extends
 {
     public static class ExpressionUtils
     {

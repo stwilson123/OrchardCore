@@ -3,6 +3,7 @@ using BlocksCore.Data.Abstractions;
 using BlocksCore.Data.Abstractions.UnitOfWork;
 using BlocksCore.Data.Core.UnitOfWork;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace BlocksCore.Data.Core
 {
@@ -10,10 +11,10 @@ namespace BlocksCore.Data.Core
     {
         public static IServiceCollection AddDataCore(this IServiceCollection services)
         {
-            services.AddTransient<IDbConnectionAccessor, DbConnectionAccessor>();
-            services.AddSingleton<IDataBaseProviderManager, DataBaseProviderManager>();
-            services.AddScoped<IUnitOfWorkManager, DefaultUnitOfWorkManager>();
-            services.AddScoped<ICurrentUnitOfWorkProvider, DefaultCurrentUnitOfWorkProvider>();
+            services.TryAddTransient<IDbConnectionAccessor, DbConnectionAccessor>();
+            services.TryAddSingleton<IDataBaseProviderManager, DataBaseProviderManager>();
+            services.TryAddScoped<IUnitOfWorkManager, DefaultUnitOfWorkManager>();
+            services.TryAddScoped<ICurrentUnitOfWorkProvider, DefaultCurrentUnitOfWorkProvider>();
 
 
             return services;

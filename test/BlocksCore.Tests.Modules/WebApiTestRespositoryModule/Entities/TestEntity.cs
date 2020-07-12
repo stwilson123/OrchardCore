@@ -23,19 +23,19 @@ namespace BlocksCore.Data.EF.Test.TestModel.BlockTestContext
         public ICollection<TESTENTITY3> TESTENTITY3s { set; get; }
     }
 
-    public partial class TESTENTITYConfiguration : Microsoft.EntityFrameworkCore.IEntityTypeConfiguration<TESTENTITY>
-    {
-        public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TESTENTITY> builder)
-        {
+    //public partial class TESTENTITYConfiguration : Microsoft.EntityFrameworkCore.IEntityTypeConfiguration<TESTENTITY>
+    //{
+    //    public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TESTENTITY> builder)
+    //    {
 
-            builder.HasKey(x => x.Id);
+    //        builder.HasKey(x => x.Id);
 
 
-            //builder.HasOne(t => t.TESTENTITY2).WithMany().HasForeignKey(t => t.TESTENTITY2ID);
-            //builder.HasMany(t => t.TESTENTITY3s).WithOne().HasForeignKey(t => t.TESTENTITYID1);
-            builder.HasOne(t => t.TESTENTITY2).WithMany().HasForeignKey(t => t.TESTENTITY2ID);//.HasForeignKey(t => t.TESTENTITY2ID);
-            builder.HasMany(t => t.TESTENTITY3s).WithOne().HasForeignKey(t => t.TESTENTITYID1);
-        }
+    //        //builder.HasOne(t => t.TESTENTITY2).WithMany().HasForeignKey(t => t.TESTENTITY2ID);
+    //        //builder.HasMany(t => t.TESTENTITY3s).WithOne().HasForeignKey(t => t.TESTENTITYID1);
+    //        builder.HasOne(t => t.TESTENTITY2).WithMany().HasForeignKey(t => t.TESTENTITY2ID);//.HasForeignKey(t => t.TESTENTITY2ID);
+    //        builder.HasMany(t => t.TESTENTITY3s).WithOne().HasForeignKey(t => t.TESTENTITYID1);
+    //    }
 
-    }
+    //}
 }

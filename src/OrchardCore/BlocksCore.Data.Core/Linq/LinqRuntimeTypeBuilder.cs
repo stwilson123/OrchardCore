@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Threading;
 
-namespace BlocksCore.Data.EF.Linq
+namespace BlocksCore.Data.Linq
 {
     public static class LinqRuntimeTypeBuilder
     {

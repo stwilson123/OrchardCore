@@ -2,18 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BlocksCore.Abstractions.Exception;
 using BlocksCore.Data.Abstractions;
 using BlocksCore.Data.Abstractions.Entities;
-using BlocksCore.Data.EF.Linq.Extends;
 using BlocksCore.Data.Abstractions.Paging;
-using Microsoft.EntityFrameworkCore;
 using DynamicQueryableExtensions = System.Linq.Dynamic.Core.DynamicQueryableExtensions;
 using BlocksCore.Abstractions.UI.Paging;
-namespace BlocksCore.Data.EF.Linq
+using BlocksCore.Domain.Abstractions;
+using System.Linq.Dynamic.Core;
+using BlocksCore.Data.Extends;
+
+namespace BlocksCore.Data.Linq
 {
     public static class ValueTypeExtensions
     {
@@ -36,7 +37,7 @@ namespace BlocksCore.Data.EF.Linq
         private TableAlias tableAlias;
       //  private bool isFirstInnerJoin;
 
-        public DefaultLinqQueryable(IQueryable<TEntity> iQuerable, DbContext dbContext)
+        public DefaultLinqQueryable(IQueryable<TEntity> iQuerable, IDataContext dbContext)
         {
             this.iQuerable = iQuerable;
             this.dbContext = dbContext;
@@ -46,7 +47,7 @@ namespace BlocksCore.Data.EF.Linq
         }
 
         public IQueryable iQuerable { get; private set; }
-        public DbContext dbContext { get; }
+        public IDataContext dbContext { get; }
 
       //  private IQueryable<Dictionary<(Type TableType, string TableAlias),  Entity>> iQueryContext;
 
@@ -73,7 +74,7 @@ namespace BlocksCore.Data.EF.Linq
             if (querable != null)
             {
                 iQuerable = DynamicQueryableExtensions.Join(iQuerable,
-                    dbContext.Set<TInner>(),
+                    dbContext.Get<TInner>(),
 
                     $"{((MemberExpression) outerKeySelector.Body).Member.Name}",
                     $"{((MemberExpression) innerKeySelector.Body).Member.Name}", tableAlias.CreateResultSelector());
@@ -85,7 +86,7 @@ namespace BlocksCore.Data.EF.Linq
                         "Can't find table alias in the history join expression.Please check Touter join expression.");
 
                 iQuerable = DynamicQueryableExtensions.Join(iQuerable,
-                    dbContext.Set<TInner>(),
+                    dbContext.Get<TInner>(),
                     $"{outerParam.Name}.{((MemberExpression) outerKeySelector.Body).Member.Name}",
                     $"{((MemberExpression) innerKeySelector.Body).Member.Name}", tableAlias.CreateResultSelector());
             }
@@ -129,7 +130,7 @@ namespace BlocksCore.Data.EF.Linq
             {
                 iQuerable = DynamicQueryableExtensions.GroupJoin(iQuerable,
                     new ParsingConfig(){RenameParameterExpression = true, },
-                    dbContext.Set<TInner>(),
+                    dbContext.Get<TInner>(),
 
                     $"{((MemberExpression) outerKeySelector.Body).Member.Name}",
                     $"{((MemberExpression) innerKeySelector.Body).Member.Name}",
@@ -146,7 +147,7 @@ namespace BlocksCore.Data.EF.Linq
             {
                 iQuerable = DynamicQueryableExtensions.GroupJoin(iQuerable,
                     new ParsingConfig(){RenameParameterExpression = true, },
-                    dbContext.Set<TInner>(),
+                    dbContext.Get<TInner>(),
                     $"{outerParam.Name}.{((MemberExpression) outerKeySelector.Body).Member.Name}",
                     $"{((MemberExpression) innerKeySelector.Body).Member.Name}",
                     "new(inner as inner,outer as outer)");

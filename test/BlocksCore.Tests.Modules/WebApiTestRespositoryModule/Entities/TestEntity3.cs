@@ -13,18 +13,18 @@ namespace BlocksCore.Data.EF.Test.TestModel.BlockTestContext
         public TESTENTITY TESTENTITY { get; set; }
     }
 
-    public partial class TESTENTITY3Configuration : Microsoft.EntityFrameworkCore.IEntityTypeConfiguration<TESTENTITY3>
-    {
-        public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TESTENTITY3> builder)
-        {
+    //public partial class TESTENTITY3Configuration : Microsoft.EntityFrameworkCore.IEntityTypeConfiguration<TESTENTITY3>
+    //{
+    //    public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TESTENTITY3> builder)
+    //    {
 
-            builder.HasKey(x => x.Id);
+    //        builder.HasKey(x => x.Id);
 
 
 
-        }
+    //    }
 
-    }
+    //}
     //public class TestEntity3Configuration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<TESTENTITY3>
     //{
     //    public TestEntity3Configuration() 

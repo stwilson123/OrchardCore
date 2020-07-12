@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="linq2db.SqlServer" Version="3.0.0-rc.2" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\OrchardCore\BlocksCore.Data.Core\BlocksCore.Data.Core.csproj" />
+    <ProjectReference Include="..\..\OrchardCore\BlocksCore.Data.Linq2DB\BlocksCore.Data.Linq2DB.csproj" />
+  </ItemGroup>
+</Project>

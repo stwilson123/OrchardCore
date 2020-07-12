@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="linq2db" Version="3.0.0-rc.2" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.1.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlocksCore.Autofac.Extensions.DependencyInjection\BlocksCore.Autofac.Extensions.DependencyInjection.csproj" />
+    <ProjectReference Include="..\BlocksCore.Data.Core\BlocksCore.Data.Core.csproj" />
+  </ItemGroup>
+
+</Project>

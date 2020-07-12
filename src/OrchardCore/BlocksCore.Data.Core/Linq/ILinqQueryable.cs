@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using BlocksCore.Data.Abstractions.Entities;
 using BlocksCore.Data.Abstractions.Paging;
 using BlocksCore.Abstractions.UI.Paging;
-namespace BlocksCore.Data.EF.Linq
+namespace BlocksCore.Data.Linq
 {
     public interface IDbLinqQueryable<TEntity> : IDbLinqQueryable where TEntity : Entity
     {

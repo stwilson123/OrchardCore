@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using BlocksCore.Abstractions.Extensions;
 using BlocksCore.Domain.Abstractions;
@@ -16,6 +17,11 @@ namespace BlocksCore.Data.EF.DBContext
     {
         public BlocksDbContext(IEnumerable<Type> entityTypes, ShellSettings settingManager, ILogger<BlocksDbContext> log, DbContextOptions<BlocksDbContext> options) : base(entityTypes, settingManager, log, options)
         {
+        }
+
+        public IQueryable Get<TEntity>() where TEntity : class
+        {
+            return this.Set<TEntity>();
         }
     }
 }
