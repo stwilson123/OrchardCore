@@ -21,11 +21,11 @@ namespace BlocksCore.Data.Linq
 
         IDbLinqQueryable<TEntity> InnerJoin<TOuter, TInner, TKey>(
             Expression<Func<TOuter, TKey>> outerKeySelector,
-            Expression<Func<TInner, TKey>> innerKeySelector) where TKey : IComparable, IConvertible where TOuter : class where TInner : class;
+            Expression<Func<TInner, TKey>> innerKeySelector) where TOuter : class where TInner : class;
 
         IDbLinqQueryable<TEntity> LeftJoin<TOuter, TInner, TKey>(
             Expression<Func<TOuter, TKey>> outerKeySelector,
-            Expression<Func<TInner, TKey>> innerKeySelector) where TKey : IComparable, IConvertible where TOuter : class where TInner : class;
+            Expression<Func<TInner, TKey>> innerKeySelector) where TOuter : class where TInner : class;
 
 
         IDbLinqQueryable<TEntity> Take(int count);
