@@ -7,7 +7,9 @@ using BlocksCore.Abstractions.Extensions;
 using BlocksCore.Abstractions.Security;
 using BlocksCore.Autofac.Extensions.DependencyInjection;
 using BlocksCore.Data.Abstractions;
+using BlocksCore.Data.Abstractions.Configurations;
 using BlocksCore.Data.Abstractions.UnitOfWork;
+using BlocksCore.Data.Core.Configurations;
 using BlocksCore.Data.EF.Repository;
 using BlocksCore.Data.Linq2DB.Test.TestModel.BlockTestContext;
 using BlocksCore.Domain.Abstractions;
@@ -49,7 +51,7 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest.TestModel
             ConnectionString = connectionString;
 
             var builder = new OrchardCoreBuilder(Services);
-            builder.AddLInq2DBDataAccess()
+            builder.AddLinq2DBDataAccess()
             .ConfigureServices(s =>
             {
                 s.AddSingleton<ITypeFeatureExtensionsProvider, DefaultTypeFeatureExtensionsProvider>();
@@ -111,9 +113,10 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest.TestModel
             //    ((DatabaseProvider)dbProviderManager.GetCurrentDatabaseProvider()).configBuilder(options, connection);
             //}, ServiceLifetime.Transient);
 
-            Services.AddTransient<LinqToDbConnectionOptions>(sp =>
+            Services.AddTransient<DbContextOption<LinqToDbConnectionOptions>>(sp =>
             {
-                var builder = new LinqToDbConnectionOptionsBuilder();
+                //var builder = new LinqToDbConnectionOptionsBuilder();
+                IDbContextOptionBuilder<LinqToDbConnectionOptions> builder = new DbContextOptionBuilder<LinqToDbConnectionOptions>();
                 var dbProviderManager = sp.GetService<IDataBaseProviderManager>();
                 var connection = sp.GetService<IUnitOfWorkManager>().Current.DbConnection;
                 var currentDbProvider = dbProviderManager.GetCurrentDatabaseProvider();
@@ -121,7 +124,8 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest.TestModel
                 {
                     throw new BlocksDataException("CurrentDbProvider is not EF DatabaseProvider.");
                 }
-                builder = ((DatabaseProvider)currentDbProvider).configBuilder(builder, connection);
+                builder = ((DatabaseProvider)currentDbProvider).ConfigBuilder(builder, connection);
+
                 return builder.Build();
             });
             Services.AddTransient<MigrateDbContext>();

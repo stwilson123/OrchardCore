@@ -16,6 +16,6 @@ namespace BlocksCore.Data.EF
         public string SampleConnectionString { get; set; } = "";
         public Action<DbContextOptionsBuilder, DbConnection> configBuilder { get; set; }
 
-        public Func<string,DbConnection> dbConnectionBuilder { get; set; }
+        public Func<string,DbConnection> DbConnectionBuilder { get; set; }
     }
 }

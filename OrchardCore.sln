@@ -478,9 +478,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.Ms.Web", "src\Bl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.Data.Linq2DB", "src\OrchardCore\BlocksCore.Data.Linq2DB\BlocksCore.Data.Linq2DB.csproj", "{C50B34DF-5B85-4209-97F7-A8EBC89F3519}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlocksCore.Data.Linq2DB.Test", "test\BlocksCore.Data.Linq2DB.Test\BlocksCore.Data.Linq2DB.Test.csproj", "{2C25D7C4-69C3-4A09-B7B3-CD3C862A6F37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.Data.Linq2DB.Test", "test\BlocksCore.Data.Linq2DB.Test\BlocksCore.Data.Linq2DB.Test.csproj", "{2C25D7C4-69C3-4A09-B7B3-CD3C862A6F37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlocksCore.Data.Linq2DB.SQLServer", "src\OrchardCore.Modules\BlocksCore.Data.Linq2DB.SQLServer\BlocksCore.Data.Linq2DB.SQLServer.csproj", "{7612AC05-A266-44F5-BE81-323685D76886}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlocksCore.Data.Linq2DB.SQLServer", "src\OrchardCore.Modules\BlocksCore.Data.Linq2DB.SQLServer\BlocksCore.Data.Linq2DB.SQLServer.csproj", "{7612AC05-A266-44F5-BE81-323685D76886}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlocksCore.Data.Migrator", "src\OrchardCore\BlocksCore.Data.Migrator\BlocksCore.Data.Migrator.csproj", "{4CBB203E-319B-48F0-9C1E-52BF0ED7C1E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1308,6 +1310,10 @@ Global
 		{7612AC05-A266-44F5-BE81-323685D76886}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7612AC05-A266-44F5-BE81-323685D76886}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7612AC05-A266-44F5-BE81-323685D76886}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CBB203E-319B-48F0-9C1E-52BF0ED7C1E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CBB203E-319B-48F0-9C1E-52BF0ED7C1E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CBB203E-319B-48F0-9C1E-52BF0ED7C1E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CBB203E-319B-48F0-9C1E-52BF0ED7C1E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1538,6 +1544,7 @@ Global
 		{C50B34DF-5B85-4209-97F7-A8EBC89F3519} = {D0194169-34DC-4762-ADB8-F8A4E189C920}
 		{2C25D7C4-69C3-4A09-B7B3-CD3C862A6F37} = {B8D16C60-99B4-43D5-A3AD-4CD89AF39B25}
 		{7612AC05-A266-44F5-BE81-323685D76886} = {D92E7E13-E6D5-4723-AB93-D93C9A4F7416}
+		{4CBB203E-319B-48F0-9C1E-52BF0ED7C1E1} = {D0194169-34DC-4762-ADB8-F8A4E189C920}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {46A1D25A-78D1-4476-9CBF-25B75E296341}

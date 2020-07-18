@@ -17,6 +17,10 @@ using OrchardCore.Environment.Extensions;
 using OrchardCore.Environment.Shell;
 using OrchardCore.Modules;
 using BlocksCore.Autofac.Extensions.DependencyInjection;
+using FluentMigrator;
+using BlocksCore.Data.Abstractions.Configurations;
+using BlocksCore.Data.Core.Configurations;
+
 namespace BlocksCore.Data.Linq2DB
 {
     public class Startup : StartupBase
@@ -36,7 +40,7 @@ namespace BlocksCore.Data.Linq2DB
 
         public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder routes, IServiceProvider serviceProvider)
         {
-
+             
 
         }
 
@@ -46,9 +50,11 @@ namespace BlocksCore.Data.Linq2DB
 
             services.AddDataCore();
             //  services.AddSingleton(typeof(IDataBaseProviderManager),typeof(Re));
-            services.TryAddTransient<LinqToDbConnectionOptions>((serviceProvider) =>
+
+            services.TryAddTransient<DbContextOption<LinqToDbConnectionOptions>>((serviceProvider) =>
             {
-                var builder = new LinqToDbConnectionOptionsBuilder();
+                //var builder = new LinqToDbConnectionOptionsBuilder();
+                IDbContextOptionBuilder<LinqToDbConnectionOptions> builder = new DbContextOptionBuilder<LinqToDbConnectionOptions>();
                 var dbProviderManager = serviceProvider.GetService<IDataBaseProviderManager>();
                 var connection = serviceProvider.GetService<IUnitOfWorkManager>().Current.DbConnection;
                 var currentDbProvider = dbProviderManager.GetCurrentDatabaseProvider();
@@ -56,24 +62,13 @@ namespace BlocksCore.Data.Linq2DB
                 {
                     throw new BlocksDataException("CurrentDbProvider is not EF DatabaseProvider.");
                 }
-                builder = ((DatabaseProvider)currentDbProvider).configBuilder(builder, connection);
+                builder = ((DatabaseProvider)currentDbProvider).ConfigBuilder(builder, connection);
 
                 return builder.Build();
             });
             services.TryAddTransient<BlocksDbContext>();
-          //  services.AddDbContext<BlocksDbContext>((serviceProvider, options) =>
-          //{
-          //    var dbProviderManager = serviceProvider.GetService<IDataBaseProviderManager>();
-          //    var connection = serviceProvider.GetService<IUnitOfWorkManager>().Current.DbConnection;
-          //    var currentDbProvider = dbProviderManager.GetCurrentDatabaseProvider();
-          //    if (!(currentDbProvider is DatabaseProvider))
-          //    {
-          //        throw new BlocksDataException("CurrentDbProvider is not EF DatabaseProvider.");
-          //    }
-          //    ((DatabaseProvider)currentDbProvider).configBuilder(options, connection);
-          //}, ServiceLifetime.Transient);
 
-            services.AddTransient<IUnitOfWork, Linq2DbUnitOfWork>();
+            services.TryAddTransient<IUnitOfWork, Linq2DbUnitOfWork>();
             RegisterRepository(services);
         }
 
@@ -106,4 +101,5 @@ namespace BlocksCore.Data.Linq2DB
 
 
     }
+
 }

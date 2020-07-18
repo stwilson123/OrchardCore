@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using BlocksCore.Abstractions.Extensions;
@@ -22,6 +23,11 @@ namespace BlocksCore.Data.EF.DBContext
         public IQueryable Get<TEntity>() where TEntity : class
         {
             return this.Set<TEntity>();
+        }
+
+        public IDbConnection GetDbConnection()
+        {
+            return this.Database.GetDbConnection();
         }
     }
 }

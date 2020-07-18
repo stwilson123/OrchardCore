@@ -53,13 +53,12 @@ namespace BlocksCore.Data.Linq2DB
             if (_dbTransaction != null)
                 _dbTransaction.Commit();
             _dbTransaction = null;
+            _dbConnection.Dispose();
         }
 
         public Task CompleteAsync()
         {
-            if (_dbTransaction != null)
-                _dbTransaction.Commit();
-            _dbTransaction = null;
+            Complete();
             return Task.CompletedTask;
         }
 
@@ -68,6 +67,8 @@ namespace BlocksCore.Data.Linq2DB
             if (_dbTransaction != null)
                 _dbTransaction.Rollback();
             _dbTransaction = null;
+            _dbConnection.Dispose();
+            _dbConnection = null;
         }
     }
 }

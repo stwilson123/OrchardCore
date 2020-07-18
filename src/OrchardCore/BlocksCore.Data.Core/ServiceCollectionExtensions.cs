@@ -1,6 +1,8 @@
 using System;
 using BlocksCore.Data.Abstractions;
+using BlocksCore.Data.Abstractions.Migrator;
 using BlocksCore.Data.Abstractions.UnitOfWork;
+using BlocksCore.Data.Core.Services;
 using BlocksCore.Data.Core.UnitOfWork;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -15,7 +17,7 @@ namespace BlocksCore.Data.Core
             services.TryAddSingleton<IDataBaseProviderManager, DataBaseProviderManager>();
             services.TryAddScoped<IUnitOfWorkManager, DefaultUnitOfWorkManager>();
             services.TryAddScoped<ICurrentUnitOfWorkProvider, DefaultCurrentUnitOfWorkProvider>();
-
+            services.TryAddSingleton<ServiceProviderCache>();
 
             return services;
         }

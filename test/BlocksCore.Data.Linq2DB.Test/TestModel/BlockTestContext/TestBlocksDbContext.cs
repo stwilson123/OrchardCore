@@ -18,11 +18,11 @@ namespace BlocksCore.Data.Linq2DB.Test.TestModel.BlockTestContext
         public const string OracleConnectString = "BlocksEntities_Oracle";
 
 
-        public TestBlocksDbContext(BlocksDbContextOption blocksDbContextOption) : base(null, null, blocksDbContextOption.ConnectString)
+        public TestBlocksDbContext(BlocksDbContextOption blocksDbContextOption) : base(null, null, blocksDbContextOption.ConnectString,null)
         {
             this.blocksDbContextOption = blocksDbContextOption;
         }
-        public TestBlocksDbContext(ShellSettings settingManager,BlocksDbContextOption blocksDbContextOption,ILogger logger) :base(settingManager, logger, blocksDbContextOption.ConnectString) 
+        public TestBlocksDbContext(ShellSettings settingManager,BlocksDbContextOption blocksDbContextOption,ILogger logger) :base(settingManager, logger, blocksDbContextOption.ConnectString,null) 
         {
             this.blocksDbContextOption = blocksDbContextOption;
         }

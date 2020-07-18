@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\OrchardCore.Modules\BlocksCore.Data.EF.Oracle\BlocksCore.Data.EF.Oracle.csproj" />
     <ProjectReference Include="..\..\src\OrchardCore.Modules\BlocksCore.Data.EF.Sqlserver\BlocksCore.Data.EF.Sqlserver.csproj" />
     <ProjectReference Include="..\..\src\OrchardCore\BlocksCore.Test.Abstractions\BlocksCore.Test.Abstractions.csproj" />
     <ProjectReference Include="..\BlocksCore.Tests.Modules\WebApiTestApplication\WebApiTestApplication.csproj" />

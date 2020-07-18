@@ -31,7 +31,7 @@ namespace BlocksCore.Data.EF.Sqlserver
                     optionBuilder.ReplaceService<IMigrationsSqlGenerator, SqlServerMigrationsSqlGeneratorEx>();
 
                 },
-                dbConnectionBuilder = (connectionString) => new SqlConnection(connectionString)
+                DbConnectionBuilder = (connectionString) => new SqlConnection(connectionString)
             });
 
             //if (EntityFrameworkServicesBuilder.CoreServices.TryGetValue(typeof(IMigrationsSqlGenerator), out ServiceCharacteristics serviceCharacteristics))

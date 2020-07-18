@@ -7,6 +7,9 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using OrchardCore.Modules;
 using Microsoft.Data.SqlClient;
 using LinqToDB.Data;
+using LinqToDB.Configuration;
+using BlocksCore.Data.Linq2DB.SQLServer;
+using FluentMigrator;
 
 namespace BlocksCore.Data.Linq2DB.Sqlserver
 {
@@ -22,12 +25,11 @@ namespace BlocksCore.Data.Linq2DB.Sqlserver
                 SampleConnectionString = "Server=localhost;Database=Orchard;User Id=username;Password=password",
                 HasTablePrefix = true,
                 IsDefault = false,
-                configBuilder = (optionBuilder, connection) =>
+                ConfigBuilder = (optionBuilder, connection) =>
                 {
-                    var dbProvider = DataConnection.GetDataProvider("Microsoft.Data.SqlClient", connection.ConnectionString);
-                    return optionBuilder.UseConnection(dbProvider, connection);
+                   return new SQLServerDbContextOptionBuilder(optionBuilder, connection);
                 },
-                dbConnectionBuilder = (connectionString) => new SqlConnection(connectionString)
+                DbConnectionBuilder = (connectionString) => new SqlConnection(connectionString),
             });
 
             //if (EntityFrameworkServicesBuilder.CoreServices.TryGetValue(typeof(IMigrationsSqlGenerator), out ServiceCharacteristics serviceCharacteristics))
@@ -42,6 +44,20 @@ namespace BlocksCore.Data.Linq2DB.Sqlserver
         public override void Configure(IApplicationBuilder builder, IEndpointRouteBuilder routes, IServiceProvider serviceProvider)
         {
 
+        }
+    }
+
+    public class TestMigrator : Migration
+    {
+        public override void Down()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Up()
+        {
+             
+           
         }
     }
 }

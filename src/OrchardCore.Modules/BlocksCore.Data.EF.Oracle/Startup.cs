@@ -25,7 +25,7 @@ namespace BlocksCore.Data.EF.Oracle
                 {
                     optionBuilder.UseOracle(connection,o => o.UseOracleSQLCompatibility("11"));
                 },
-                dbConnectionBuilder = (connectionString) => new OracleConnection(connectionString)
+                DbConnectionBuilder = (connectionString) => new OracleConnection(connectionString)
             });
         }
 
