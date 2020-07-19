@@ -7,6 +7,7 @@ using BlocksCore.Data.Linq2DB.SQLServer.Creator;
 using BlocksCore.Data.Migrator;
 using FluentMigrator.Runner;
 using LinqToDB.Data;
+using LinqToDB.DataProvider;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -18,13 +19,13 @@ namespace BlocksCore.Data.Linq2DB.SQLServer
         {
             services.TryAddScoped<IDatabaseCreator, SQLServerDatabaseCreator>();
             services.TryAddScoped<IModel>(sp => sp.GetService<IDbContextServices>().Model);
+            services.TryAddDataProvider(serviceProvider, (connectionString) =>
+            {
+                return Linq2DBMap.GetDataProvider("Microsoft.Data.SqlClient", connectionString);
+            });
             services.AddMigratorCore(serviceProvider,(builder,connectionString) => {
-
-                var dbProvider = Linq2DBMap.GetDataProvider("Microsoft.Data.SqlClient", connectionString);
-                if (dbProvider == null)
-                    throw new BlocksException("","Not found Linq2Db DataProvider.");
-
-                builder.AddDataBaseProvider(Linq2DBMap.Map(dbProvider.Name));
+                var dataProvider = Linq2DBMap.GetDataProvider("Microsoft.Data.SqlClient", connectionString);//TODO Opts serviceProvider.GetService<IDataProvider>();
+                builder.AddDataBaseProvider(Linq2DBMap.Map(dataProvider.Name));
             });
             return true;
         }

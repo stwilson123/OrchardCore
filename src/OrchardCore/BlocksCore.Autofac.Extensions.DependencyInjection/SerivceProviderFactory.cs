@@ -22,6 +22,7 @@ namespace BlocksCore.Autofac.Extensions.DependencyInjection
                 {
 
                     RegisterExternallyOwned(builder, owinSerivceDescriptor, childTag);
+                    if(services != null)
                     builder.Populate(services.Except(owinSerivceDescriptor), childTag);
                 });
 
@@ -34,6 +35,7 @@ namespace BlocksCore.Autofac.Extensions.DependencyInjection
             RegisterExternallyOwned(containerBuilder, owinSerivceDescriptor,null);
             return serviceProviderFactory.CreateServiceProvider(containerBuilder);
         }
+ 
         private static IRegistrationBuilder<object, TActivatorData, TRegistrationStyle> ConfigureLifecycle<TActivatorData, TRegistrationStyle>(
            this IRegistrationBuilder<object, TActivatorData, TRegistrationStyle> registrationBuilder,
            ServiceLifetime lifecycleKind,
