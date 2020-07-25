@@ -17,7 +17,7 @@ namespace BlocksCore.Data.EF.Test.TestModel.BlockTestContext
         public string STRING { set; get; }
         public long ISACTIVE { set; get; }
         public string COMMENT { set; get; }
-        public DateTime REGISTERTIME { set; get; }
+        public DateTime? REGISTERTIME { set; get; }
       
         public TESTENTITY2 TESTENTITY2 { set; get; }
         public ICollection<TESTENTITY3> TESTENTITY3s { set; get; }

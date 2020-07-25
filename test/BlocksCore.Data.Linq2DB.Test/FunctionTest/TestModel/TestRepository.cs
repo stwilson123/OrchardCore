@@ -77,9 +77,12 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest.TestModel
 
         public List<TESTENTITY> GetTESTENTITY3s()
         {
-            return GetContextTable().SelectToDynamicList((TESTENTITY t) =>
+            return GetContextTable()
+                .SelectToDynamicList((TESTENTITY t) =>
                 new TESTENTITY()
                 {
+                    Id = t.Id,
+                   // TESTENTITY3s = new List<TESTENTITY3>()
                     TESTENTITY3s = t.TESTENTITY3s
                 });
         }
@@ -104,7 +107,7 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest.TestModel
 
         public int ExecuteSqlCommand(string id)
         {
-            return this.ExecuteSqlCommand("DELETE FROM TESTENTITY WHERE ID = {0}", id);
+            return this.ExecuteSqlCommand("DELETE FROM TESTENTITY WHERE ID = @Id", new { Id = id });
         }
 
         public object GetLongIdetifier()
@@ -170,7 +173,15 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest.TestModel
         }
 
 
-       
+
+    }
+
+    
+    public class TestRepository2 : DBSqlRepositoryBase<TESTENTITY2>, ITestRepository2
+    {
+        public TestRepository2(IUnitOfWorkManager unitOfWork) : base(unitOfWork)
+        {
+        }
     }
 
     public class TestRepository3 : DBSqlRepositoryBase<TESTENTITY3>, ITestRepository3

@@ -52,9 +52,10 @@ namespace BlocksCore.Data.Linq
         //  private IQueryable<Dictionary<(Type TableType, string TableAlias),  Entity>> iQueryContext;
         private string JoinExpressionGenernateKey<TInput, TKey>(Expression<Func<TInput, TKey>> selector, string prefixName = "")
         {
+            var prefix = string.IsNullOrEmpty(prefixName) ? "" : prefixName + ".";
             if (selector.Body is MemberExpression memberExpression)
             {
-                return memberExpression.Member.Name;
+                return $"{prefix + memberExpression.Member.Name }";
             }
             else if (selector.Body is NewExpression newExpression)
             {
@@ -63,7 +64,10 @@ namespace BlocksCore.Data.Linq
                 {
                     var a = newExpression.Arguments[i];
                     if (a is MemberExpression member)
-                        paramsExpressions.Add($"{prefixName + member.Member.Name} as {newExpression.Members[i].Name}");
+                    {
+
+                        paramsExpressions.Add($"{prefix + member.Member.Name} as {newExpression.Members[i].Name}");
+                    }
                 }
 
                 return $"new ({ string.Join(", ", paramsExpressions)})";
@@ -107,7 +111,7 @@ namespace BlocksCore.Data.Linq
                 iQuerable = DynamicQueryableExtensions.Join(iQuerable,
                     parsingConfig,
                     dbContext.Get<TInner>(),
-                    JoinExpressionGenernateKey(outerKeySelector, outerParam.Name + "."),
+                    JoinExpressionGenernateKey(outerKeySelector, outerParam.Name),
                     JoinExpressionGenernateKey(innerKeySelector), tableAlias.CreateResultSelector());
             }
 
@@ -168,7 +172,7 @@ namespace BlocksCore.Data.Linq
                 iQuerable = DynamicQueryableExtensions.GroupJoin(iQuerable,
                     new ParsingConfig(){RenameParameterExpression = true, },
                     dbContext.Get<TInner>(),
-                    JoinExpressionGenernateKey(outerKeySelector, outerParam.Name + "."),
+                    JoinExpressionGenernateKey(outerKeySelector, outerParam.Name),
                     JoinExpressionGenernateKey(innerKeySelector),
                     "new(inner as inner,outer as outer)");
                 iQuerable = DynamicQueryableExtensions.SelectMany(iQuerable,

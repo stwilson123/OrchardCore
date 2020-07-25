@@ -9,6 +9,9 @@ using FluentMigrator.Runner.Logging;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using FluentMigrator.Runner.Processors;
+using BlocksCore.Data.Abstractions.DataBaseProvider;
+using System.Runtime.CompilerServices;
+using BlocksCore.Data.Migrator.ConnectionString;
 
 namespace BlocksCore.Data.Migrator
 {
@@ -19,28 +22,28 @@ namespace BlocksCore.Data.Migrator
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
-        public static IServiceCollection AddMigratorCore(this IServiceCollection services, IServiceProvider serviceProvider, Action<IMigrationRunnerBuilder, string> optionbuilder)
+        public static IServiceCollection AddMigratorCore(this IServiceCollection services, ConnectionInfo connectionInfo, Action<IMigrationRunnerBuilder, ConnectionInfo> optionbuilder)
         {
 
 
             services.AddFluentMigratorCore()
-                //TODO how controll master collection string to create database??
-                .AddScoped<DynamicConnectionString>()
+               
                  .AddScoped<IConfigureOptions<ProcessorOptions>>(
                     sp =>
                     {
                         var dyConnectionString = sp.GetRequiredService<DynamicConnectionString>();
-                        var shellSettings = serviceProvider.GetService<ShellSettings>();
                         return new ConfigureNamedOptions<ProcessorOptions>(
                             Options.DefaultName,
-                            opt => opt.ConnectionString = (dyConnectionString?.ConnectionString == null ? shellSettings["ConnectionString"] : dyConnectionString.ConnectionString));
+                            opt => { opt.ConnectionString = dyConnectionString.CurrentConnectionString;
+                                opt.Timeout = TimeSpan.FromSeconds(30);
+                            });
                     })
                 .ConfigureRunner(configure =>
                 {
-                    var shellSettings = serviceProvider.GetService<ShellSettings>();
-                    var connectionString = shellSettings["ConnectionString"];
                     if (optionbuilder != null)
-                        optionbuilder(configure, shellSettings["ConnectionString"]);
+                        optionbuilder(configure, connectionInfo);
+                    configure.AddDataBaseProvider(connectionInfo.ProviderName);
+
                     //configure.WithGlobalConnectionString(connectionString);
                     configure.ScanIn(typeof(DefaultMigrator).Assembly).For.Migrations();
                 })
@@ -55,6 +58,19 @@ namespace BlocksCore.Data.Migrator
 
             return services;
         }
+
+
+        public static IServiceCollection AddMigratorSQLServer(this IServiceCollection services, ConnectionInfo connectionInfo, Action<IMigrationRunnerBuilder, ConnectionInfo> optionbuilder)
+        {
+            return services.AddMigratorCore(connectionInfo, optionbuilder)
+                .AddScoped<DynamicConnectionString>(sp => new SQLServerConnectionString(sp.GetService<ConnectionInfo>()));
+        }
+
+        //public static IServiceCollection AddMigratorOracle(this IServiceCollection services, ConnectionInfo connectionInfo, Action<IMigrationRunnerBuilder, ConnectionInfo> optionbuilder)
+        //{
+        //    return services.AddMigratorCore(connectionInfo, optionbuilder)
+        //        .AddScoped<DynamicConnectionString>(sp => new OracleConnectionString(sp.GetService<ConnectionInfo>()));
+        //}
     }
 
     class InnerBuilder : IMigrationRunnerBuilder

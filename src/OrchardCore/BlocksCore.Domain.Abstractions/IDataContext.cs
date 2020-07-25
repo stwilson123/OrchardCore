@@ -13,5 +13,7 @@ namespace BlocksCore.Domain.Abstractions
         IQueryable Get<TEntity>() where TEntity : class;
 
         IDbConnection  GetDbConnection();
+
+        void ModelCreating();
     }
 }

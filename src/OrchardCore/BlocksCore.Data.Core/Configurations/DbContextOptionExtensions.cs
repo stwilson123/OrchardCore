@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using BlocksCore.Data.Abstractions;
 using BlocksCore.Data.Abstractions.Configurations;
 using BlocksCore.Data.Abstractions.Infrastructure;
 using BlocksCore.Data.Core.Infrastructure;
@@ -17,12 +19,17 @@ namespace BlocksCore.Data.Core.Configurations
         {
         }
 
-        public bool ApplyServices(IServiceCollection services,IServiceProvider provider)
+        public bool ApplyServices(IServiceCollection services,IServiceProvider provider,ConnectionInfo connectionInfo)
         {
 
            
-            services.TryAddScoped<IDbContextServices, DbContextServices>();
+            services.TryAddSingleton<IDbContextServices, DbContextServices>();
+            services.TryAddSingleton(provider.GetRequiredService<ShellSettings>());
 
+            var dbProviderManager = provider.GetService<IDataBaseProviderManager>();
+            services.TryAddSingleton(dbProviderManager.GetCurrentDatabaseProvider());
+            services.TryAddSingleton(connectionInfo);
+           
             return true;
         }
     }

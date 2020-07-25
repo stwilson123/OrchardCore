@@ -9,7 +9,6 @@ using BlocksCore.Data.Abstractions.Entities;
 using BlocksCore.Data.EF.DBContext;
 using BlocksCore.Domain.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
-
 namespace BlocksCore.Data.EF
 {
     public class EFUnitOfWork : IUnitOfWork
@@ -18,7 +17,7 @@ namespace BlocksCore.Data.EF
         private readonly IDbConnectionAccessor _dbConnectionAccessor;
         private readonly ITypeFeatureExtensionsProvider _typeFeatureExtensionsProvider;
         private IDbTransaction _dbTransaction;
-        public DbConnection DbConnection
+        public IDbConnection DbConnection
         {
             get
             {
@@ -27,6 +26,9 @@ namespace BlocksCore.Data.EF
                 return _dbConnection;
             }
         }
+
+        public IDbTransaction DbTransaction => _dbTransaction;
+
         private DbConnection _dbConnection;
 
         public EFUnitOfWork(IServiceProvider serviceProvider, IDbConnectionAccessor dbConnectionAccessor, ITypeFeatureExtensionsProvider typeFeatureExtensionsProvider)

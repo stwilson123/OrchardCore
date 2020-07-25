@@ -1,9 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
+    <Nullable>enable</Nullable>
+
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +15,7 @@
     <PackageReference Include="coverlet.collector" Version="1.2.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\OrchardCore.Modules\BlocksCore.Data.Linq2DB.Oracle\BlocksCore.Data.Linq2DB.Oracle.csproj" />
     <ProjectReference Include="..\..\src\OrchardCore.Modules\BlocksCore.Data.Linq2DB.SQLServer\BlocksCore.Data.Linq2DB.SQLServer.csproj" />
     <ProjectReference Include="..\..\src\OrchardCore\BlocksCore.Data.Linq2DB\BlocksCore.Data.Linq2DB.csproj" />
     <ProjectReference Include="..\..\src\OrchardCore\BlocksCore.Test.Abstractions\BlocksCore.Test.Abstractions.csproj" />
@@ -27,5 +30,4 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
 </Project>

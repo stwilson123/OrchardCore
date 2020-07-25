@@ -2,14 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using BlocksCore.Autofac.Extensions.DependencyInjection;
 using BlocksCore.Autofac.Extensions.DependencyInjection.Paramters;
-using BlocksCore.Data.EF.DBContext;
 using BlocksCore.Data.Linq2DB.Test.TestModel;
 using BlocksCore.Data.Linq2DB.Test.TestModel.BlockTestContext;
 using BlocksCore.SyntacticAbstractions.Types.Collections;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
@@ -37,9 +35,10 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest.TestModel
         {
             T connectionStinrgProvider = new T();
             var dbName = connectionStinrgProvider.getDbName();
-            var autoConnectString = String.Format(ConfigurationHelper.Config[TestBlocksDbContext.SqlserverConnectString],dbName);
             testModelContexts = new List<TestModelContext>() {
-                new SqlserverModelContextFix(autoConnectString)
+               // new SqlserverModelContextFix(String.Format(ConfigurationHelper.Config[DatabaseConnectionStringConfigKey.SqlserverConnectString],dbName)),
+                new OracleModelContextFix(String.Format(ConfigurationHelper.Config[DatabaseConnectionStringConfigKey.OracleConnectString],dbName),ConfigurationHelper.Config["BlocksEntities_OracleDBA"])
+
             };
 
             foreach (var modelContext in testModelContexts)
@@ -61,20 +60,24 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest.TestModel
 
                     using (var dbContext = modelContext.ServiceProvider.GetService<MigrateDbContext>(new NamedParam("entityTypes", TestModelContext.registerTypes)))
                     {
+                        //disconnect db
+                       
                         // dbContext.ExecuteSqlCommand("SELECT 1;");
-                        dbContext.EnsureDeleted();
+                         dbContext.EnsureDeleted();
+
+                        modelContext.Dispose();
                     }
                     //using (var dbContext = new TestBlocksDbContext(new BlocksDbContextOption() { ProviderName = modelContext.ProviderName, ConnectString = modelContext.ConnectionString }))
                     //{
                     //    // dbContext.ExecuteSqlCommand("SELECT 1;");
                     //    dbContext.GetService<IRelationalDatabaseCreator>().EnsureDeleted();
                     //}
-                    modelContext.Dispose();
+
                 }
                 catch (Exception ex)
                 {
                     listExceptions.Add(ex);
-                }
+                } 
                 finally
                 {
 

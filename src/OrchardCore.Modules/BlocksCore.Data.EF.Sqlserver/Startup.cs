@@ -1,4 +1,5 @@
 using System;
+using System.Data.Common;
 using BlocksCore.Data.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
@@ -17,6 +18,8 @@ namespace BlocksCore.Data.EF.Sqlserver
     {
         public override void ConfigureServices(IServiceCollection services)
         {
+
+      
             services.TryAddDataProvider(new DatabaseProvider()
             {
                 Name = "Sql Server",
@@ -25,13 +28,13 @@ namespace BlocksCore.Data.EF.Sqlserver
                 SampleConnectionString = "Server=localhost;Database=Orchard;User Id=username;Password=password",
                 HasTablePrefix = true,
                 IsDefault = false,
-                configBuilder = (optionBuilder, connection) =>
+                configBuilder = (optionBuilder, unitOfWork) =>
                 {
-                    optionBuilder.UseSqlServer(connection);
+                    optionBuilder.UseSqlServer(unitOfWork.DbConnection as DbConnection);
                     optionBuilder.ReplaceService<IMigrationsSqlGenerator, SqlServerMigrationsSqlGeneratorEx>();
 
                 },
-                DbConnectionBuilder = (connectionString) => new SqlConnection(connectionString)
+                CreateDbConnection = (connectionString) => new SqlConnection(connectionString)
             });
 
             //if (EntityFrameworkServicesBuilder.CoreServices.TryGetValue(typeof(IMigrationsSqlGenerator), out ServiceCharacteristics serviceCharacteristics))

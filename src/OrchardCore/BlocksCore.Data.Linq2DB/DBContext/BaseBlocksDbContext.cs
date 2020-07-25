@@ -15,12 +15,14 @@ using BlocksCore.Data.Abstractions.Entities;
 using BlocksCore.Data.Abstractions.Infrastructure;
 using BlocksCore.Data.Abstractions.Migrator;
 using BlocksCore.Data.Core.Services;
+using BlocksCore.Data.Linq2DB.Entities;
 using BlocksCore.Domain.Abstractions;
 using BlocksCore.SyntacticAbstractions.Reflection.Extensions;
 using LinqToDB;
 using LinqToDB.Configuration;
 using LinqToDB.Data;
 using LinqToDB.Extensions;
+using LinqToDB.Tools;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -67,6 +69,8 @@ namespace BlocksCore.Data.Linq2DB
 
 
         private bool _initializing = false;
+
+        private bool _entityInitialized = false;
         public IServiceProvider InternalServiceProvider { get => GetServiceProvider(); }
         private IDbContextServices _contextServices;
 
@@ -89,11 +93,12 @@ namespace BlocksCore.Data.Linq2DB
             return this.GetTable<TEntity>();
         }
         /// </summary>
-        protected BaseBlocksDbContext(ShellSettings settingManager, ILogger log, string connectionString, DbContextOption<LinqToDbConnectionOptions> options) : base(connectionString)
+        internal BaseBlocksDbContext(ShellSettings settingManager, ILogger log, DbContextOption<LinqToDbConnectionOptions> options) : base(options.Option)
         {
             _settingManager = settingManager;
             this.Logger = log;
             this.dbContextOption = options;
+
         }
 
 
@@ -116,12 +121,11 @@ namespace BlocksCore.Data.Linq2DB
         {
             if (!isDbMigrate)
                 return false;
-            var a = this.GetServiceProvider().GetService < string>();
             this.GetServiceProvider().GetService<IDatabaseCreator>().EnsureCreated();
 
             foreach (var entity in GetDbEntities(this))
             {
-                var createTableMethod = typeof(DataExtensions).GetMethod("CreateTable").MakeGenericMethod(entity);
+                var createTableMethod = typeof(LinqToDB.DataExtensions).GetMethod("CreateTable").MakeGenericMethod(entity);
                 createTableMethod.Invoke(this, new object[] { this, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing });
             }  
             
@@ -142,12 +146,12 @@ namespace BlocksCore.Data.Linq2DB
             if (!isDbMigrate)
                 return false;
             this.GetServiceProvider().GetService<IDatabaseCreator>().EnsureDeleted();
-            foreach (var entity in GetDbEntities(this))
-            {
-                var dropTableMethod = typeof(DataExtensions).GetMethods().FirstOrDefault(m => m.Name == "DropTable").MakeGenericMethod(entity);
+            //foreach (var entity in GetDbEntities(this))
+            //{
+            //    var dropTableMethod = typeof(DataExtensions).GetMethods().FirstOrDefault(m => m.Name == "DropTable").MakeGenericMethod(entity);
 
-                dropTableMethod.Invoke(this, new object[] { this, Type.Missing, Type.Missing, Type.Missing, Type.Missing,Type.Missing });
-            }
+            //    dropTableMethod.Invoke(this, new object[] { this, Type.Missing, Type.Missing, Type.Missing, Type.Missing,Type.Missing });
+            //}
 
 
             return isDbMigrate;
@@ -167,6 +171,7 @@ namespace BlocksCore.Data.Linq2DB
 
             try
             {
+                _initializing = true;
                 var serviceScope = serviceProviderCache.GetOrAdd(this.dbContextOption)
                      .GetRequiredService<IServiceScopeFactory>()
                      .CreateScope();
@@ -191,6 +196,45 @@ namespace BlocksCore.Data.Linq2DB
         public IDbConnection GetDbConnection()
         {
             return this.Connection;
+        }
+
+        public new void Dispose()
+        {
+            _serviceScope?.Dispose();
+             base.Dispose();
+        }
+
+        public new Task DisposeAsync(CancellationToken cancellationToken = default)
+        {
+            _serviceScope?.Dispose();
+            return base.DisposeAsync(default);
+        }
+
+        public void ModelCreating()
+        {
+            if (_entityInitialized)
+                return;
+
+            //TODO Add IEntityConfig
+            var ms = new LinqToDB.Mapping.MappingSchema();
+            var mb = ms.GetFluentMappingBuilder();
+     
+            var mbType = mb.GetType();
+            var entityConfig= mbType.GetMethod("Entity");
+            var entityTypes = this.EntityTypes.Where(t => typeof(IEntity).IsAssignableFrom(t));
+
+            foreach (var entityTypeConfiguration in this.EntityTypes)
+            {
+                foreach (var entityTypeInterfaceType in entityTypeConfiguration.GetInterfaces().Where(InterfaceType => InterfaceType.IsGenericType && InterfaceType.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>)))
+                {
+                    entityTypeConfiguration.GetMethod("Configure").Invoke(Activator.CreateInstance(entityTypeConfiguration), new object[]
+                     {
+                         entityConfig.MakeGenericMethod(entityTypeInterfaceType.GenericTypeArguments[0]).Invoke(mb,new object[]{ Type.Missing })
+                     });
+                }
+            }
+            this.AddMappingSchema(ms);
+            _entityInitialized = true;
         }
     }
 }

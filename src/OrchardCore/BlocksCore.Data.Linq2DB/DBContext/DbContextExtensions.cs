@@ -9,6 +9,7 @@ using BlocksCore.Data.Abstractions.Paging;
 using BlocksCore.Abstractions.UI.Paging;
 using LinqToDB;
 using LinqToDB.Common;
+using LinqToDB.Data;
 
 namespace BlocksCore.Data.Linq2DB.DBContext
 {
@@ -20,9 +21,15 @@ namespace BlocksCore.Data.Linq2DB.DBContext
            return context.FromSql<TElement>(sql, paramters).ToList();
         }
 
+        public static int ExecuteSqlCommand([NotNullAttribute] this BlocksDbContext context, string sql, object paramter)
+        {
+
+            return context.Execute(sql, paramter);
+        }
         public static int ExecuteSqlCommand([NotNullAttribute]this BlocksDbContext context,string sql, params object[] paramters)
         {
-            return context.ExecuteSqlCommand(sql, paramters);
+ 
+            return context.Execute(sql, paramters);
         }
 
         public static IPageList<TElement> SqlQueryPaging<TElement>(this BlocksDbContext context ,IPage page, string sql, params object[] paramters)  where TElement : class, IQueryEntity

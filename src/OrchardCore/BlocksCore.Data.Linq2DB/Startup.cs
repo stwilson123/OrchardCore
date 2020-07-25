@@ -20,6 +20,9 @@ using BlocksCore.Autofac.Extensions.DependencyInjection;
 using FluentMigrator;
 using BlocksCore.Data.Abstractions.Configurations;
 using BlocksCore.Data.Core.Configurations;
+using System.Data.Common;
+using LinqToDB.Data;
+using System.Diagnostics;
 
 namespace BlocksCore.Data.Linq2DB
 {
@@ -56,20 +59,25 @@ namespace BlocksCore.Data.Linq2DB
                 //var builder = new LinqToDbConnectionOptionsBuilder();
                 IDbContextOptionBuilder<LinqToDbConnectionOptions> builder = new DbContextOptionBuilder<LinqToDbConnectionOptions>();
                 var dbProviderManager = serviceProvider.GetService<IDataBaseProviderManager>();
-                var connection = serviceProvider.GetService<IUnitOfWorkManager>().Current.DbConnection;
+                var unitOfWork = serviceProvider.GetService<IUnitOfWorkManager>().Current;
                 var currentDbProvider = dbProviderManager.GetCurrentDatabaseProvider();
                 if (!(currentDbProvider is DatabaseProvider))
                 {
                     throw new BlocksDataException("CurrentDbProvider is not EF DatabaseProvider.");
                 }
-                builder = ((DatabaseProvider)currentDbProvider).ConfigBuilder(builder, connection);
-
+                builder = ((DatabaseProvider)currentDbProvider).ConfigBuilder(builder, unitOfWork);
                 return builder.Build();
             });
             services.TryAddTransient<BlocksDbContext>();
 
             services.TryAddTransient<IUnitOfWork, Linq2DbUnitOfWork>();
             RegisterRepository(services);
+
+
+            DataConnection.TurnTraceSwitchOn();
+            DataConnection.WriteTraceLine = (s1, s2, level) => Debug.WriteLine(s1, s2);
+            LinqToDB.Common.Configuration.Linq.GenerateExpressionTest = true;
+           // LinqToDB.Common.Configuration.Linq.AllowMultipleQuery = true;
         }
 
         void RegisterRepository(IServiceCollection services)

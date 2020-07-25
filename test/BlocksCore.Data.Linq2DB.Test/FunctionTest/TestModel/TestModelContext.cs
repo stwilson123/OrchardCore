@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,12 +11,12 @@ using BlocksCore.Data.Abstractions;
 using BlocksCore.Data.Abstractions.Configurations;
 using BlocksCore.Data.Abstractions.UnitOfWork;
 using BlocksCore.Data.Core.Configurations;
-using BlocksCore.Data.EF.Repository;
 using BlocksCore.Data.Linq2DB.Test.TestModel.BlockTestContext;
 using BlocksCore.Domain.Abstractions;
 using BlocksCore.Extensions;
 using BlocksCore.Security;
 using LinqToDB.Configuration;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -32,13 +33,21 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest.TestModel
     public class TestModelContext : IDisposable
     {
         public IServiceCollection Services { get; } = new ServiceCollection();
-        public IServiceProvider ServiceProvider { get; }
-
+        public IServiceProvider ServiceProvider
+        {
+            get
+            {
+                if (serviceProvider == null)
+                    BuildServiceProvider();
+                return serviceProvider;
+            }
+        }
+        private IServiceProvider serviceProvider;
         public static IList<Type> registerTypes = new List<Type>() {
                 typeof(TESTENTITY), typeof(TESTENTITY2), typeof(TESTENTITY3),
-                typeof(TestRepository), typeof(TestRepository3),
-                typeof(TestDto) 
-              //  typeof(TESTENTITYConfiguration),typeof(TESTENTITY2Configuration),typeof(TESTENTITY3Configuration)
+                typeof(TestRepository),typeof(TestRepository2), typeof(TestRepository3),
+              //  typeof(TestDto) 
+                typeof(TESTENTITYConfiguration),typeof(TESTENTITY2Configuration),typeof(TESTENTITY3Configuration)
             };
         IFeatureInfo registerFeature;
         //ShellSettings shellSettings = new ShellSettings();
@@ -56,11 +65,19 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest.TestModel
             {
                 s.AddSingleton<ITypeFeatureExtensionsProvider, DefaultTypeFeatureExtensionsProvider>();
             })
-            .RegisterStartup<BlocksCore.Data.Linq2DB.Sqlserver.Startup>();
+            .RegisterStartup<BlocksCore.Data.Linq2DB.Sqlserver.Startup>()
+            .RegisterStartup<BlocksCore.Data.Linq2DB.Oracle.Startup>();
 
+
+        }
+
+        public void BuildServiceProvider()
+        {
             Init();
+
+
             var mockUserContext = new Mock<IUserContext>();
-            mockUserContext.Setup(f => f.GetCurrentUser()).Returns(new DefaultUserIdentifier("t1","1","admin",null));
+            mockUserContext.Setup(f => f.GetCurrentUser()).Returns(new DefaultUserIdentifier("t1", "1", "admin", null));
             IUserContext userContext = mockUserContext.Object;
 
 
@@ -69,7 +86,7 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest.TestModel
             //mockRegisterFeature.SetupGet(f => f.Id).Returns("TestModelContext");
             //mockRegisterFeature.SetupGet(f => f).Returns("TestModelContext");
 
-            registerFeature = new FeatureInfo("TestModelContext", "TestModelContext",0,null,null,null,null,false);
+            registerFeature = new FeatureInfo("TestModelContext", "TestModelContext", 0, null, null, null, null, false);
 
             Services.AddSingleton<IClock, Clock>();
             Services.AddLogging(loggingBuilder =>
@@ -84,7 +101,7 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest.TestModel
 
 
             var mockFeatureEntry = new CompiledFeatureEntry(registerFeature, registerTypes);
-           
+
 
             var mockExtensionManager = new Mock<IExtensionManager>();
             mockExtensionManager.Setup(m => m.LoadFeaturesAsync(It.IsAny<string[]>()))
@@ -99,7 +116,7 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest.TestModel
             Services.AddSingleton<ITypeFeatureProvider>(mockTypeFeatureProvider.Object);
             Services.AddSingleton<IUserContext>(userContext);
 
-            ServiceProvider =  Services.BuildServiceProvider();
+            serviceProvider = Services.BuildServiceProvider();
             var starters = ServiceProvider.GetServices<IStartup>().OrderBy(s => s.Order);
             foreach (var startup in starters)
             {
@@ -118,13 +135,13 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest.TestModel
                 //var builder = new LinqToDbConnectionOptionsBuilder();
                 IDbContextOptionBuilder<LinqToDbConnectionOptions> builder = new DbContextOptionBuilder<LinqToDbConnectionOptions>();
                 var dbProviderManager = sp.GetService<IDataBaseProviderManager>();
-                var connection = sp.GetService<IUnitOfWorkManager>().Current.DbConnection;
+                var unitOfWork = sp.GetService<IUnitOfWorkManager>().Current;
                 var currentDbProvider = dbProviderManager.GetCurrentDatabaseProvider();
                 if (!(currentDbProvider is DatabaseProvider))
                 {
                     throw new BlocksDataException("CurrentDbProvider is not EF DatabaseProvider.");
                 }
-                builder = ((DatabaseProvider)currentDbProvider).ConfigBuilder(builder, connection);
+                builder = ((DatabaseProvider)currentDbProvider).ConfigBuilder(builder, unitOfWork);
 
                 return builder.Build();
             });
@@ -135,7 +152,7 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest.TestModel
             //{
             //    startup.Configure(null, null, serviceProvider);
             //}
-            ServiceProvider = SerivceProviderFactory.CreateServiceProvider(null,Services, Services.Where(s => s.ServiceType == typeof(IHost)));
+            serviceProvider = SerivceProviderFactory.CreateServiceProvider(null, Services, Services.Where(s => s.ServiceType == typeof(IHost)));
         }
 
         public virtual void Init()
@@ -145,7 +162,9 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest.TestModel
 
         public void Dispose()
         {
-           
+
+            if (ServiceProvider is IDisposable disposable)
+                disposable.Dispose();
         }
     }
 }

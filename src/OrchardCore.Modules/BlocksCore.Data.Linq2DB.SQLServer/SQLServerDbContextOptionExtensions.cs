@@ -15,18 +15,20 @@ namespace BlocksCore.Data.Linq2DB.SQLServer
 {
     public class SQLServerDbContextOptionExtensions : IDbContextOptionExtensions
     {
-        public bool ApplyServices(IServiceCollection services,IServiceProvider serviceProvider)
+
+        public SQLServerDbContextOptionExtensions()
+        {
+        }
+
+        public bool ApplyServices(IServiceCollection services,IServiceProvider serviceProvider, ConnectionInfo connectionInfo)
         {
             services.TryAddScoped<IDatabaseCreator, SQLServerDatabaseCreator>();
-            services.TryAddScoped<IModel>(sp => sp.GetService<IDbContextServices>().Model);
-            services.TryAddDataProvider(serviceProvider, (connectionString) =>
-            {
-                return Linq2DBMap.GetDataProvider("Microsoft.Data.SqlClient", connectionString);
-            });
-            services.AddMigratorCore(serviceProvider,(builder,connectionString) => {
-                var dataProvider = Linq2DBMap.GetDataProvider("Microsoft.Data.SqlClient", connectionString);//TODO Opts serviceProvider.GetService<IDataProvider>();
-                builder.AddDataBaseProvider(Linq2DBMap.Map(dataProvider.Name));
-            });
+            //services.TryAddScoped<IModel>(sp => sp.GetService<IDbContextServices>().Model);
+            //services.TryAddDataProvider((connectionString) =>
+            //{
+            //    return Linq2DBMap.GetDataProvider("Microsoft.Data.SqlClient", connectionString);
+            //});
+            services.AddMigratorSQLServer(connectionInfo,null);
             return true;
         }
     }

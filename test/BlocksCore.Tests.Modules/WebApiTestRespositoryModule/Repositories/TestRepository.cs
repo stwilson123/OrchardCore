@@ -104,7 +104,7 @@ namespace BlocksCore.Data.EF.Test.FunctionTest.TestModel
 
         public int ExecuteSqlCommand(string id)
         {
-            return this.ExecuteSqlCommand("DELETE FROM TESTENTITY WHERE ID = {0}", id);
+            return this.ExecuteSqlCommand("DELETE FROM TESTENTITY WHERE ID = @Id", new { Id = id });
         }
 
         public object GetLongIdetifier()

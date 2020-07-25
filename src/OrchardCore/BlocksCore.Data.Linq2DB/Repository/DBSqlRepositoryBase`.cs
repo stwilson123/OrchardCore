@@ -177,6 +177,11 @@ namespace BlocksCore.Data.Linq2DB.Repository
         {
            return  this.Context.ExecuteSqlCommand(sql, paramters);
         }
+
+        public int ExecuteSqlCommand(string sql, object paramter)
+        {
+            return this.Context.ExecuteSqlCommand(sql, paramter);
+        }
     }
 
 

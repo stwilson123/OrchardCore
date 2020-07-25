@@ -30,6 +30,7 @@ namespace BlocksCore.Data.Linq2DB.Repository
         {
             get
             {
+   
                 if (_context == null)
                     _context = _unitOfwork.GetOrCreateDataContext<TEntity>() as BlocksDbContext;
                 return _context;
@@ -215,23 +216,26 @@ namespace BlocksCore.Data.Linq2DB.Repository
 
         public TPrimaryKey InsertAndGetId(TEntity entity)
         {
+            var primaryKey = Context.InsertWithIdentity(entity);
 
-            return (TPrimaryKey)(Context.InsertWithIdentity(entity));
+            return primaryKey == null || primaryKey == DBNull.Value ? entity.Id :(TPrimaryKey)(primaryKey);
         }
 
         public virtual TEntity InsertOrUpdate(TEntity entity)
         {
-
-            return entity.IsTransient()
-                ? Insert(entity)
-                : Update(entity);
+            throw new NotImplementedException();
+            //return entity.IsTransient()
+            //    ? Insert(entity)
+            //    : Update(entity);
         }
 
-        public virtual async Task<TEntity> InsertOrUpdateAsync(TEntity entity)
+        public virtual  Task<TEntity> InsertOrUpdateAsync(TEntity entity)
         {
-            return entity.IsTransient()
-                ? await InsertAsync(entity)
-                : await UpdateAsync(entity);
+            throw new NotImplementedException();
+
+            //return entity.IsTransient()
+            //    ? await InsertAsync(entity)
+            //    : await UpdateAsync(entity);
         }
 
         public async Task<TPrimaryKey> InsertAndGetIdAsync(TEntity entity)

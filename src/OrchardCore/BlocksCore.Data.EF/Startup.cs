@@ -53,13 +53,13 @@ namespace BlocksCore.Data.EF
             services.AddDbContext<BlocksDbContext>(  (serviceProvider, options) =>
             {
                 var dbProviderManager = serviceProvider.GetService<IDataBaseProviderManager>();
-                var connection = serviceProvider.GetService<IUnitOfWorkManager>().Current.DbConnection;
+                var unitOfWork = serviceProvider.GetService<IUnitOfWorkManager>().Current;
                 var currentDbProvider = dbProviderManager.GetCurrentDatabaseProvider();
                 if(!(currentDbProvider is DatabaseProvider))
                 {
                     throw new BlocksDataException("CurrentDbProvider is not EF DatabaseProvider.");
                 }
-                ((DatabaseProvider)currentDbProvider).configBuilder(options, connection);
+                ((DatabaseProvider)currentDbProvider).configBuilder(options, unitOfWork);
             }, ServiceLifetime.Transient);
            
             services.AddTransient<IUnitOfWork, EFUnitOfWork>();

@@ -2,53 +2,45 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BlocksCore.Data.Linq2DB.DBContext;
+using BlocksCore.Data.Linq2DB.Test.FunctionTest.TestModel;
 using BlocksCore.Data.Linq2DB.Test.TestConfiguration;
 using BlocksCore.Data.Linq2DB.Test.TestConfiguration.Log;
 using BlocksCore.Data.Linq2DB.Test.TestModel.BlockTestContext;
 using LinqToDB;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace BlocksCore.Data.Linq2DB.Test.Cache
 {
-    public class QueryCacheTest : BlocksTest
+    public class QueryCacheTest : IClassFixture<DbModelContextFixs>
     {
+        private readonly DbModelContextFixs testModelContexts;
 
-        private string testId = Guid.NewGuid().ToString();
-        public QueryCacheTest() :base()
+        public QueryCacheTest(DbModelContextFixs testModelContexts)
         {
-            foreach (var contextOption in contextOptions)
-            {
-                using (var context = new TestBlocksDbContext(contextOption))
-                {
-                    context.Insert(new TESTENTITY() { Id = testId, });
-                    
-                }
+            this.testModelContexts = testModelContexts;
 
-            }
+            foreach (var testModelContext in this.testModelContexts.testModelContexts)
+            {
+                testModelContext.ServiceProvider.GetRequiredService<BlocksDbContext>().Insert(new TESTENTITY() { Id = testId, });
+            } 
         }
 
-        [Fact]
-        public void DoubleSingleOrDefault()
+        private string testId = Guid.NewGuid().ToString();
+
+        [Theory]
+        [MultDbData()]
+        public void DoubleSingleOrDefault(string providerName)
         {
-            foreach (var contextOption in contextOptions)
-            {
-                var logHistory = new List<string>();
-                contextOption.loggerFactory = EFLoggerFactory.CreateLoggerFactory(logHistory);
+            var context = this.testModelContexts.testModelContexts.FirstOrDefault(ctx => ctx.ProviderName == providerName).ServiceProvider.GetRequiredService<BlocksDbContext>();
+            context.GetTable<TESTENTITY>().FirstOrDefault(t => t.Id == testId);
+            var lastSql = context.LastQuery;
+            context.LastQuery = "";
+            //var commandLogCount = logHistory.Count();
 
-                using (var context = new TestBlocksDbContext(contextOption))
-                {
-                    context.TestEntity.FirstOrDefault(t => t.Id == testId);
-                    var commandLogCount = logHistory.Count();
-
-                    context.TestEntity.FirstOrDefault(t => t.Id == testId);
-                    Assert.True(commandLogCount < logHistory.Count(), "Must generate sql command every times.");
-                }
-            }
+            context.GetTable<TESTENTITY>().FirstOrDefault(t => t.Id == testId);
+            Assert.True(lastSql == context.LastQuery, "Must generate sql command every times.");
 
         }
 

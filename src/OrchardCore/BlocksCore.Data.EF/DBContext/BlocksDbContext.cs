@@ -29,5 +29,10 @@ namespace BlocksCore.Data.EF.DBContext
         {
             return this.Database.GetDbConnection();
         }
+
+        public void ModelCreating()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

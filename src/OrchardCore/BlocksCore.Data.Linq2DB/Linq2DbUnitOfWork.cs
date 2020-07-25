@@ -1,8 +1,11 @@
 using System;
 using System.Data;
 using System.Data.Common;
+using System.Linq;
 using System.Threading.Tasks;
 using BlocksCore.Abstractions.Extensions;
+using BlocksCore.Autofac.Extensions.DependencyInjection;
+using BlocksCore.Autofac.Extensions.DependencyInjection.Paramters;
 using BlocksCore.Data.Abstractions.Entities;
 using BlocksCore.Data.Linq2DB.DBContext;
 using BlocksCore.Domain.Abstractions;
@@ -16,7 +19,7 @@ namespace BlocksCore.Data.Linq2DB
         private readonly IDbConnectionAccessor _dbConnectionAccessor;
         private readonly ITypeFeatureExtensionsProvider _typeFeatureExtensionsProvider;
         private IDbTransaction _dbTransaction;
-        public DbConnection DbConnection
+        public IDbConnection DbConnection
         {
             get
             {
@@ -25,6 +28,9 @@ namespace BlocksCore.Data.Linq2DB
                 return _dbConnection;
             }
         }
+
+        public IDbTransaction DbTransaction => _dbTransaction;
+
         private DbConnection _dbConnection;
 
         public Linq2DbUnitOfWork(IServiceProvider serviceProvider, IDbConnectionAccessor dbConnectionAccessor, ITypeFeatureExtensionsProvider typeFeatureExtensionsProvider)
@@ -37,7 +43,10 @@ namespace BlocksCore.Data.Linq2DB
 
         public IDataContext GetOrCreateDataContext<TEntity>() where TEntity : IEntity
         {
-            return _serviceProvider.GetService<BlocksDbContext>();
+            var lists = _typeFeatureExtensionsProvider.GetFeatureExportedTypesDenepencies(typeof(TEntity));
+            var dataContext = _serviceProvider.GetService<BlocksDbContext>(new NamedParam("entityTypes", lists));
+            dataContext.ModelCreating();
+            return dataContext;
         }
 
         public void Begin(UnitOfWorkOptions options)

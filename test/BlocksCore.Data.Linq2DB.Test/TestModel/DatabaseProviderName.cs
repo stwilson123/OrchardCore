@@ -11,4 +11,10 @@ namespace BlocksCore.Data.Linq2DB.Test.TestModel
         public static readonly string MySql = "MySql";
 
     }
+
+    public class DatabaseConnectionStringConfigKey
+    {
+        public const string SqlserverConnectString = "BlocksEntities_Sqlserver";
+        public const string OracleConnectString = "BlocksEntities_Oracle";
+    }
 }

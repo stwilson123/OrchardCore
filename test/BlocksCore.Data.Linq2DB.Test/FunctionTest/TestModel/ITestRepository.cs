@@ -32,7 +32,7 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest.TestModel
     }
 
 
-    public interface ITest2Repository : IRepository<TESTENTITY2>
+    public interface ITestRepository2 : IRepository<TESTENTITY2>
     {
 
     }

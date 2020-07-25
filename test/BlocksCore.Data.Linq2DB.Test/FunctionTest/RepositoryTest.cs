@@ -122,7 +122,7 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest
 
             var rep = serviceProvider.GetService<ITestRepository>();
             var id= rep.InsertAndGetId(new TESTENTITY(){ Id = Guid.NewGuid().ToString(), TESTENTITY2ID = Guid.NewGuid().ToString()});
-            var testEntity = rep.FirstOrDefault(t => t.Id != null);
+            var testEntity = rep.FirstOrDefault(t => t.Id == id);
             var setGuid = Guid.NewGuid().ToString();
             testEntity.STRING = setGuid;
             rep.Update(testEntity);
@@ -134,7 +134,7 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest
 
             //async test
             id = await rep.InsertAndGetIdAsync(new TESTENTITY() { Id = Guid.NewGuid().ToString(), TESTENTITY2ID = Guid.NewGuid().ToString() });
-            testEntity = await rep.FirstOrDefaultAsync(t => t.Id != null);
+            testEntity = await rep.FirstOrDefaultAsync(t => t.Id == id);
             setGuid = Guid.NewGuid().ToString();
             testEntity.STRING = setGuid;
             await rep.UpdateAsync(testEntity);

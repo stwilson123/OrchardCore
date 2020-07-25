@@ -4,6 +4,9 @@ using BlocksCore.Data.Linq2DB.Test.FunctionTest.TestModel;
 using BlocksCore.Data.Linq2DB.Test.TestConfiguration;
 using Xunit;
 using Microsoft.Extensions.DependencyInjection;
+using LinqToDB.Linq;
+using BlocksCore.Data.Linq2DB.Test.TestModel.BlockTestContext;
+using System;
 
 namespace BlocksCore.Data.Linq2DB.Test.FunctionTest
 {
@@ -23,9 +26,7 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest
 
             var serviceProvider = this.testModelContext.testModelContexts.FirstOrDefault(ctx => ctx.ProviderName == providerName).ServiceProvider;
 
-            var list = new List<MyClassModel>();
-            var list2 = new List<MyClassModel2>();
-
+        
             //            var groupList = list.GroupJoin(list2,t => t.MyClass2Id, p => p.id, (inner, outer) => new { inner, outer} )
             //                .SelectMany(joinResult => joinResult.outer.DefaultIfEmpty(),
             //                    (a,b) => {
@@ -33,16 +34,28 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest
             //                       b
             //            }
             //            )
+
+            
             var rep = serviceProvider.GetService<ITestRepository>();
+            var rep2 = serviceProvider.GetService<ITestRepository2>();
+
+            var testEntity2Id = rep2.InsertAndGetId(new TESTENTITY2() { Id = Guid.NewGuid().ToString("N"), Text = Guid.NewGuid().ToString() });
+            var testEntityId = rep.InsertAndGetId(new Test.TestModel.BlockTestContext.TESTENTITY()
+            {
+                STRING = "test",
+                 TESTENTITY2ID = testEntity2Id
+            });
+
+           
 
 
-            var firstData2 = rep.GetMultLeftJoin();
+            //var firstData1 = rep.GetMultLeftJoin();
+
+            //var firstData2 =  rep.GetTestEntity2Text();
+            var firstData3 = rep.GetTESTENTITY3s();
 
 
 
-            var firstData = rep.GetTestEntity2Text();
-
-            var firstData1 = rep.GetTESTENTITY3s();
 
 
 

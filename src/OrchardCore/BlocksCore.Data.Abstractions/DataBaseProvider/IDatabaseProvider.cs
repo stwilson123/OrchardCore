@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Text;
+using BlocksCore.Data.Abstractions.DataBaseProvider;
 
 namespace BlocksCore.Data.Abstractions
 {
@@ -14,6 +15,12 @@ namespace BlocksCore.Data.Abstractions
        bool IsDefault { get; set; }
        string SampleConnectionString { get; set; }
 
-        Func<string, DbConnection> DbConnectionBuilder { get; set; }
+        Func<string, DbConnection> CreateDbConnection { get; set; }
+
+        Func<string, DbConnectionStringBuilder> GetConnectionStringBuilder { get; set; }
+
+        Func<string, ProviderName> GetProviderName { get; set; }
+
+
     }
 }

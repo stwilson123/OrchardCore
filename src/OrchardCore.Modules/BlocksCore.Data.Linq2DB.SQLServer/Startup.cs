@@ -27,17 +27,17 @@ namespace BlocksCore.Data.Linq2DB.Sqlserver
                 IsDefault = false,
                 ConfigBuilder = (optionBuilder, connection) =>
                 {
-                   return new SQLServerDbContextOptionBuilder(optionBuilder, connection);
+                    return new SQLServerDbContextOptionBuilder(optionBuilder, connection);
                 },
-                DbConnectionBuilder = (connectionString) => new SqlConnection(connectionString),
+                CreateDbConnection = (connectionString) => new SqlConnection(connectionString),
+                GetConnectionStringBuilder = (connectionString) => new SqlConnectionStringBuilder(connectionString),
+                GetProviderName = (connectionString) =>
+                {
+                    var dataProvider = Linq2DBMap.GetDataProvider("Microsoft.Data.SqlClient", connectionString);//TODO Opts serviceProvider.GetService<IDataProvider>();
+                    return Linq2DBMap.Map(dataProvider.Name);
+                }
             });
 
-            //if (EntityFrameworkServicesBuilder.CoreServices.TryGetValue(typeof(IMigrationsSqlGenerator), out ServiceCharacteristics serviceCharacteristics))
-            //{
-            //    //serviceCharacteristics.Lifetime.
-            //    services.Replace(new ServiceDescriptor(typeof(IMigrationsSqlGenerator), typeof(SqlServerMigrationsSqlGeneratorEx), serviceCharacteristics.Lifetime));
-            //}
-            //TODO 
 
         }
 
@@ -56,8 +56,8 @@ namespace BlocksCore.Data.Linq2DB.Sqlserver
 
         public override void Up()
         {
-             
-           
+
+
         }
     }
 }

@@ -19,15 +19,15 @@ namespace BlocksCore.Data.Linq2DB.Test.TestConfiguration
         {
             return this.inputData != null ? new List<object[]>
             {
-                new object[]{ DatabaseProviderName.Sqlserver, this.inputData },
-                //new object[]{ DatabaseProviderName.Oracle, this.inputData },
+               // new object[]{ DatabaseProviderName.Sqlserver, this.inputData },
+                new object[]{ DatabaseProviderName.Oracle, this.inputData },
                 //new object[]{ DatabaseProviderName.MySql,this.inputData },
             }:
              new List<object[]>
             {
-                new object[]{ DatabaseProviderName.Sqlserver },
-                //new object[]{ DatabaseProviderName.Oracle, this.inputData },
-                //new object[]{ DatabaseProviderName.MySql,this.inputData },
+                //new object[]{ DatabaseProviderName.Sqlserver },
+                new object[]{ DatabaseProviderName.Oracle },
+                //new object[]{ DatabaseProviderName.MySql },
             }
             ;
         }

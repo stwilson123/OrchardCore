@@ -59,7 +59,7 @@ namespace BlocksCore.Test.Abstractions
             JsonSerializerSettings jsonSerializerSettingsCombine = new JsonSerializerSettings
             {
                 Converters = converters,
-               // ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
+                ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
             };
             return JsonConvert.SerializeObject(obj, jsonSerializerSettingsCombine);
         }
