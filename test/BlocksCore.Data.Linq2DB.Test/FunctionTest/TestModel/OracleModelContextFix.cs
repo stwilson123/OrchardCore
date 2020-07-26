@@ -4,6 +4,7 @@ using System.Text;
 using BlocksCore.Data.Linq2DB.Test.TestModel;
 using BlocksCore.Data.Linq2DB.Test.TestModel.BlockTestContext;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using OrchardCore.Environment.Shell;
 
 namespace BlocksCore.Data.Linq2DB.Test.FunctionTest.TestModel
@@ -21,16 +22,31 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest.TestModel
             this.masterConnectionString = masterConnectionString;
         }
 
-        public override void Init()
+        public override void Init(bool isDatabaseCreator = false)
         {
-            ShellSettings shellSettings = new ShellSettings();
-            shellSettings["DatabaseProvider"] = ProviderName;
-            shellSettings["ConnectionString"] = ConnectionString;
-            shellSettings["MasterConnectionString"] = masterConnectionString;
-
-            
-            Services.AddSingleton(shellSettings);
+            Services.TryAddSingleton(isDatabaseCreator ? CreateDatabaseCreatorSettings() : CreateShellSettings());
             base.Init();
         }
+
+        public override ShellSettings CreateShellSettings()
+        {
+            ShellSettings shellSettings = new ShellSettings();
+            shellSettings["DatabaseProvider"] = DatabaseProviderName.Oracle;
+            shellSettings["ConnectionString"] = ConnectionString;
+            shellSettings["MasterConnectionString"] = masterConnectionString;
+            return shellSettings;
+        }
+
+        public override ShellSettings CreateDatabaseCreatorSettings()
+        {
+            ShellSettings shellSettings = new ShellSettings();
+            shellSettings["DatabaseProvider"] = DatabaseProviderName.Oracle;
+            shellSettings["ConnectionString"] = ConnectionString.Replace("Min Pool Size=0","");
+            shellSettings["MasterConnectionString"] = masterConnectionString + "  ";
+            return shellSettings;
+        }
+
+
+
     }
 }

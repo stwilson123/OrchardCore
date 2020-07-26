@@ -216,9 +216,7 @@ namespace BlocksCore.Data.Linq2DB.Repository
 
         public TPrimaryKey InsertAndGetId(TEntity entity)
         {
-            var primaryKey = Context.InsertWithIdentity(entity);
-
-            return primaryKey == null || primaryKey == DBNull.Value ? entity.Id :(TPrimaryKey)(primaryKey);
+            return Context.Insert(entity) > 0 ? entity.Id : default(TPrimaryKey) ;
         }
 
         public virtual TEntity InsertOrUpdate(TEntity entity)

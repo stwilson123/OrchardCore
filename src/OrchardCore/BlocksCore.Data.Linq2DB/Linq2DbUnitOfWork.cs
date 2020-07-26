@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
@@ -9,16 +10,18 @@ using BlocksCore.Autofac.Extensions.DependencyInjection.Paramters;
 using BlocksCore.Data.Abstractions.Entities;
 using BlocksCore.Data.Linq2DB.DBContext;
 using BlocksCore.Domain.Abstractions;
+using BlocksCore.SyntacticAbstractions.Types.Collections;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BlocksCore.Data.Linq2DB
 {
-    public class Linq2DbUnitOfWork : IUnitOfWork
+    public class Linq2DbUnitOfWork : IUnitOfWork,IDisposable
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IDbConnectionAccessor _dbConnectionAccessor;
         private readonly ITypeFeatureExtensionsProvider _typeFeatureExtensionsProvider;
         private IDbTransaction _dbTransaction;
+        private readonly LazyConcurrentDictionary<string, BlocksDbContext> dictionary = new LazyConcurrentDictionary<string, BlocksDbContext>();
         public IDbConnection DbConnection
         {
             get
@@ -43,10 +46,17 @@ namespace BlocksCore.Data.Linq2DB
 
         public IDataContext GetOrCreateDataContext<TEntity>() where TEntity : IEntity
         {
-            var lists = _typeFeatureExtensionsProvider.GetFeatureExportedTypesDenepencies(typeof(TEntity));
-            var dataContext = _serviceProvider.GetService<BlocksDbContext>(new NamedParam("entityTypes", lists));
-            dataContext.ModelCreating();
-            return dataContext;
+            var featureId = _typeFeatureExtensionsProvider.GetMainFeatureForDependency(typeof(TEntity))?.Id;
+
+
+            return dictionary.GetOrAdd(featureId, (Id) =>
+            {
+                var lists = _typeFeatureExtensionsProvider.GetFeatureExportedTypesDenepencies(typeof(TEntity));
+                var dataContext = _serviceProvider.GetService<BlocksDbContext>(new NamedParam("entityTypes", lists));
+                dataContext.ModelCreating();
+                return dataContext;
+            });
+          
         }
 
         public void Begin(UnitOfWorkOptions options)
@@ -78,6 +88,14 @@ namespace BlocksCore.Data.Linq2DB
             _dbTransaction = null;
             _dbConnection.Dispose();
             _dbConnection = null;
+        }
+
+        public void Dispose()
+        {
+            foreach (var context in dictionary.Values())
+            {
+                context.Dispose();
+            } 
         }
     }
 }

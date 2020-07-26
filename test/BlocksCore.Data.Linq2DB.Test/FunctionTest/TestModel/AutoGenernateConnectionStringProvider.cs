@@ -8,7 +8,7 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest.TestModel
     {
         public override string getDbName()
         {
-            return "a"+ Guid.NewGuid().ToString("N").Substring(0,29);
+            return ("a"+ Guid.NewGuid().ToString("N").Substring(0,29)).ToUpper();
         }
     }
 }

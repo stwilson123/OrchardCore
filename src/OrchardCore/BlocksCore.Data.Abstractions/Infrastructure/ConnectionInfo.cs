@@ -9,11 +9,13 @@ namespace BlocksCore.Data.Abstractions.Infrastructure
 {
     public class ConnectionInfo
     {
-        public ConnectionInfo(string connectionString, DbConnectionStringBuilder dbConnectionStringBuilder, ProviderName providerName)
+        public ConnectionInfo(string connectionString, DbConnectionStringBuilder dbConnectionStringBuilder, ProviderName providerName,string masterConnectionString, DbConnectionStringBuilder masterDbConnectionStringBuilder)
         {
             ConnectionString = connectionString;
             DBConnectionStringBuilder = dbConnectionStringBuilder;
             ProviderName = providerName;
+            MasterConnectionString = masterConnectionString;
+            MasterDbConnectionStringBuilder = masterDbConnectionStringBuilder;
         }
 
         public string ConnectionString { get; }
@@ -21,6 +23,8 @@ namespace BlocksCore.Data.Abstractions.Infrastructure
         public DbConnectionStringBuilder DBConnectionStringBuilder { get; }
 
         public ProviderName ProviderName { get; }
+        public string MasterConnectionString { get; }
+        public DbConnectionStringBuilder MasterDbConnectionStringBuilder { get; }
 
         public string Database {
             get {

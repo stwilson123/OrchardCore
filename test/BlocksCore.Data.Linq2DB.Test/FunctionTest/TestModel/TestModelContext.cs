@@ -155,9 +155,24 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest.TestModel
             serviceProvider = SerivceProviderFactory.CreateServiceProvider(null, Services, Services.Where(s => s.ServiceType == typeof(IHost)));
         }
 
-        public virtual void Init()
+        public virtual void Init(bool isDatabaseCreator = false)
         {
 
+        }
+
+        public virtual ShellSettings CreateShellSettings()
+        {
+            return null;
+        }
+        public virtual ShellSettings CreateDatabaseCreatorSettings()
+        {
+            return null;
+        }
+
+        public void CloseConnection()
+        {
+            var dbConnection = ServiceProvider.GetRequiredService<IUnitOfWorkManager>().Current as IDisposable;
+            dbConnection.Dispose();
         }
 
         public void Dispose()

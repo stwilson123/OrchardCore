@@ -8,7 +8,7 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest.TestModel
     {
         public override string getDbName()
         {
-            return "TestBlockCoreDb";
+            return "TestBlockCoreDb".ToUpper();
         }
     }
 }

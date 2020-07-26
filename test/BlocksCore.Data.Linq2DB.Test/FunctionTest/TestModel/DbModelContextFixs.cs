@@ -28,21 +28,30 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest.TestModel
     }
 
 
-    public class BaseDbModelContextFixs<T> : IDisposable, IClassFixture<T> where T : BaseConnectionStinrgProvider,new()
+    public class BaseDbModelContextFixs<T> : IDisposable, IClassFixture<T> where T : BaseConnectionStinrgProvider, new()
     {
         public IEnumerable<TestModelContext> testModelContexts { get; }
+        private IEnumerable<TestModelContext> dbHandleContexts { get; }
+
+        Func<string,List<TestModelContext>> funcCreateModelContext = (dbName) =>
+        {
+            return new List<TestModelContext>() {
+              //  new SqlserverModelContextFix(String.Format(ConfigurationHelper.Config[DatabaseConnectionStringConfigKey.SqlserverConnectString],dbName),ConfigurationHelper.Config["BlocksEntities_SqlserverDBA"]),
+                new OracleModelContextFix(String.Format(ConfigurationHelper.Config[DatabaseConnectionStringConfigKey.OracleConnectString],dbName),ConfigurationHelper.Config["BlocksEntities_OracleDBA"])
+
+            }; 
+        };
         public BaseDbModelContextFixs()
         {
             T connectionStinrgProvider = new T();
             var dbName = connectionStinrgProvider.getDbName();
-            testModelContexts = new List<TestModelContext>() {
-               // new SqlserverModelContextFix(String.Format(ConfigurationHelper.Config[DatabaseConnectionStringConfigKey.SqlserverConnectString],dbName)),
-                new OracleModelContextFix(String.Format(ConfigurationHelper.Config[DatabaseConnectionStringConfigKey.OracleConnectString],dbName),ConfigurationHelper.Config["BlocksEntities_OracleDBA"])
+            testModelContexts = funcCreateModelContext(dbName);
 
-            };
+            dbHandleContexts = funcCreateModelContext(dbName);
 
-            foreach (var modelContext in testModelContexts)
+            foreach (var modelContext in dbHandleContexts)
             {
+                modelContext.Init(true);
                 using (var dbContext = modelContext.ServiceProvider.GetService<MigrateDbContext>(new NamedParam("entityTypes", TestModelContext.registerTypes)))
                 {
                     // dbContext.ExecuteSqlCommand("SELECT 1;");
@@ -57,21 +66,17 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest.TestModel
             {
                 try
                 {
-
+                   // modelContext.Init(true);
                     using (var dbContext = modelContext.ServiceProvider.GetService<MigrateDbContext>(new NamedParam("entityTypes", TestModelContext.registerTypes)))
                     {
                         //disconnect db
-                       
-                        // dbContext.ExecuteSqlCommand("SELECT 1;");
-                         dbContext.EnsureDeleted();
 
-                        modelContext.Dispose();
+                        // dbContext.ExecuteSqlCommand("SELECT 1;");
+                        modelContext.CloseConnection();
+                        Thread.Sleep(5 * 1000);
+                        dbContext.EnsureDeleted();
+
                     }
-                    //using (var dbContext = new TestBlocksDbContext(new BlocksDbContextOption() { ProviderName = modelContext.ProviderName, ConnectString = modelContext.ConnectionString }))
-                    //{
-                    //    // dbContext.ExecuteSqlCommand("SELECT 1;");
-                    //    dbContext.GetService<IRelationalDatabaseCreator>().EnsureDeleted();
-                    //}
 
                 }
                 catch (Exception ex)

@@ -49,9 +49,9 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest
            
 
 
-            //var firstData1 = rep.GetMultLeftJoin();
+            var firstData1 = rep.GetMultLeftJoin();
 
-            //var firstData2 =  rep.GetTestEntity2Text();
+            var firstData2 =  rep.GetTestEntity2Text();
             var firstData3 = rep.GetTESTENTITY3s();
 
 

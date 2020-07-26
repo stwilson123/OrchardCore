@@ -43,8 +43,8 @@ namespace BlocksCore.Data.Migrator
                                                     END");
             IfDatabase("oracle").Execute.Sql(@$"BEGIN
                                                     EXECUTE IMMEDIATE 'CREATE USER {dbName} identified by {dbName}';
-                                                    EXECUTE IMMEDIATE 'CREATE TABLESPACE ""{ dbName}"" datafile ''d:\{dbName}.dbf'' size 10m';
-                                                    EXECUTE IMMEDIATE 'ALTER USER {dbName} DEFAULT TABLESPACE ""{dbName}""';
+                                                    EXECUTE IMMEDIATE 'CREATE TABLESPACE { dbName} datafile ''d:\{dbName}.dbf'' size 10m';
+                                                    EXECUTE IMMEDIATE 'ALTER USER {dbName} DEFAULT TABLESPACE {dbName}';
                                                     EXECUTE IMMEDIATE 'GRANT CREATE session,create table,unlimited tablespace to {dbName}';
                                                 END;".Replace("r\n", " ").Replace('\n', ' '));
 
@@ -59,17 +59,19 @@ namespace BlocksCore.Data.Migrator
             IfDatabase("sqlserver").Execute.Sql(@$"
             ALTER DATABASE [{dbName}] SET  SINGLE_USER WITH ROLLBACK IMMEDIATE --设置库单用户模式，和设置立即回滚
             DROP DATABASE [{dbName}]");
-
-
-            var existSession = $"SELECT 'alter system kill session ' || '''' ||t.sid ||','||t.SERIAL#|| '''' FROM v$session t WHERE t.USERNAME='{dbName}'";
-            IfDatabase("oracle").Execute.Sql(@$"
-            DECLARE   
-               l_cnt  varchar2(1000);   
+            
+            var existSession = $"SELECT 'alter system kill session ' || '''' ||t.sid ||','||t.SERIAL#|| '''' as killSql FROM v$session t WHERE t.USERNAME='{dbName}'".Replace("'","''");
+            IfDatabase("oracle").Execute.Sql(@$"   
             BEGIN
-                EXECUTE IMMEDIATE '{existSession}' INTO l_cnt;
-                EXECUTE IMMEDIATE l_cnt;
+                BEGIN
+                         FOR v_cur IN(SELECT sid, serial# FROM v$session WHERE username = '{dbName}') LOOP
+                            EXECUTE IMMEDIATE ('ALTER SYSTEM  DISCONNECT SESSION ''' || v_cur.sid || ',' || v_cur.serial# || ''' IMMEDIATE');
+                         END LOOP;
+                        dbms_lock.sleep(10);
+                END;
+                EXECUTE IMMEDIATE 'DROP TABLESPACE {dbName} INCLUDING CONTENTS AND DATAFILES';
                 EXECUTE IMMEDIATE 'DROP USER {dbName} CASCADE';
-                EXECUTE IMMEDIATE 'DROP TABLESPACE ""{dbName}"" INCLUDING CONTENTS AND DATAFILES';
+               
             END;
            ".Replace("r\n", " ").Replace('\n', ' '));
         }

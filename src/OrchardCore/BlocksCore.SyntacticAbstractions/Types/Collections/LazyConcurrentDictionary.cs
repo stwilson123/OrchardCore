@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Linq;
 using System.Threading;
 
 namespace BlocksCore.SyntacticAbstractions.Types.Collections
@@ -41,6 +42,11 @@ namespace BlocksCore.SyntacticAbstractions.Types.Collections
                 }));
 
             return lazyResult.Value;
+        }
+
+        public TValue[] Values()
+        {
+            return this.concurrentDictionary.Values.Select(v => v.Value).ToArray();
         }
     }
 }

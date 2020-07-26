@@ -329,8 +329,6 @@ namespace BlocksCore.Data.Linq2DB.Test.FunctionTest
                 Id = newId
             });
             Assert.Equal(1,rep.ExecuteSqlCommand(newId));
-
-
         }
 
 

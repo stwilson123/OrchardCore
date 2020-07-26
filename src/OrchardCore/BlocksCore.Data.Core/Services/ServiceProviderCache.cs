@@ -8,6 +8,7 @@ using BlocksCore.Autofac.Extensions.DependencyInjection;
 using BlocksCore.Data.Abstractions;
 using BlocksCore.Data.Abstractions.Configurations;
 using BlocksCore.Data.Abstractions.Infrastructure;
+using BlocksCore.Data.Core.UnitOfWork;
 using BlocksCore.SyntacticAbstractions.Collection;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.Environment.Shell;
@@ -44,12 +45,15 @@ namespace BlocksCore.Data.Core.Services
         private static bool ApplyServices(IDbContextOptions options, IServiceCollection services,IServiceProvider serviceProvider)
         {
             var coreServicesAdded = false;
-            var connectionString = serviceProvider.GetRequiredService<ShellSettings>()["ConnectionString"];
+            var shellSettings = serviceProvider.GetRequiredService<ShellSettings>();
+            var connectionString = shellSettings["ConnectionString"];
+            var masterConnectionString = shellSettings["MasterConnectionString"];
+
             var dataProvider = serviceProvider.GetRequiredService<IDatabaseProvider>();
             var connectionStringBuilder = dataProvider.GetConnectionStringBuilder(connectionString);
             var providerName = dataProvider.GetProviderName(connectionString);
-           
-            var connectInfo = new ConnectionInfo(connectionString, connectionStringBuilder, providerName);
+            var  masterConnectionStringBuilder = string.IsNullOrEmpty(masterConnectionString) ? null : dataProvider.GetConnectionStringBuilder(masterConnectionString);
+            var connectInfo = new ConnectionInfo(connectionString, connectionStringBuilder, providerName, masterConnectionString, masterConnectionStringBuilder);
             foreach (var extension in options.Extensions)
             {
                 if (extension.ApplyServices(services, serviceProvider, connectInfo))

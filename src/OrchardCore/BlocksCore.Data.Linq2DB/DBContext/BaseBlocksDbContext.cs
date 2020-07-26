@@ -127,9 +127,9 @@ namespace BlocksCore.Data.Linq2DB
             {
                 var createTableMethod = typeof(LinqToDB.DataExtensions).GetMethod("CreateTable").MakeGenericMethod(entity);
                 createTableMethod.Invoke(this, new object[] { this, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing });
-            }  
-            
-            
+            }
+
+
             return isDbMigrate;
         }
 
