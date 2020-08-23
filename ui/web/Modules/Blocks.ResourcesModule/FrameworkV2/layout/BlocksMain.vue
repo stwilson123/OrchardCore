@@ -1,5 +1,5 @@
 <template>
-  <el-main :class="blocksClass">
+  <el-main :class="blocksClass" style="min-height:300px">
     <slot></slot>
   </el-main>
 </template>

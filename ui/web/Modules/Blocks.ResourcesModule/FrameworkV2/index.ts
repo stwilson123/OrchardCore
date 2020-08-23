@@ -33,6 +33,8 @@ import * as rules from "vee-validate/dist/rules";
 
 import { plugin } from 'vue-function-api';
 import Vue from "vue";
+import Element from "element-ui";
+import 'element-ui/lib/theme-chalk/index.css'
 const components = [
     { name: "BlInput", component: BlocksInput },
     { name: "BlButton", component: BlocksButton },
@@ -143,5 +145,7 @@ export default {
     BlocksCol,
     BlocksValidationObserver,
     BlocksValidationProvider,
-    BlocksDialogController
+    BlocksDialogController,
+    components,
+    Element
 };

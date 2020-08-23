@@ -14,8 +14,8 @@ export default {
   },
   props: {
     direction: {
-      type: String
-      //default: () => "vertical"
+      type: String,
+      default: () => "vertical"
     },
     type: {
       type: String,

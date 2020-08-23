@@ -35,7 +35,7 @@ const router = new Router({
   scrollBehavior: () => ({ y: 0 }),
   routes: routes
 });
-const whiteList = ['/authentionmodule/login', '/layout/BussnessWebModule/MasterData/Index1', '/layout/BussnessWebModule/MasterData/LayoutDemo']
+const whiteList = ['/authentionmodule/login', '/layout/BussnessWebModule/MasterData/Index1', '/layout/BussnessWebModule/MasterData/LayoutDemo','/programbuildermodule/index']
 //const whiteList = ['/login']
 const dashurl = store.getters.dashboardRoute.url.toLowerCase();
 whiteList.push(dashurl);

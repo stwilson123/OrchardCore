@@ -23,7 +23,7 @@ if (store.getters.roles.length === 0) {
   })
 }
 
-const whiteList = ['/authentionmodule/login']// no redirect whitelist
+const whiteList = ['/authentionmodule/login','/programbuildermodule/index']// no redirect whitelist
 
 router.beforeEach((to, from, next) => {
   NProgress.start() // start progress bar
