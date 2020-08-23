@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <None Include="OrchardCore.Application.Targets.targets" Pack="true">
@@ -15,7 +15,7 @@
     <ProjectReference Include="..\..\OrchardCore.Modules\BlocksCore.Localization\BlocksCore.Localization.csproj" />
     <ProjectReference Include="..\..\OrchardCore.Modules\BlocksCore.Navigation\BlocksCore.Navigation.csproj" />
     <ProjectReference Include="..\..\OrchardCore.Modules\BlocksCore.Settings\BlocksCore.Settings.csproj" />
-    <ProjectReference Include="..\BlocksCore.Data.EF\BlocksCore.Data.EF.csproj" />
+    <ProjectReference Include="..\BlocksCore.Data.Linq2DB\BlocksCore.Data.Linq2DB.csproj" />
     <ProjectReference Include="..\BlocksCore.Domain.Core\BlocksCore.Domain.Core.csproj" />
     <ProjectReference Include="..\BlocksCore.Event.Core\BlocksCore.Event.Core.csproj" />
     <ProjectReference Include="..\BlocksCore.Localization.Core\BlocksCore.Localization.Core.csproj" />

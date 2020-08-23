@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.1.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlocksCore.Autofac.Extensions.DependencyInjection\BlocksCore.Autofac.Extensions.DependencyInjection.csproj" />
     <ProjectReference Include="..\BlocksCore.Data.Abstractions\BlocksCore.Data.Abstractions.csproj" />
     <ProjectReference Include="..\BlocksCore.Domain.Abstractions\BlocksCore.Domain.Abstractions.csproj" />
   </ItemGroup>

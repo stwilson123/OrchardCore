@@ -105,8 +105,8 @@ namespace BlocksCore.Data.EF.Test.FunctionTest.TestModel
             Services.AddDbContext<MigrateDbContext>((serviceProvider, options) =>
             {
                 var dbProviderManager = serviceProvider.GetService<IDataBaseProviderManager>();
-                var connection = serviceProvider.GetService<IUnitOfWork>().DbConnection;
-                ((DatabaseProvider)dbProviderManager.GetCurrentDatabaseProvider()).configBuilder(options, connection);
+                var unitOfWork = serviceProvider.GetService<IUnitOfWork>();
+                ((DatabaseProvider)dbProviderManager.GetCurrentDatabaseProvider()).configBuilder(options, unitOfWork);
             }, ServiceLifetime.Transient);
            // Services.AddTransient<MigrateDbContext>();
 

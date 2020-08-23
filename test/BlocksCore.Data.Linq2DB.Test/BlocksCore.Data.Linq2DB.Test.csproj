@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+    <Nullable>enable</Nullable>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+    <PackageReference Include="coverlet.collector" Version="1.2.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\OrchardCore.Modules\BlocksCore.Data.Linq2DB.Oracle\BlocksCore.Data.Linq2DB.Oracle.csproj" />
+    <ProjectReference Include="..\..\src\OrchardCore.Modules\BlocksCore.Data.Linq2DB.SQLServer\BlocksCore.Data.Linq2DB.SQLServer.csproj" />
+    <ProjectReference Include="..\..\src\OrchardCore\BlocksCore.Data.Linq2DB\BlocksCore.Data.Linq2DB.csproj" />
+    <ProjectReference Include="..\..\src\OrchardCore\BlocksCore.Test.Abstractions\BlocksCore.Test.Abstractions.csproj" />
+    <ProjectReference Include="..\BlocksCore.Tests.Modules\WebApiTestApplication\WebApiTestApplication.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.0.0" />
+    <PackageReference Include="Moq" Version="4.13.1" />
+
+
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="appsettings.test.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

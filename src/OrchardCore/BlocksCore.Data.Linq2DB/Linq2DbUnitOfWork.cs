@@ -1,0 +1,101 @@
+using System;
+using System.Collections;
+using System.Data;
+using System.Data.Common;
+using System.Linq;
+using System.Threading.Tasks;
+using BlocksCore.Abstractions.Extensions;
+using BlocksCore.Autofac.Extensions.DependencyInjection;
+using BlocksCore.Autofac.Extensions.DependencyInjection.Paramters;
+using BlocksCore.Data.Abstractions.Entities;
+using BlocksCore.Data.Linq2DB.DBContext;
+using BlocksCore.Domain.Abstractions;
+using BlocksCore.SyntacticAbstractions.Types.Collections;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace BlocksCore.Data.Linq2DB
+{
+    public class Linq2DbUnitOfWork : IUnitOfWork,IDisposable
+    {
+        private readonly IServiceProvider _serviceProvider;
+        private readonly IDbConnectionAccessor _dbConnectionAccessor;
+        private readonly ITypeFeatureExtensionsProvider _typeFeatureExtensionsProvider;
+        private IDbTransaction _dbTransaction;
+        private readonly LazyConcurrentDictionary<string, BlocksDbContext> dictionary = new LazyConcurrentDictionary<string, BlocksDbContext>();
+        public IDbConnection DbConnection
+        {
+            get
+            {
+                if (_dbConnection == null)
+                    _dbConnection = _dbConnectionAccessor.CreateConnection();
+                return _dbConnection;
+            }
+        }
+
+        public IDbTransaction DbTransaction => _dbTransaction;
+
+        private DbConnection _dbConnection;
+
+        public Linq2DbUnitOfWork(IServiceProvider serviceProvider, IDbConnectionAccessor dbConnectionAccessor, ITypeFeatureExtensionsProvider typeFeatureExtensionsProvider)
+        {
+            _serviceProvider = serviceProvider;
+            _dbConnectionAccessor = dbConnectionAccessor;
+            this._typeFeatureExtensionsProvider = typeFeatureExtensionsProvider;
+
+        }
+
+        public IDataContext GetOrCreateDataContext<TEntity>() where TEntity : IEntity
+        {
+            var featureId = _typeFeatureExtensionsProvider.GetMainFeatureForDependency(typeof(TEntity))?.Id;
+
+
+            return dictionary.GetOrAdd(featureId, (Id) =>
+            {
+                var lists = _typeFeatureExtensionsProvider.GetFeatureExportedTypesDenepencies(typeof(TEntity));
+                var dataContext = _serviceProvider.GetService<BlocksDbContext>(new NamedParam("entityTypes", lists));
+                dataContext.ModelCreating();
+                return dataContext;
+            });
+          
+        }
+
+        public void Begin(UnitOfWorkOptions options)
+        {
+            if (DbConnection.State == ConnectionState.Closed)
+                DbConnection.Open();
+            _dbTransaction = DbConnection.BeginTransaction(options.IsolationLevel ?? IsolationLevel.ReadCommitted);
+        }
+
+
+        public void Complete()
+        {
+            if (_dbTransaction != null)
+                _dbTransaction.Commit();
+            _dbTransaction = null;
+            _dbConnection.Dispose();
+        }
+
+        public Task CompleteAsync()
+        {
+            Complete();
+            return Task.CompletedTask;
+        }
+
+        public void Rollback()
+        {
+            if (_dbTransaction != null)
+                _dbTransaction.Rollback();
+            _dbTransaction = null;
+            _dbConnection.Dispose();
+            _dbConnection = null;
+        }
+
+        public void Dispose()
+        {
+            foreach (var context in dictionary.Values())
+            {
+                context.Dispose();
+            } 
+        }
+    }
+}

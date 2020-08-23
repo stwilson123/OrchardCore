@@ -7,9 +7,9 @@ using BlocksCore.Abstractions.UI.Paging;
 using BlocksCore.Data.Abstractions.Entities;
 using BlocksCore.Data.Abstractions.Paging;
 using BlocksCore.Data.Abstractions.UnitOfWork;
-using BlocksCore.Data.EF.Linq;
 using BlocksCore.Data.EF.Repository;
 using BlocksCore.Data.EF.Test.TestModel.BlockTestContext;
+using BlocksCore.Data.Linq;
 using BlocksCore.Domain.Abstractions;
 using Microsoft.EntityFrameworkCore;
 

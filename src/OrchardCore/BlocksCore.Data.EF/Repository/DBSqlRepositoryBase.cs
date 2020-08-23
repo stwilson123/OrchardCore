@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using BlocksCore.Data.Abstractions.Entities;
 using BlocksCore.Data.Abstractions.UnitOfWork;
+using BlocksCore.Data.EF.DBContext;
 using BlocksCore.Domain.Abstractions;
 using BlocksCore.SyntacticAbstractions.Types.Collections;
 using Microsoft.EntityFrameworkCore;
@@ -27,17 +28,17 @@ namespace BlocksCore.Data.EF.Repository
         /// </summary>
       //  public virtual TDbContext Context => _unitProvider.GetDbContext<TDbContext, TEntity>();
 
-        public virtual DbContext Context
+        public virtual BlocksDbContext Context
         {
             get
             {
                 if (context == null)
-                    context = _unitOfwork.GetOrCreateDataContext<TEntity>() as DbContext;
+                    context = _unitOfwork.GetOrCreateDataContext<TEntity>() as BlocksDbContext;
                 return context;
             }
         }
 
-        protected DbContext context;
+        protected BlocksDbContext context;
         /// <summary>
         /// Gets DbSet for given entity.
         /// </summary>
@@ -328,50 +329,50 @@ namespace BlocksCore.Data.EF.Repository
             return entity;
         }
 
-        public void Delete(TEntity entity)
+        public int Delete(TEntity entity)
         {
             AttachIfNot(entity);
             Table.Remove(entity);
+            return 1;
         }
 
-        public virtual Task DeleteAsync(TEntity entity)
+        public virtual Task<int> DeleteAsync(TEntity entity)
         {
-            Delete(entity);
-            return Task.FromResult(0);
+            return Task.FromResult(Delete(entity));
         }
 
-        public void Delete(TPrimaryKey id)
+        public int Delete(TPrimaryKey id)
         {
             var entity = GetFromChangeTrackerOrNull(id);
             if (entity != null)
             {
                 Delete(entity);
-                return;
+                return 1;
             }
 
             entity = FirstOrDefault(id);
             if (entity != null)
             {
                 Delete(entity);
-                return;
+                return 1;
             }
+            throw new Exception("id not found.");
 
             //Could not found the entity, do nothing.
         }
 
-        public virtual Task DeleteAsync(TPrimaryKey id)
+        public virtual Task<int> DeleteAsync(TPrimaryKey id)
         {
-            Delete(id);
-            return Task.FromResult(0);
+            return Task.FromResult(Delete(id));
         }
 
-        public long Delete(Expression<Func<TEntity, bool>> predicate)
+        public int Delete(Expression<Func<TEntity, bool>> predicate)
         {
             return GetAllCode().Where(predicate).Delete();
         }
 
 
-        public Task DeleteAsync(Expression<Func<TEntity, bool>> predicate)
+        public Task<int> DeleteAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return Task.FromResult(Delete(predicate));
         }

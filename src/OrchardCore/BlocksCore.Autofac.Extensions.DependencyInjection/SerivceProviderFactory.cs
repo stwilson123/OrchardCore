@@ -12,17 +12,17 @@ namespace BlocksCore.Autofac.Extensions.DependencyInjection
 {
     public static class SerivceProviderFactory
     {
-        public static IServiceProvider CreateServiceProvider(IServiceProvider serviceProvider,IServiceCollection services,IEnumerable<ServiceDescriptor> owinSerivceDescriptor)
+        public static IServiceProvider CreateServiceProvider(IServiceProvider serviceProvider, IServiceCollection services, IEnumerable<ServiceDescriptor> owinSerivceDescriptor)
         {
-
+            var selfowinSerivceDescriptor = owinSerivceDescriptor ?? Enumerable.Empty<ServiceDescriptor>();
             if (serviceProvider is AutofacServiceProvider autofacServiceProvider)
             {
                 var childTag = Guid.NewGuid().ToString("N");
                 var childLifetimeScope = autofacServiceProvider.LifetimeScope.BeginLifetimeScope(childTag, builder =>
                 {
-
-                    RegisterExternallyOwned(builder, owinSerivceDescriptor, childTag);
-                    builder.Populate(services.Except(owinSerivceDescriptor), childTag);
+                    RegisterExternallyOwned(builder, selfowinSerivceDescriptor, childTag);
+                    if (services != null)
+                        builder.Populate(services.Except(selfowinSerivceDescriptor), childTag);
                 });
 
                 return new AutofacServiceProvider(childLifetimeScope);
@@ -30,10 +30,11 @@ namespace BlocksCore.Autofac.Extensions.DependencyInjection
 
             IServiceProviderFactory<ContainerBuilder> serviceProviderFactory = new AutofacServiceProviderFactory();
 
-            var containerBuilder = serviceProviderFactory.CreateBuilder(services.Except(owinSerivceDescriptor),null);
-            RegisterExternallyOwned(containerBuilder, owinSerivceDescriptor,null);
+            var containerBuilder = serviceProviderFactory.CreateBuilder(services.Except(owinSerivceDescriptor), null);
+            RegisterExternallyOwned(containerBuilder, owinSerivceDescriptor, null);
             return serviceProviderFactory.CreateServiceProvider(containerBuilder);
         }
+
         private static IRegistrationBuilder<object, TActivatorData, TRegistrationStyle> ConfigureLifecycle<TActivatorData, TRegistrationStyle>(
            this IRegistrationBuilder<object, TActivatorData, TRegistrationStyle> registrationBuilder,
            ServiceLifetime lifecycleKind,
@@ -101,7 +102,7 @@ namespace BlocksCore.Autofac.Extensions.DependencyInjection
                         .ConfigureLifecycle(descriptor.Lifetime, lifetimeScopeTagForSingletons)
                         .ExternallyOwned()
                         .CreateRegistration();
-                        
+
 
                     builder.RegisterComponent(registration);
                 }
@@ -117,7 +118,7 @@ namespace BlocksCore.Autofac.Extensions.DependencyInjection
         }
 
 
-        public static ContainerBuilder  CreateBuilder(this IServiceProviderFactory<ContainerBuilder> factory,IEnumerable<ServiceDescriptor> services , Action<ContainerBuilder> configurationAction)
+        public static ContainerBuilder CreateBuilder(this IServiceProviderFactory<ContainerBuilder> factory, IEnumerable<ServiceDescriptor> services, Action<ContainerBuilder> configurationAction)
         {
             var builder = new ContainerBuilder();
 

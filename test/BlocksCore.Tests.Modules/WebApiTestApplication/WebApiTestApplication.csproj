@@ -1,11 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\OrchardCore.Modules\BlocksCore.Data.EF.Sqlserver\BlocksCore.Data.EF.Sqlserver.csproj" />
+    <ProjectReference Include="..\..\..\src\OrchardCore.Modules\BlocksCore.Data.Linq2DB.SQLServer\BlocksCore.Data.Linq2DB.SQLServer.csproj" />
     <ProjectReference Include="..\..\..\src\OrchardCore.Modules\BlocksCore.Diagnostics\BlocksCore.Diagnostics.csproj" />
     <ProjectReference Include="..\..\..\src\OrchardCore\BlocksCore.Application.ManageSystem.Core.Targets\BlocksCore.Application.ManageSystem.Core.Targets.csproj" />
     <ProjectReference Include="..\..\..\src\OrchardCore\BlocksCore.Application.Mvc.Targets\BlocksCore.Application.Mvc.Targets.csproj" />

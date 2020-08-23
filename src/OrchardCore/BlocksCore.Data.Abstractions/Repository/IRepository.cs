@@ -234,25 +234,25 @@ namespace BlocksCore.Data.Abstractions.Repository
         /// Deletes an entity.
         /// </summary>
         /// <param name="entity">Entity to be deleted</param>
-        void Delete(TEntity entity);
+        int Delete(TEntity entity);
 
         /// <summary>
         /// Deletes an entity.
         /// </summary>
         /// <param name="entity">Entity to be deleted</param>
-        Task DeleteAsync(TEntity entity);
+        Task<int> DeleteAsync(TEntity entity);
 
         /// <summary>
         /// Deletes an entity by primary key.
         /// </summary>
         /// <param name="id">Primary key of the entity</param>
-        void Delete(TPrimaryKey id);
+        int Delete(TPrimaryKey id);
 
         /// <summary>
         /// Deletes an entity by primary key.
         /// </summary>
         /// <param name="id">Primary key of the entity</param>
-        Task DeleteAsync(TPrimaryKey id);
+        Task<int> DeleteAsync(TPrimaryKey id);
 
         /// <summary>
         /// Deletes many entities by function.
@@ -261,7 +261,7 @@ namespace BlocksCore.Data.Abstractions.Repository
         /// given predicate.
         /// </summary>
         /// <param name="predicate">A condition to filter entities</param>
-        long Delete(Expression<Func<TEntity, bool>> predicate);
+        int Delete(Expression<Func<TEntity, bool>> predicate);
 
         /// <summary>
         /// Deletes many entities by function.
@@ -270,7 +270,7 @@ namespace BlocksCore.Data.Abstractions.Repository
         /// given predicate.
         /// </summary>
         /// <param name="predicate">A condition to filter entities</param>
-        Task DeleteAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<int> DeleteAsync(Expression<Func<TEntity, bool>> predicate);
 
         #endregion
 

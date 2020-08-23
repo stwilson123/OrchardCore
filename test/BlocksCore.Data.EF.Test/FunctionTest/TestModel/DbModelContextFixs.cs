@@ -41,7 +41,7 @@ namespace BlocksCore.Data.EF.Test.FunctionTest.TestModel
             testModelContexts = new List<TestModelContext>() {
                 new SqlserverModelContextFix(autoConnectString)
             };
-
+             
             foreach (var modelContext in testModelContexts)
             {
                 using (var dbContext = modelContext.ServiceProvider.GetService<MigrateDbContext>(new NamedParam("entityTypes", TestModelContext.registerTypes)))

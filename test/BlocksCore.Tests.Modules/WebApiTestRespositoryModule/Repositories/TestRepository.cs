@@ -7,11 +7,11 @@ using BlocksCore.Abstractions.UI.Paging;
 using BlocksCore.Data.Abstractions.Entities;
 using BlocksCore.Data.Abstractions.Paging;
 using BlocksCore.Data.Abstractions.UnitOfWork;
-using BlocksCore.Data.EF.Linq;
-using BlocksCore.Data.EF.Repository;
 using BlocksCore.Data.EF.Test.TestModel.BlockTestContext;
+using BlocksCore.Data.Linq;
+using BlocksCore.Data.Linq2DB.Repository;
 using BlocksCore.Domain.Abstractions;
-using Microsoft.EntityFrameworkCore;
+using LinqToDB;
 
 namespace BlocksCore.Data.EF.Test.FunctionTest.TestModel
 {
@@ -90,8 +90,7 @@ namespace BlocksCore.Data.EF.Test.FunctionTest.TestModel
             var takeNum = 1;
             var skipNum = 0;
 
-            return Context.Set<TestDto>()
-                .FromSqlRaw("SELECT TESTENTITY.ID FROM TESTENTITY  INNER JOIN TESTENTITY2  " +
+            return Context.FromSql<TestDto>("SELECT TESTENTITY.ID FROM TESTENTITY  INNER JOIN TESTENTITY2  " +
                          "ON TESTENTITY.TESTENTITY2ID = TESTENTITY2.ID ")
                 .Skip(skipNum).Take(takeNum)
                 .ToList();
@@ -105,7 +104,7 @@ namespace BlocksCore.Data.EF.Test.FunctionTest.TestModel
 
         public int ExecuteSqlCommand(string id)
         {
-            return this.ExecuteSqlCommand("DELETE FROM TESTENTITY WHERE ID = {0}", id);
+            return this.ExecuteSqlCommand("DELETE FROM TESTENTITY WHERE ID = @Id", new { Id = id });
         }
 
         public object GetLongIdetifier()
@@ -169,24 +168,7 @@ namespace BlocksCore.Data.EF.Test.FunctionTest.TestModel
 //                    }
                 });
         }
-
-        [System.Obsolete]
-        private IQueryable<TEntity> FromSqlTemp<TEntity>(IQueryable q, RawSqlString sql,
-            params object[] parameters) where TEntity : class
-        {
-            return q.Provider.CreateQuery<TEntity>(
-                Expression.Call(
-                    null,
-                    FromSqlMethodInfo.MakeGenericMethod(typeof(TEntity)),
-                    q.Expression,
-                    Expression.Constant(sql),
-                    Expression.Constant(parameters)));
-        }
-
-        internal static readonly MethodInfo FromSqlMethodInfo
-            = typeof(RelationalQueryableExtensions)
-                .GetTypeInfo().GetDeclaredMethods(nameof(FromSql))
-                .Single(mi => mi.GetParameters().Length == 3);
+ 
     }
 
     public class TestRepository3 : DBSqlRepositoryBase<TESTENTITY3>, ITestRepository3

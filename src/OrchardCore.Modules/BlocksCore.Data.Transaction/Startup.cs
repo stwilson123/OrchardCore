@@ -10,6 +10,8 @@ namespace BlocksCore.Data.Transaction
         public override void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IActionFilter, TransactionActionFilter>();
+            services.AddSingleton<IExceptionFilter, TransactionExceptionFilter>();
+
         }
     }
 }

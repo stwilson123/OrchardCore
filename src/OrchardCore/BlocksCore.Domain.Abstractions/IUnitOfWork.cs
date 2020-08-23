@@ -7,7 +7,9 @@ namespace BlocksCore.Domain.Abstractions
     {
         IDataContext GetOrCreateDataContext<TEntity>() where TEntity : IEntity;
 
-        DbConnection DbConnection { get; }
+        IDbConnection DbConnection { get; }
+
+        IDbTransaction DbTransaction { get; }
 
         void Begin(UnitOfWorkOptions options);
 

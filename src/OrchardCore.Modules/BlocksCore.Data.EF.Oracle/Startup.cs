@@ -1,4 +1,5 @@
 using System;
+using System.Data.Common;
 using BlocksCore.Data.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
@@ -21,11 +22,11 @@ namespace BlocksCore.Data.EF.Oracle
                 SampleConnectionString = "Server=localhost;Database=Orchard;User Id=username;Password=password",
                 HasTablePrefix = true,
                 IsDefault = false,
-                configBuilder = (optionBuilder, connection) =>
+                configBuilder = (optionBuilder, unitOfWork) =>
                 {
-                    optionBuilder.UseOracle(connection,o => o.UseOracleSQLCompatibility("11"));
+                    optionBuilder.UseOracle(unitOfWork.DbConnection as DbConnection,o => o.UseOracleSQLCompatibility("11"));
                 },
-                dbConnectionBuilder = (connectionString) => new OracleConnection(connectionString)
+                CreateDbConnection = (connectionString) => new OracleConnection(connectionString)
             });
         }
 

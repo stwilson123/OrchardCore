@@ -30,7 +30,7 @@ namespace BlocksCore.Data.Core
 
             var connectString = _shellSettings["ConnectionString"];
 
-            return currentDBProvider.dbConnectionBuilder(connectString);
+            return currentDBProvider.CreateDbConnection(connectString);
         }
     }
 }

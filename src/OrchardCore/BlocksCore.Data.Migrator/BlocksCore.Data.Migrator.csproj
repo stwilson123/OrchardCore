@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentMigrator.Runner" Version="3.2.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlocksCore.Autofac.Extensions.DependencyInjection\BlocksCore.Autofac.Extensions.DependencyInjection.csproj" />
+    <ProjectReference Include="..\BlocksCore.Data.Abstractions\BlocksCore.Data.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

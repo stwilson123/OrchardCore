@@ -25,7 +25,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 // .AddCommands()
                 .AddMvc()
                 .AddWebAPI()
-                .AddEFDataAccess()
+                .AddLinq2DBDataAccess()
                 .AddLocalization()
                 .AddEventCore()
                 .AddDomainCore();

@@ -8,7 +8,7 @@ using BlocksCore.Abstractions.Security;
 using BlocksCore.Data.Abstractions.Entities;
 using BlocksCore.Data.Abstractions.UnitOfWork;
 using BlocksCore.Data.EF.DBContext;
-using BlocksCore.Data.EF.Linq;
+using BlocksCore.Data.Linq;
 using BlocksCore.Domain.Abstractions;
 using BlocksCore.SyntacticAbstractions.Types.Collections;
 using Microsoft.EntityFrameworkCore;

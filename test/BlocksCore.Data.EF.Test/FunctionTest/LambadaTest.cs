@@ -1,6 +1,6 @@
 using System;
 using System.Linq.Expressions;
-using BlocksCore.Data.EF.Linq.Extends;
+using BlocksCore.Data.Extends;
 using Xunit;
 
 namespace BlocksCore.Data.EF.Test.FunctionTest

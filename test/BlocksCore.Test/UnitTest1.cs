@@ -105,7 +105,7 @@ namespace BlocksCore.Test
         }
         [Theory]
         [InlineData(1)]
-        [InlineData(2)]
+        //[InlineData(2)]
 
         public void Test_InitData(int i)
         {

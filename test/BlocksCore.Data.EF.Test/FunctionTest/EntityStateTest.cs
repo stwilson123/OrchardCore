@@ -33,6 +33,7 @@ namespace BlocksCore.Data.EF.Test.FunctionTest
             {
                 using (var context = new TestBlocksDbContext(contextOption))
                 {
+                  
                     var testEntity = context.TestEntity.Skip(0).Take(1).FirstOrDefault();
 
                     testEntity.TESTENTITY2ID = Guid.NewGuid().ToString();
