@@ -13,7 +13,7 @@ let createComponent = (editor, vueComponent) => {
     let tagName = hyphenate(name);
     let comConfig = componentConfig[comName];
     let comType = vue.extend(component);
-    debugger
+
     editor.DomComponents.addType(tagName, {
         // Make the editor understand when to bind `my-input-type`
         isComponent: (el) => el.tagName === "SECTION",
@@ -40,9 +40,24 @@ let createComponent = (editor, vueComponent) => {
                 droppable: true
             },
             comType: comType,
-            com: null,
+            get com() {
+                
+                if (typeof this._com === "undefined") {
+                    try
+                    {
+                        this._com = new this.comType();
+                        this.com.$mount();
+                    }
+                    catch
+                    {
+                        this._com = undefined;
+                    }
+                }
+                return this._com;
+            },
+            _com: undefined,
             init() {
-                debugger;
+                ;
                 //this.on("change:attributes:msg", this.handlePropChange);
 
                 this.com = new this.comType();
@@ -51,13 +66,13 @@ let createComponent = (editor, vueComponent) => {
             },
             handlePropChange(model, trait) {
                 this.com.msg = trait.msg;
-                debugger
+
             },
         }, comConfig.component),
         view: {
             //  el: hl.$el,
             init() {
-                debugger;
+                ;
                 // Do something in view on model property change
                 // this.listenTo(model, "change:prop", this.handlePropChange);
 
@@ -77,19 +92,21 @@ let createComponent = (editor, vueComponent) => {
                 // this.$el = $(this.model.com.$el);
                 //this.$el.append(this.model.com.$el)
                 //  this.$el.append(createMaskComponent())
+                // if (typeof comConfig.component === "undefined")
+                //     this.$el.append(this.model.com.$el)
+
             },
-            getChildrenSelector:comConfig.component && comConfig.component.containerTagName ? function() {
-                debugger
-                this.$el.append(this.model.com.$el);
-                console.debug(this.model.containerTagName)
-                console.debug(this.tagName())
-                return this.model.containerTagName || this.tagName();
-            }:undefined,
+            // getChildrenSelector: comConfig.component && comConfig.component.containerTagName ? function () {
+            //     this.$el.append(this.model.com.$el);
+            //     console.debug(this.model.containerTagName)
+            //     console.debug(this.tagName())
+            //     return this.model.containerTagName || this.tagName();
+            // } : undefined,
         },
     });
     let blockManager = editor.BlockManager;
 
-     
+
     blockManager.add(tagName, Object.assign({
         content: {
             type: tagName,
@@ -124,12 +141,12 @@ let componentConfig = {
             category: 'Basic',
         }
     },
-    "BlGrid": {
-        blocks: {
-            label: 'Grid',
-            category: 'Basic',
-        }
-    },
+    // "BlGrid": {
+    //     blocks: {
+    //         label: 'Grid',
+    //         category: 'Basic',
+    //     }
+    // },
     "BlDialog": {
         blocks: {
             label: 'Dialog',
@@ -193,12 +210,12 @@ let componentConfig = {
             category: 'Layout',
         }
     },
-    "BlFormItem": {
-        blocks: {
-            label: 'FormItem',
-            category: 'Layout',
-        }
-    },
+    // "BlFormItem": {
+    //     blocks: {
+    //         label: 'FormItem',
+    //         category: 'Layout',
+    //     }
+    // },
     "BlRow": {
         blocks: {
             label: 'Row',

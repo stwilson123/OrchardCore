@@ -13,7 +13,8 @@ export default class Index extends Controller {
             plugins: ["blocks-preset-webpage"],
             panels: {},
             canvas: {
-                styles: ['/pack/build/lib/component/web/webComponent_a4fe8be44daea154ed2f.css']
+                styles: ['/pack/build/lib/component/web/webComponent_a4fe8be44daea154ed2f.css','/pack/build/lib/component/common/uidesigner.css'],
+                
             },
             storageManager: {
                 id: "",
@@ -26,7 +27,7 @@ export default class Index extends Controller {
             },
             domComponents: {
                 processor: (obj) => {
-                    debugger
+                    
                     if (obj.$$typeof) { // eg. this is a React Element
                         const compDef = {
                             type: obj.type,
