@@ -11,6 +11,7 @@
     "dev": "webpack-dev-server  --mode development --disableHostCheck true  --inline --config ./config/webpack.config.js",
     "build:resourcedll": "webpack --mode production --config ./config/webpack.resourcedll.config.js",
     "build:venderdll": "webpack --mode production  --progress --config ./config/webpack.vender.config.js",
+    "build:component": "webpack --mode production  --progress --config ./config/webpack.resourceModule.config.js",
     "build:resourcedll:dev": "node --inspect-brk ./node_modules/webpack/bin/webpack.js --config ./config/webpack.vender.config.js --inline --progress",
     "dev:debug": " node --inspect-brk ./node_modules/webpack-dev-server/bin/webpack-dev-server.js  --mode development   --inline --config ./config/webpack.config.js"
   },
@@ -69,6 +70,7 @@
     "core-js": "^3.1.0",
     "cross-env": "^5.2.0",
     "element-ui": "^2.13.0",
+    "grapesjs": "^0.16.18",
     "highcharts": "^7.1.1",
     "jqGrid": "^5.3.2",
     "jquery": "^3.3.1",

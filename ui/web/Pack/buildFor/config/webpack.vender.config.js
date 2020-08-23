@@ -13,7 +13,7 @@ module.exports = {
     extensions: [".js", ".ts"],
     alias: {
       interface: "@blocks-framework/vue"
-    }
+    },
   },
   module: {
     rules: [

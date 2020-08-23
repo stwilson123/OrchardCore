@@ -213,7 +213,7 @@ module.exports = {
         port: PORT,
         overlay: { warnings: false, errors: true },
         proxy: {
-            "api": {
+            "/api": {
                 target: 'http://localhost:49338',
                 bypass: function (req, res, proxyOptions) {
                     let match = req.originalUrl.match(/(\.(\w+)\?)|(\.(\w+)$)/);
