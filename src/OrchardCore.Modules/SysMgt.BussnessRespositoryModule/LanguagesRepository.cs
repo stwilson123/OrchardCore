@@ -1,12 +1,12 @@
 using Blocks.BussnessEntityModule;
 using BlocksCore.Abstractions.UI.Combobox;
 using BlocksCore.Data.Abstractions.Paging;
-using BlocksCore.Data.EF.DBContext;
-using BlocksCore.Data.EF.Repository;
+
+using BlocksCore.Data.Linq2DB.Repository;
 using SysMgt.BussnessDTOModule.Languages;
 using System;
 using System.Collections.Generic;
-using BlocksCore.Data.EF.Linq;
+using BlocksCore.Data.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlocksCore.Data.Abstractions.UnitOfWork;

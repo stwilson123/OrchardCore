@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Blocks.BussnessEntityModule;
 using BlocksCore.Data.Abstractions.Paging;
 using BlocksCore.Data.Abstractions.UnitOfWork;
-using BlocksCore.Data.EF.DBContext;
-using BlocksCore.Data.EF.Linq;
-using BlocksCore.Data.EF.Repository;
+
+using BlocksCore.Data.Linq;
+using BlocksCore.Data.Linq2DB.Repository;
 using SysMgt.BussnessDTOModule.ProductFormatDetail;
 
 namespace SysMgt.BussnessRespositoryModule

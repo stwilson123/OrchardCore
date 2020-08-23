@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Blocks.BussnessEntityModule;
 using BlocksCore.Data.Abstractions.UnitOfWork;
-using BlocksCore.Data.EF.DBContext;
-using BlocksCore.Data.EF.Repository;
+
+using BlocksCore.Data.Linq2DB.Repository;
 
 namespace SysMgt.BussnessRespositoryModule
 {

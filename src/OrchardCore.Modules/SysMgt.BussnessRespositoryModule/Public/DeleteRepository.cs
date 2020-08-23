@@ -1,12 +1,12 @@
 using Blocks.BussnessEntityModule;
-using BlocksCore.Data.EF.DBContext;
+
 using BlocksCore.Data.Abstractions.Paging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BlocksCore.Data.EF.Repository;
+using BlocksCore.Data.Linq2DB.Repository;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;

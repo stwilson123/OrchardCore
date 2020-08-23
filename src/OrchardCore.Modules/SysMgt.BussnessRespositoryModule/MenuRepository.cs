@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Blocks.BussnessEntityModule;
 using BlocksCore.Data.Abstractions.Paging;
-using BlocksCore.Data.EF.DBContext;
-using BlocksCore.Data.EF.Repository;
+
+using BlocksCore.Data.Linq2DB.Repository;
 using SysMgt.BussnessDTOModule.Menu;
-using  BlocksCore.Data.EF.Linq;
 using BlocksCore.Data.Abstractions.UnitOfWork;
+using BlocksCore.Data.Linq;
 
 namespace SysMgt.BussnessRespositoryModule
 {

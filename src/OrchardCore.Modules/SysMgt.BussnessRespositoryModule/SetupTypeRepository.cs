@@ -1,9 +1,9 @@
 using Blocks.BussnessEntityModule;
 using BlocksCore.Data.Abstractions.Paging;
-using BlocksCore.Data.EF.DBContext;
-using BlocksCore.Data.EF.Repository;
+
+using BlocksCore.Data.Linq2DB.Repository;
 using SysMgt.BussnessDTOModule.Setup;
-using BlocksCore.Data.EF.Linq;
+using BlocksCore.Data.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;

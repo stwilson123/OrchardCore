@@ -5,7 +5,7 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\OrchardCore.Modules\BlocksCore.Data.EF.Oracle\BlocksCore.Data.EF.Oracle.csproj" />
+    <ProjectReference Include="..\OrchardCore.Modules\BlocksCore.Data.Linq2DB.Oracle\BlocksCore.Data.Linq2DB.Oracle.csproj" />
     <ProjectReference Include="..\OrchardCore.Modules\SysMgr.BussnessWebModule\SysMgr.BussnessWebModule.csproj" />
     <ProjectReference Include="..\OrchardCore\BlocksCore.Application.ManageSystem.Core.Targets\BlocksCore.Application.ManageSystem.Core.Targets.csproj" />
     <ProjectReference Include="..\OrchardCore\BlocksCore.Logging.Log4net\BlocksCore.Logging.Log4net.csproj" />

@@ -1,7 +1,7 @@
 using Blocks.BussnessEntityModule;
 using BlocksCore.Data.Abstractions.UnitOfWork;
-using BlocksCore.Data.EF.DBContext;
-using BlocksCore.Data.EF.Repository;
+
+using BlocksCore.Data.Linq2DB.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
