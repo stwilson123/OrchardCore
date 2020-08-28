@@ -12,7 +12,9 @@ export default {
       type: String
     },
     prop: {
-      type: String
+      type: String,
+      default:() => "tempProp"
+
     }
   }
 };

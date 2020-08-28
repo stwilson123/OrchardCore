@@ -1,5 +1,5 @@
 <template>
-  <el-col :xs="xs" :sm="sm">
+  <el-col :xs="xs" :sm="sm" style="min-height:30px">
     <slot></slot>
   </el-col>
 </template>

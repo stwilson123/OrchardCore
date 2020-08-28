@@ -5,6 +5,7 @@
     :rules="rules"
     :label-width="labelWidth"
     :label-position="labelPosition"
+    style="min-height:100px"
   >
     <slot></slot>
   </el-form>

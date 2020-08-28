@@ -179,7 +179,7 @@ export default {
       this.showClear = false;
     },
     blurEvent(e) {
-      if (this.$parent["form"]) {
+      if (this.$parent && this.$parent["form"]) {
         this.$parent["form"].validateField(this.name);
       }
     }

@@ -1,5 +1,5 @@
 <template>
-  <el-row :gutter="gutter">
+  <el-row :gutter="gutter" style="min-height:30px">
     <slot></slot>
   </el-row>
 </template>
