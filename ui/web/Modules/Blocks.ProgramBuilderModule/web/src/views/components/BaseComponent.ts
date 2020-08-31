@@ -149,7 +149,7 @@ export default class BaseComponent {
             }
         }
 
-        return {};
+        return comOption;
     }
 
     createtraits(props: object): Array<object> {

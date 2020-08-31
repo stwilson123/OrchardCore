@@ -9,8 +9,8 @@ export default () => {
     let vueComponents = eleComponents.components;
     for (const comKey in blocksConfig) {
         let vueComponent = vueComponents.find(c => c.name === comKey);
-        let com = new BaseComponent(comKey, vue.extend(vueComponent), vueComponent);
-        result.push({ name:comKey, component: com.getComponentOption(), blocks:com.getBlockOption })
+        let com = new BaseComponent(comKey, vue.extend(vueComponent.component), vueComponent.component.props);
+        result.push({ name:comKey, component: com.getComponentOption(), blocks:com.getBlockOption() })
     }
     return result;
 }

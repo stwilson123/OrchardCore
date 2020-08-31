@@ -3,7 +3,7 @@ let componentConfig = {
 
         blocks: {
             label: 'Input',
-            category: 'Basic',
+            category: 'Form',
         },
         component: {
             containerTagName: 'input'
@@ -12,19 +12,19 @@ let componentConfig = {
     "BlButton": {
         blocks: {
             label: 'Button',
-            category: 'Basic',
+            category: 'Form',
         }
     },
     "BlSelect": {
         blocks: {
             label: 'Select',
-            category: 'Basic',
+            category: 'Form',
         }
     },
     "BlDatepicker": {
         blocks: {
             label: 'Datepicker',
-            category: 'Basic',
+            category: 'Form',
         }
     },
     // "BlGrid": {
@@ -93,15 +93,15 @@ let componentConfig = {
     "BlForm": {
         blocks: {
             label: 'Form',
-            category: 'Layout',
+            category: 'Form',
         }
     },
-    "BlFormItem": {
-        blocks: {
-            label: 'FormItem',
-            category: 'Layout',
-        }
-    },
+    // "BlFormItem": {
+    //     blocks: {
+    //         label: 'FormItem',
+    //         category: 'Layout',
+    //     }
+    // },
     "BlRow": {
         blocks: {
             label: 'Row',

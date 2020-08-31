@@ -4,7 +4,6 @@
 import componentOptionsFun from "./eleComponent";
 let createComponent = (editor, option) => {
 
-
     editor.DomComponents.addType(option.name, option.component);
     let blockManager = editor.BlockManager;
 
@@ -19,7 +18,6 @@ export default (editor, config) => {
     for (const option of options) {
         createComponent(editor, option);
     }
-    // extendSelectComponent(editor);
 };
 
 
